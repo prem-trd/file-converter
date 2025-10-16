@@ -9,7 +9,7 @@ export const pdfToolCategories = [
     {
         title: 'ORGANIZE PDF',
         tools: [
-          { key: 'merge', label: 'Merge PDF', description: 'Combine multiple PDFs into one.', icon: <FaFileMedical />, color: '#e53935' },
+          { key: 'merge-pdf', label: 'Merge PDF', description: 'Combine multiple PDFs into one.', icon: <FaFileMedical />, color: '#e53935' },
           { key: 'split', label: 'Split PDF', description: 'Extract pages from a PDF.', icon: <FaFileExport />, color: '#e53935' },
           { key: 'remove-pages', label: 'Remove pages', description: 'Delete specific pages from a PDF.', icon: <FaTrashAlt />, color: '#e53935' },
           { key: 'extract-pages', label: 'Extract pages', description: 'Select and create a new PDF from pages.', icon: <FaFileExport />, color: '#e53935' },
