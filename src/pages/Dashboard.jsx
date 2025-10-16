@@ -1,11 +1,55 @@
-import React from 'react';
 
-export default function Dashboard() {
+import React, { useState } from 'react';
+import { pdfToolCategories, imageToolCategories } from '../data/tools.jsx';
+import ToolCard from '../components/ToolCard';
+import { Input, InputGroup } from 'rsuite';
+import SearchIcon from '@rsuite/icons/Search';
+import './Dashboard.css';
+
+const allTools = [...pdfToolCategories, ...imageToolCategories];
+
+const Dashboard = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const filteredTools = allTools.map(category => ({
+    ...category,
+    tools: category.tools.filter(tool =>
+      tool.label.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      tool.description.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+  })).filter(category => category.tools.length > 0);
+
   return (
-    <div style={{ textAlign: 'center', marginTop: '50px' }}>
-      <h2>Welcome to the File Converter!</h2>
-      <h1>The All-in-One PDF Solution</h1>
-      <p>Your one-stop shop for all your PDF needs. Merge, split, compress, and convert with ease.</p>
+    <div className="dashboard-container">
+      <div className="dashboard-header">
+        <h1>The All-in-One PDF & Image Solution</h1>
+        <p>Your one-stop shop for all your file conversion needs. Merge, split, compress, and convert with ease.</p>
+        <div className="search-bar-container">
+          <InputGroup inside>
+            <Input
+              placeholder="Search for a tool..."
+              value={searchTerm}
+              onChange={setSearchTerm}
+            />
+            <InputGroup.Addon>
+              <SearchIcon />
+            </InputGroup.Addon>
+          </InputGroup>
+        </div>
+      </div>
+      
+      {filteredTools.map(category => (
+        <div key={category.title} className="tool-category-section">
+          <h2>{category.title}</h2>
+          <div className="tool-grid">
+            {category.tools.map(tool => (
+              <ToolCard key={tool.key} tool={tool} />
+            ))}
+          </div>
+        </div>
+      ))}
     </div>
   );
-}
+};
+
+export default Dashboard;
