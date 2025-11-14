@@ -2,8 +2,14 @@
 .tool-card-link {
     text-decoration: none;
     color: inherit;
+    display: flex; /* Ensure link takes up full height */
   }
   
+/* Add this to remove underline on hover */
+.tool-card-link:hover {
+    text-decoration: none;
+}
+
   .tool-card {
     background-color: #fff;
     border: 1px solid #e0e0e0;
@@ -11,10 +17,11 @@
     padding: 20px;
     text-align: center;
     transition: transform 0.3s, box-shadow 0.3s;
-    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    width: 100%; /* Make card take full width of link */
+    min-height: 180px; /* Set a minimum height to prevent overlap */
   }
   
   .tool-card:hover {

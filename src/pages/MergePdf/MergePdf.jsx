@@ -2,32 +2,45 @@
 import React, { useState, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { PDFDocument } from 'pdf-lib';
-import { Button, IconButton } from 'rsuite';
-import { FaFilePdf, FaTrash, FaArrowUp, FaArrowDown } from 'react-icons/fa';
+import { Button, IconButton, List } from 'rsuite';
+import { VscFilePdf, VscChevronUp, VscChevronDown, VscTrash } from "react-icons/vsc";
 import './MergePdf.css';
 
 const MergePdf = () => {
   const [files, setFiles] = useState([]);
-  const [mergedPdfUrl, setMergedPdfUrl] = useState(null);
+  const [isMerging, setIsMerging] = useState(false);
 
   const onDrop = useCallback(acceptedFiles => {
-    const pdfFiles = acceptedFiles.filter(file => file.type === 'application/pdf');
-    setFiles(prevFiles => [...prevFiles, ...pdfFiles]);
-    setMergedPdfUrl(null); // Reset on new file drop
+    const newFiles = acceptedFiles
+      .filter(file => file.type === 'application/pdf')
+      .map(file => ({
+        file,
+        id: `${file.name}-${file.lastModified}`,
+      }));
+    setFiles(prevFiles => [...prevFiles, ...newFiles]);
   }, []);
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop, accept: { 'application/pdf': ['.pdf'] } });
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    accept: {
+      'application/pdf': ['.pdf'],
+    },
+  });
 
-  const removeFile = index => {
-    setFiles(files.filter((_, i) => i !== index));
+  const moveFile = (fromIndex, toIndex) => {
+    if (toIndex < 0 || toIndex >= files.length) {
+      return;
+    }
+    const updatedFiles = [...files];
+    const [movedFile] = updatedFiles.splice(fromIndex, 1);
+    updatedFiles.splice(toIndex, 0, movedFile);
+    setFiles(updatedFiles);
   };
 
-  const moveFile = (index, direction) => {
-    const newFiles = [...files];
-    const newIndex = index + direction;
-    if (newIndex < 0 || newIndex >= files.length) return;
-    [newFiles[index], newFiles[newIndex]] = [newFiles[newIndex], newFiles[index]];
-    setFiles(newFiles);
+  const removeFile = index => {
+    const updatedFiles = [...files];
+    updatedFiles.splice(index, 1);
+    setFiles(updatedFiles);
   };
 
   const mergePdfs = async () => {
@@ -36,19 +49,23 @@ const MergePdf = () => {
       return;
     }
 
-    const mergedDoc = await PDFDocument.create();
+    setIsMerging(true);
+    const mergedPdf = await PDFDocument.create();
 
-    for (const file of files) {
-      const arrayBuffer = await file.arrayBuffer();
-      const pdf = await PDFDocument.load(arrayBuffer);
-      const copiedPages = await mergedDoc.copyPages(pdf, pdf.getPageIndices());
-      copiedPages.forEach(page => mergedDoc.addPage(page));
+    for (const { file } of files) {
+      const pdfBytes = await file.arrayBuffer();
+      const pdf = await PDFDocument.load(pdfBytes);
+      const copiedPages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
+      copiedPages.forEach(page => mergedPdf.addPage(page));
     }
 
-    const mergedPdfBytes = await mergedDoc.save();
+    const mergedPdfBytes = await mergedPdf.save();
     const blob = new Blob([mergedPdfBytes], { type: 'application/pdf' });
-    const url = URL.createObjectURL(blob);
-    setMergedPdfUrl(url);
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'merged.pdf';
+    link.click();
+    setIsMerging(false);
   };
 
   return (
@@ -60,41 +77,33 @@ const MergePdf = () => {
         </p>
       </div>
 
-      <div className="upload-card">
-        <div {...getRootProps({ className: `dropzone ${isDragActive ? 'drag-over' : ''}` })}>
-          <input {...getInputProps()} />
-          <p className="dropzone-content">Drag 'n' drop PDF files here, or click to select</p>
-        </div>
+      <div {...getRootProps({ className: `dropzone ${isDragActive ? 'drag-over' : ''}` })}>
+        <input {...getInputProps()} />
+        <p className="dropzone-content">Drag 'n' drop PDF files here, or click to select</p>
       </div>
 
       {files.length > 0 && (
         <div className="file-list-container">
-          <ul className="file-list">
+          <List bordered>
             {files.map((file, index) => (
-              <li key={index} className="file-item">
-                <FaFilePdf size={24} color="#e74c3c" />
-                <span className="file-name" title={file.name}>{file.name}</span>
-                <div className="file-item-actions">
-                  <IconButton icon={<FaArrowUp />} onClick={() => moveFile(index, -1)} disabled={index === 0} size="sm" appearance="subtle" />
-                  <IconButton icon={<FaArrowDown />} onClick={() => moveFile(index, 1)} disabled={index === files.length - 1} size="sm" appearance="subtle" />
-                  <IconButton icon={<FaTrash />} onClick={() => removeFile(index)} size="sm" color="red" appearance="subtle" />
+              <List.Item key={file.id} index={index}>
+                <div className="file-item">
+                  <VscFilePdf size={24} style={{ color: '#e74c3c' }} />
+                  <span className="file-name" title={file.file.name}>{file.file.name}</span>
+                  <div className="file-item-actions">
+                    <IconButton icon={<VscChevronUp />} size="xs" onClick={() => moveFile(index, index - 1)} disabled={index === 0} />
+                    <IconButton icon={<VscChevronDown />} size="xs" onClick={() => moveFile(index, index + 1)} disabled={index === files.length - 1} />
+                    <IconButton icon={<VscTrash />} size="xs" onClick={() => removeFile(index)} />
+                  </div>
                 </div>
-              </li>
+              </List.Item>
             ))}
-          </ul>
+          </List>
           <div className="merge-button-container">
-            <Button onClick={mergePdfs} appearance="primary" color="blue" size="lg" block>
-              Merge {files.length} PDFs
+            <Button onClick={mergePdfs} appearance="primary" color="blue" size="lg" block disabled={isMerging}>
+              {isMerging ? 'Merging...' : `Merge ${files.length} PDFs`}
             </Button>
           </div>
-        </div>
-      )}
-
-      {mergedPdfUrl && (
-        <div style={{ marginTop: '20px' }}>
-          <a href={mergedPdfUrl} download="merged.pdf">
-            <Button appearance="primary" color="green" size="lg">Download Merged PDF</Button>
-          </a>
         </div>
       )}
     </div>

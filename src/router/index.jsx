@@ -5,6 +5,7 @@ import NotFound from "../pages/NotFound";
 import SignIn from "../pages/SignIn";
 import SignUp from "../pages/SignUp";
 import MergePdf from "../pages/MergePdf/MergePdf.jsx";
+import SplitPdf from "../pages/SplitPdf/SplitPdf.jsx";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
       {
         path: "merge-pdf",
         element: <MergePdf />,
+      },
+      {
+        path: "split-pdf",
+        element: <SplitPdf />,
       },
       {
         path: "*",
