@@ -26,6 +26,14 @@ The application will adhere to the highest standards of modern web design, focus
 *   **Reusable Tool Cards:** The `ToolCard` component displays each tool in a clean, clickable card.
 *   **Search Functionality:** A search bar allows users to easily find the specific tool they need.
 *   **Improved Styling:** The dashboard has a fresh, modern look with a grid-based layout.
+*   **Extract Pages Feature:**
+    *   Created the `ExtractPages.jsx` component.
+    *   Added a route for the new page in `src/router/index.jsx`.
+    *   Added a tool card to the dashboard for easy navigation.
+*   **Organize PDF Feature:**
+    *   Created the `OrganizePdf.jsx` component.
+    *   Added a route for the new page in `src/router/index.jsx`.
+    *   Added a tool card to the dashboard for easy navigation.
 *   **Bug Fixes:**
     *   Resolved `SyntaxError: Unexpected token '<'` by renaming `tools.js` to `tools.jsx` and updating imports.
     *   Fixed invisible card headings by adjusting CSS.
@@ -65,7 +73,7 @@ The next phase is to build out the backend functionality using Firebase and conn
 - **Services:** Cloud Functions for Firebase.
 - **Implementation:**
     - For each tool (e.g., "Merge PDF"), create a Cloud Function that performs the backend processing.
-    - The frontend will call these functions and provide feedback on the job status (e.g., "processing," "complete").
+    - The frontend will call these functions and provide feedback on the job status (e.g., "processing," "complete
 
 ### Step 5: Data Persistence
 - **Goal:** Store user data and information about their PDF jobs.

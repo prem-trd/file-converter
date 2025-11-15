@@ -1,0 +1,52 @@
+
+:root {
+  --primary-bg-color: #2c3e50;
+  --secondary-bg-color: #34495e;
+  --primary-text-color: #ecf0f1;
+  --secondary-text-color: #bdc3c7;
+  --accent-color: #3498db;
+  --danger-color: #e74c3c;
+  --success-color: #2ecc71;
+  --light-bg-color: #ecf0f1;
+  --dark-text-color: #2c3e50;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--primary-bg-color);
+  color: var(--primary-text-color);
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.page-container {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Align items to the start of the container */
+  padding-top: 5vh; /* Add some padding from the top */
+  width: 100%;
+}
+
+
+/* General responsive styles */
+@media (max-width: 768px) {
+    body {
+        font-size: 14px;
+    }
+}

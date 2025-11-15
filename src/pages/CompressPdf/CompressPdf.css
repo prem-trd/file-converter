@@ -1,5 +1,5 @@
 
-.split-pdf-container {
+.compress-pdf-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -10,27 +10,27 @@
     margin: auto;
   }
   
-  .split-pdf-header {
+  .compress-pdf-header {
     text-align: center;
     margin-bottom: 30px;
   }
   
-  .split-pdf-title {
+  .compress-pdf-title {
     font-size: 2.5rem;
     font-weight: 700;
     color: var(--primary-text-color);
     margin-bottom: 10px;
   }
   
-  .split-pdf-description {
+  .compress-pdf-description {
     font-size: 1.1rem;
     color: var(--secondary-text-color);
     max-width: 600px;
     margin: 0 auto;
   }
   
-  .split-pdf-content {
-    width: 100%;
+  .compress-pdf-content {
+      width: 100%;
   }
 
   .dropzone {
@@ -57,15 +57,15 @@
     font-size: 1.1rem;
     color: var(--secondary-text-color);
   }
-
+  
   .file-processing-area {
       width: 100%;
   }
-  
+
   .file-list-container {
     margin-bottom: 20px;
   }
-  
+
   .file-item {
     display: flex;
     align-items: center;
@@ -94,52 +94,21 @@
       color: #ff6b81;
   }
 
-  .ranges-container {
-    margin-top: 30px;
-    padding: 20px;
-    border: 1px solid #4a627a;
-    border-radius: 8px;
-    background-color: var(--secondary-bg-color);
-  }
-
-  .ranges-title {
-    font-size: 1.2rem;
-    font-weight: 600;
-    margin-bottom: 20px;
-    color: var(--primary-text-color);
-  }
-
-  .range-item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 15px;
-  }
-
-  .range-separator {
-      font-weight: 500;
-      color: var(--primary-text-color);
-  }
-
-  .remove-range-btn {
-      height: 38px;
-  }
-
-  .add-range-btn {
-      width: 100%;
+  .compression-options {
+      margin: 20px 0;
   }
   
-  .split-button-container {
+  .compress-button-container {
     margin-top: 20px;
     text-align: center;
   }
 
   @media (max-width: 768px) {
-    .split-pdf-title {
+    .compress-pdf-title {
         font-size: 2rem;
     }
 
-    .split-pdf-container {
+    .compress-pdf-container {
         padding: 15px;
     }
 

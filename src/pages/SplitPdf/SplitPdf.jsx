@@ -2,125 +2,212 @@
 import React, { useState, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { PDFDocument } from 'pdf-lib';
-import { Button, Input, Form } from 'rsuite';
-import { VscFilePdf } from "react-icons/vsc";
+import { Button, Form, Alert, Spinner } from 'react-bootstrap';
+import { FaFilePdf, FaTrash, FaPlus } from 'react-icons/fa';
+import JSZip from 'jszip';
 import './SplitPdf.css';
 
 const SplitPdf = () => {
   const [file, setFile] = useState(null);
-  const [isSplitting, setIsSplitting] = useState(false);
-  const [startPage, setStartPage] = useState('');
-  const [endPage, setEndPage] = useState('');
   const [totalPages, setTotalPages] = useState(0);
+  const [ranges, setRanges] = useState([{ from: '', to: '' }]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
 
   const onDrop = useCallback(async (acceptedFiles) => {
-    if (acceptedFiles.length > 0) {
-      const selectedFile = acceptedFiles[0];
-      setFile(selectedFile);
+    if (acceptedFiles.length === 0) return;
+    const selectedFile = acceptedFiles[0];
 
-      const pdfBytes = await selectedFile.arrayBuffer();
-      const pdfDoc = await PDFDocument.load(pdfBytes);
-      setTotalPages(pdfDoc.getPageCount());
-      setStartPage('1');
-      setEndPage(String(pdfDoc.getPageCount()));
+    if (selectedFile.type !== 'application/pdf') {
+      setError("Please upload a valid PDF file.");
+      setFile(null);
+      setTotalPages(0);
+      return;
+    }
+
+    setError(null);
+    setSuccess(null);
+    setFile(selectedFile);
+    setIsLoading(true);
+
+    try {
+      const arrayBuffer = await selectedFile.arrayBuffer();
+      const pdfDoc = await PDFDocument.load(arrayBuffer);
+      const pageCount = pdfDoc.getPageCount();
+      setTotalPages(pageCount);
+      setRanges([{ from: '1', to: String(pageCount) }]);
+    } catch (e) {
+      console.error(e);
+      setError("Could not read the PDF file. It may be corrupted.");
+      setFile(null);
+      setTotalPages(0);
+    } finally {
+      setIsLoading(false);
     }
   }, []);
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    onDrop,
-    accept: {
-      'application/pdf': ['.pdf'],
-    },
-    multiple: false,
-  });
+  const { getRootProps, getInputProps } = useDropzone({ onDrop, accept: { 'application/pdf': ['.pdf'] }, maxFiles: 1 });
+
+  const handleRangeChange = (index, field, value) => {
+    const newRanges = [...ranges];
+    // Ensure value doesn't exceed total pages
+    const numValue = parseInt(value, 10);
+    if (value === '' || (numValue >= 1 && numValue <= totalPages)) {
+        newRanges[index][field] = value;
+        setRanges(newRanges);
+    } else if (numValue > totalPages) {
+        newRanges[index][field] = String(totalPages);
+        setRanges(newRanges);
+    } else if (numValue < 1 && value !== '') {
+        newRanges[index][field] = '1';
+        setRanges(newRanges);
+    }
+  };
+
+  const addRange = () => setRanges([...ranges, { from: '', to: '' }]);
+  const removeRange = (index) => setRanges(ranges.filter((_, i) => i !== index));
 
   const handleSplit = async () => {
-    if (!file || !startPage || !endPage) {
-      alert('Please select a file and specify the page range.');
+    if (!file) {
+      setError("Please select a file first.");
       return;
     }
 
-    const start = parseInt(startPage, 10);
-    const end = parseInt(endPage, 10);
+    setIsLoading(true);
+    setError(null);
+    setSuccess(null);
 
-    if (isNaN(start) || isNaN(end) || start < 1 || end > totalPages || start > end) {
-      alert(`Invalid page range. Please enter a range between 1 and ${totalPages}.`);
-      return;
+    try {
+      const arrayBuffer = await file.arrayBuffer();
+      const pdfDoc = await PDFDocument.load(arrayBuffer);
+      const zip = new JSZip();
+      let validRanges = 0;
+
+      for (const range of ranges) {
+        const from = parseInt(range.from, 10);
+        const to = parseInt(range.to, 10) || from;
+
+        if (isNaN(from) || isNaN(to) || from < 1 || to > totalPages || from > to) {
+          continue; // Skip invalid ranges
+        }
+
+        validRanges++;
+        const newPdfDoc = await PDFDocument.create();
+        const indices = Array.from({ length: to - from + 1 }, (_, i) => from - 1 + i);
+        const copiedPages = await newPdfDoc.copyPages(pdfDoc, indices);
+        copiedPages.forEach(page => newPdfDoc.addPage(page));
+        const pdfBytes = await newPdfDoc.save();
+        zip.file(`${file.name.replace('.pdf', '')}-p${from}-${to}.pdf`, pdfBytes);
+      }
+
+      if (validRanges === 0) {
+        setError("No valid page ranges to split.");
+        setIsLoading(false);
+        return;
+      }
+
+      const zipBlob = await zip.generateAsync({ type: 'blob' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(zipBlob);
+      link.download = `${file.name.replace('.pdf', '')}_split.zip`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      setSuccess('PDF split successfully! Check your downloads.');
+      removeFile();
+
+    } catch (e) {
+      console.error(e);
+      setError("An error occurred while splitting the PDF.");
+    } finally {
+      setIsLoading(false);
     }
-
-    setIsSplitting(true);
-
-    const pdfBytes = await file.arrayBuffer();
-    const pdfDoc = await PDFDocument.load(pdfBytes);
-    const newPdfDoc = await PDFDocument.create();
-
-    const pageIndices = Array.from({ length: end - start + 1 }, (_, i) => start + i - 1);
-    const copiedPages = await newPdfDoc.copyPages(pdfDoc, pageIndices);
-    copiedPages.forEach((page) => newPdfDoc.addPage(page));
-
-    const newPdfBytes = await newPdfDoc.save();
-    const blob = new Blob([newPdfBytes], { type: 'application/pdf' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = `split_${file.name}`;
-    link.click();
-
-    setIsSplitting(false);
   };
+
+  const removeFile = () => {
+    setFile(null);
+    setTotalPages(0);
+    setRanges([{ from: '', to: '' }]);
+    setError(null);
+    setSuccess(null);
+  };
+  
+  const formatBytes = (bytes, decimals = 2) => {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const dm = decimals < 0 ? 0 : decimals;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+  }
 
   return (
     <div className="split-pdf-container">
-      <div className="split-pdf-header">
-        <h1 className="split-pdf-title">Split PDF</h1>
-        <p className="split-pdf-description">
-          Extract a range of pages from a PDF file.
-        </p>
-      </div>
-
-      <div {...getRootProps({ className: `dropzone ${isDragActive ? 'drag-over' : ''}` })}>
-        <input {...getInputProps()} />
-        {file ? (
-          <div className="file-info">
-            <VscFilePdf size={40} style={{ color: '#e74c3c' }} />
-            <p>{file.name}</p>
-            <p>{totalPages} pages</p>
-          </div>
-        ) : (
-          <p className="dropzone-content">Drag 'n' drop a PDF file here, or click to select a file</p>
-        )}
-      </div>
-
-      {file && (
-        <div className="split-options">
-            <Form layout="inline">
-                <Form.Group controlId="start-page">
-                <Form.ControlLabel>Start Page</Form.ControlLabel>
-                <Input
-                    type="number"
-                    min="1"
-                    max={totalPages}
-                    value={startPage}
-                    onChange={(value) => setStartPage(value)}
-                    style={{ width: 100 }}
-                />
-                </Form.Group>
-                <Form.Group controlId="end-page">
-                <Form.ControlLabel>End Page</Form.ControlLabel>
-                <Input
-                    type="number"
-                    min="1"
-                    max={totalPages}
-                    value={endPage}
-                    onChange={(value) => setEndPage(value)}
-                    style={{ width: 100 }}
-                />
-                </Form.Group>
-            </Form>
-          <Button onClick={handleSplit} appearance="primary" color="blue" size="lg" disabled={isSplitting} style={{ marginTop: 20 }}>
-            {isSplitting ? 'Splitting...' : 'Split PDF'}
-          </Button>
+        <div className="split-pdf-header">
+            <h1 className="split-pdf-title">Split PDF</h1>
+            <p className="split-pdf-description">Define page ranges to split your PDF into multiple documents.</p>
         </div>
-      )}
+        <div className="split-pdf-content">
+            {error && <Alert variant="danger" onClose={() => setError(null)} dismissible>{error}</Alert>}
+            {success && <Alert variant="success" onClose={() => setSuccess(null)} dismissible>{success}</Alert>}
+
+            {!file ? (
+                <div {...getRootProps({ className: 'dropzone' })}>
+                    <input {...getInputProps()} />
+                    <div className="dropzone-content">
+                        <FaFilePdf size={48} />
+                        <p>Drag 'n' drop a PDF file here, or click to select a file</p>
+                    </div>
+                </div>
+            ) : (
+                <div className="file-processing-area">
+                    <div className="file-list-container">
+                        <div className="file-item">
+                            <FaFilePdf className="pdf-icon" size={24}/>
+                            <span className="file-name" title={file.name}>{file.name} ({formatBytes(file.size)})</span>
+                            <div className="file-item-actions">
+                                <Button variant="link" onClick={removeFile} className="delete-button"><FaTrash /></Button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div className="ranges-container">
+                      <h4 className="ranges-title">Define Split Ranges (Total pages: {totalPages})</h4>
+                      {ranges.map((range, index) => (
+                        <Form.Group key={index} className="range-item">
+                            <Form.Control 
+                                type="number" 
+                                placeholder="From" 
+                                value={range.from} 
+                                onChange={e => handleRangeChange(index, 'from', e.target.value)}
+                                min="1"
+                                max={totalPages}
+                            />
+                            <span className="range-separator">-</span>
+                            <Form.Control 
+                                type="number" 
+                                placeholder="To" 
+                                value={range.to} 
+                                onChange={e => handleRangeChange(index, 'to', e.target.value)} 
+                                min="1"
+                                max={totalPages}
+                            />
+                            <Button variant="danger" onClick={() => removeRange(index)} className="remove-range-btn"><FaTrash /></Button>
+                        </Form.Group>
+                      ))}
+                      <Button variant="secondary" onClick={addRange} className="add-range-btn"><FaPlus /> Add Range</Button>
+                    </div>
+
+                    <div className="split-button-container">
+                        <Button onClick={handleSplit} disabled={isLoading} size="lg">
+                            {isLoading ? <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" /> : 'Split PDF'}
+                        </Button>
+                    </div>
+                </div>
+            )}
+        </div>
     </div>
   );
 };

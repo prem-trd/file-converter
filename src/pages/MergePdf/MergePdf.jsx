@@ -100,7 +100,7 @@ const MergePdf = () => {
             ))}
           </List>
           <div className="merge-button-container">
-            <Button onClick={mergePdfs} appearance="primary" color="blue" size="lg" block disabled={isMerging}>
+            <Button onClick={mergePdfs} appearance="primary" color="blue" size="lg" disabled={isMerging}>
               {isMerging ? 'Merging...' : `Merge ${files.length} PDFs`}
             </Button>
           </div>
