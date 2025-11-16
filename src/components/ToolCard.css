@@ -1,48 +1,49 @@
-
 .tool-card-link {
-    text-decoration: none;
-    color: inherit;
-    display: flex; /* Ensure link takes up full height */
-  }
-  
-/* Add this to remove underline on hover */
-.tool-card-link:hover {
-    text-decoration: none;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  /* Ensure link takes up full height */
 }
 
-  .tool-card {
-    background-color: #fff;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    padding: 20px;
-    text-align: center;
-    transition: transform 0.3s, box-shadow 0.3s;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 100%; /* Make card take full width of link */
-    min-height: 180px; /* Set a minimum height to prevent overlap */
-  }
-  
-  .tool-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-  }
-  
-  .tool-card-icon {
-    font-size: 40px;
-    margin-bottom: 15px;
-  }
-  
-  .tool-card-title {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #333;
-  }
-  
-  .tool-card-description {
-    font-size: 14px;
-    color: #666;
-  }
-  
+/* Add this to remove underline on hover */
+.tool-card-link:hover {
+  text-decoration: none;
+}
+
+.tool-card {
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  /* Make card take full width of link */
+  min-height: 180px;
+  /* Set a minimum height to prevent overlap */
+}
+
+.tool-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.tool-card-icon {
+  font-size: 40px;
+  margin-bottom: 15px;
+}
+
+.tool-card-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.tool-card-description {
+  font-size: 14px;
+  color: #666;
+}

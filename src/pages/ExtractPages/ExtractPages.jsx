@@ -36,10 +36,10 @@ const ExtractPages = () => {
       setNumPages(pdfDoc.getPageCount());
       setPagesToExtract(new Set());
     } catch (e) {
-        console.error(e);
-        setError("Could not read the PDF file. It may be corrupted or protected.");
-        setFile(null);
-        setNumPages(null);
+      console.error(e);
+      setError("Could not read the PDF file. It may be corrupted or protected.");
+      setFile(null);
+      setNumPages(null);
     }
   }, []);
 
@@ -112,71 +112,78 @@ const ExtractPages = () => {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
   }
 
+  const truncateFilename = (name, maxLength = 30) => {
+    if (name.length <= maxLength) {
+      return name;
+    }
+    return name.substring(0, maxLength - 3) + '...';
+  };
+
   return (
     <div className="extract-pages-container">
-        <div className="extract-pages-header">
-            <h1 className="extract-pages-title">Extract PDF Pages</h1>
-            <p className="extract-pages-description">Select and extract specific pages from your PDF file.</p>
-        </div>
+      <div className="extract-pages-header">
+        <h1 className="extract-pages-title">Extract PDF Pages</h1>
+        <p className="extract-pages-description">Select and extract specific pages from your PDF file.</p>
+      </div>
 
-        <div className="extract-pages-content">
-            {error && <Alert variant="danger" onClose={() => setError(null)} dismissible>{error}</Alert>}
-            {success && <Alert variant="success" onClose={() => setSuccess(null)} dismissible>{success}</Alert>}
+      <div className="extract-pages-content">
+        {error && <Alert variant="danger" onClose={() => setError(null)} dismissible>{error}</Alert>}
+        {success && <Alert variant="success" onClose={() => setSuccess(null)} dismissible>{success}</Alert>}
 
-            {!file ? (
-                <div {...getRootProps({ className: 'dropzone' })}>
-                    <input {...getInputProps()} />
-                    <div className="dropzone-content">
-                        <FaFilePdf size={48} />
-                        <p>Drag 'n' drop a PDF file here, or click to select a file</p>
-                    </div>
+        {!file ? (
+          <div {...getRootProps({ className: 'dropzone' })}>
+            <input {...getInputProps()} />
+            <div className="dropzone-content">
+              <FaFilePdf size={48} />
+              <p>Drag 'n' drop a PDF file here, or click to select a file</p>
+            </div>
+          </div>
+        ) : (
+          <div className="file-processing-area">
+            <div className="file-list-container">
+              <div className="file-item">
+                <FaFilePdf className="pdf-icon" size={24} />
+                <span className="file-name" title={file.name}>{truncateFilename(file.name)} ({formatBytes(file.size)})</span>
+                <div className="file-item-actions">
+                  <Button variant="link" onClick={removeFile} className="delete-button">
+                    <FaTrash />
+                  </Button>
                 </div>
-            ) : (
-                <div className="file-processing-area">
-                    <div className="file-list-container">
-                        <div className="file-item">
-                            <FaFilePdf className="pdf-icon" size={24}/>
-                            <span className="file-name" title={file.name}>{file.name} ({formatBytes(file.size)})</span>
-                            <div className="file-item-actions">
-                                <Button variant="link" onClick={removeFile} className="delete-button">
-                                    <FaTrash />
-                                </Button>
-                            </div>
-                        </div>
-                    </div>
+              </div>
+            </div>
 
-                    {numPages !== null && (
-                      <div className="pages-selection-container">
-                        <h4 className="pages-selection-title">Select pages to extract</h4>
-                        <div className="pages-grid">
-                          {Array.from({ length: numPages }, (_, i) => i + 1).map(pageNumber => (
-                            <Form.Check 
-                              key={pageNumber}
-                              type="checkbox"
-                              id={`page-checkbox-${pageNumber}`}
-                              label={pageNumber}
-                              onChange={(e) => handleCheckboxChange(pageNumber, e.target.checked)}
-                              checked={pagesToExtract.has(pageNumber)}
-                            />
-                          ))}
-                        </div>
-                      </div>
-                    )}
-
-                    <div className="extract-button-container">
-                        <Button
-                            variant="primary"
-                            onClick={handleExtract}
-                            disabled={isLoading || pagesToExtract.size === 0}
-                            className="extract-button"
-                            size="lg"
-                        >
-                            {isLoading ? <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" /> : `Extract ${pagesToExtract.size} Pages`}
-                        </Button>
-                    </div>
+            {numPages !== null && (
+              <div className="pages-selection-container">
+                <h4 className="pages-selection-title">Select pages to extract</h4>
+                <div className="pages-grid">
+                  {Array.from({ length: numPages }, (_, i) => i + 1).map(pageNumber => (
+                    <Form.Check
+                      key={pageNumber}
+                      type="checkbox"
+                      id={`page-checkbox-${pageNumber}`}
+                      label={pageNumber}
+                      onChange={(e) => handleCheckboxChange(pageNumber, e.target.checked)}
+                      checked={pagesToExtract.has(pageNumber)}
+                    />
+                  ))}
                 </div>
+              </div>
             )}
-        </div>
+
+            <div className="extract-button-container">
+              <Button
+                variant="primary"
+                onClick={handleExtract}
+                disabled={isLoading || pagesToExtract.size === 0}
+                className="extract-button"
+                size="lg"
+              >
+                {isLoading ? <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" /> : `Extract ${pagesToExtract.size} Pages`}
+              </Button>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

@@ -29,7 +29,7 @@ const CompressPdf = () => {
     setFiles(acceptedFiles);
   }, []);
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop, accept: {'application/pdf': ['.pdf']} });
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop, accept: { 'application/pdf': ['.pdf'] } });
 
   const handleCompress = async () => {
     if (files.length === 0) {
@@ -82,6 +82,13 @@ const CompressPdf = () => {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
   }
 
+  const truncateFilename = (name, maxLength = 30) => {
+    if (name.length <= maxLength) {
+      return name;
+    }
+    return name.substring(0, maxLength - 3) + '...';
+  };
+
   return (
     <div className="compress-pdf-container">
       <div className="compress-pdf-header">
@@ -102,29 +109,29 @@ const CompressPdf = () => {
             </div>
           </div>
         ) : (
-            <div className="file-list-container">
-                 <div className="file-item">
-                    <FaFilePdf className="pdf-icon" size={24}/>
-                    <span className="file-name" title={files[0].name}>{files[0].name} ({formatBytes(files[0].size)})</span>
-                    <div className="file-item-actions">
-                        <Button variant="link" onClick={removeFile} className="delete-button">
-                            <FaTrash />
-                        </Button>
-                    </div>
-                </div>
+          <div className="file-list-container">
+            <div className="file-item">
+              <FaFilePdf className="pdf-icon" size={24} />
+              <span className="file-name" title={files[0].name}>{truncateFilename(files[0].name)} ({formatBytes(files[0].size)})</span>
+              <div className="file-item-actions">
+                <Button variant="link" onClick={removeFile} className="delete-button">
+                  <FaTrash />
+                </Button>
+              </div>
             </div>
+          </div>
         )}
 
         {files.length > 0 && (
           <div className="compress-button-container">
             <Button
-                variant="primary"
-                onClick={handleCompress}
-                disabled={isLoading}
-                className="compress-button"
-                size="lg"
+              variant="primary"
+              onClick={handleCompress}
+              disabled={isLoading}
+              className="compress-button"
+              size="lg"
             >
-                {isLoading ? <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" /> : 'Compress PDF'}
+              {isLoading ? <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" /> : 'Compress PDF'}
             </Button>
           </div>
         )}

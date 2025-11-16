@@ -58,7 +58,7 @@ const SignIn = () => {
               <Button appearance="primary" type="submit" block>Sign in</Button>
             </ButtonToolbar>
             <div className="signup-link">
-                <Button appearance="link" as={Link} to="/signup">New user? Sign up</Button>
+              <Button appearance="link" as={Link} to="/signup">New user? Sign up</Button>
             </div>
           </div>
         </form>

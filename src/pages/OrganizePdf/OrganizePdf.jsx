@@ -45,7 +45,7 @@ const OrganizePdf = () => {
 
         setFiles(f => [...f, ...newFileObjects]);
         setIsLoading(true);
-        
+
         const pagesPromises = newFileObjects.map(loadFilePages);
         const loadedPagesArrays = await Promise.all(pagesPromises);
         const allNewPages = loadedPagesArrays.flat();
@@ -84,7 +84,7 @@ const OrganizePdf = () => {
     };
 
     const handleRotatePage = (id) => {
-        setPages(p => p.map(page => 
+        setPages(p => p.map(page =>
             page.id === id ? { ...page, rotation: (page.rotation + 90) % 360 } : page
         ));
     };
@@ -144,15 +144,22 @@ const OrganizePdf = () => {
             setIsLoading(false);
         }
     };
-    
+
     const formatBytes = (bytes, decimals = 2) => {
-      if (bytes === 0) return '0 Bytes';
-      const k = 1024;
-      const dm = decimals < 0 ? 0 : decimals;
-      const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
-      const i = Math.floor(Math.log(bytes) / Math.log(k));
-      return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+        if (bytes === 0) return '0 Bytes';
+        const k = 1024;
+        const dm = decimals < 0 ? 0 : decimals;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
     }
+
+    const truncateFilename = (name, maxLength = 30) => {
+        if (name.length <= maxLength) {
+            return name;
+        }
+        return name.substring(0, maxLength - 3) + '...';
+    };
 
     return (
         <DndProvider backend={HTML5Backend}>
@@ -180,8 +187,8 @@ const OrganizePdf = () => {
                             <div className="file-list-container">
                                 {files.map(file => (
                                     <div key={file.id} className="file-item">
-                                        <FaFilePdf className="pdf-icon" size={24}/>
-                                        <span className="file-name" title={file.file.name}>{file.file.name} ({formatBytes(file.file.size)})</span>
+                                        <FaFilePdf className="pdf-icon" size={24} />
+                                        <span className="file-name" title={file.file.name}>{truncateFilename(file.file.name)} ({formatBytes(file.file.size)})</span>
                                         <div className="file-item-actions">
                                             <Button variant="link" onClick={() => handleRemoveFile(file.id)} className="delete-button">
                                                 <FaTrash />
@@ -190,7 +197,7 @@ const OrganizePdf = () => {
                                     </div>
                                 ))}
                             </div>
-                            
+
                             <div {...getRootProps({ className: 'dropzone-mini' })}>
                                 <input {...getInputProps()} />
                                 <p>Add more files...</p>
@@ -207,23 +214,23 @@ const OrganizePdf = () => {
                             </div>
                             {pages.map((page, index) => (
                                 <div key={page.id} className="page-item-wrapper">
-                                  <DraggablePage id={page.id} index={index} movePage={movePage}>
-                                      <div className="page-card">
-                                          <div className="page-card-actions">
-                                              <Button variant="light" size="sm" onClick={() => handleRotatePage(page.id)}><FaRedo /></Button>
-                                              <Button variant="light" size="sm" onClick={() => handleDeletePage(page.id)}><FaTrash /></Button>
-                                          </div>
-                                          <div className="page-number" style={{ transform: `rotate(${page.rotation}deg)` }}>
-                                              {page.isNew ? 'New' : index + 1}
-                                          </div>
-                                      </div>
-                                  </DraggablePage>
-                                  <Button variant="outline-secondary" className="add-page-btn" onClick={() => handleAddEmptyPage(index + 1)}><FaPlus /></Button>
+                                    <DraggablePage id={page.id} index={index} movePage={movePage}>
+                                        <div className="page-card">
+                                            <div className="page-card-actions">
+                                                <Button variant="light" size="sm" onClick={() => handleRotatePage(page.id)}><FaRedo /></Button>
+                                                <Button variant="light" size="sm" onClick={() => handleDeletePage(page.id)}><FaTrash /></Button>
+                                            </div>
+                                            <div className="page-number" style={{ transform: `rotate(${page.rotation}deg)` }}>
+                                                {page.isNew ? 'New' : index + 1}
+                                            </div>
+                                        </div>
+                                    </DraggablePage>
+                                    <Button variant="outline-secondary" className="add-page-btn" onClick={() => handleAddEmptyPage(index + 1)}><FaPlus /></Button>
                                 </div>
                             ))}
                         </div>
                     )}
-                    
+
                     {pages.length > 0 && (
                         <div className="organize-button-container">
                             <Button onClick={handleOrganizePdf} size="lg" disabled={isLoading}>

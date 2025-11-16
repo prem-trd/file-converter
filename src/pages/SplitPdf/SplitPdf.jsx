@@ -54,14 +54,14 @@ const SplitPdf = () => {
     // Ensure value doesn't exceed total pages
     const numValue = parseInt(value, 10);
     if (value === '' || (numValue >= 1 && numValue <= totalPages)) {
-        newRanges[index][field] = value;
-        setRanges(newRanges);
+      newRanges[index][field] = value;
+      setRanges(newRanges);
     } else if (numValue > totalPages) {
-        newRanges[index][field] = String(totalPages);
-        setRanges(newRanges);
+      newRanges[index][field] = String(totalPages);
+      setRanges(newRanges);
     } else if (numValue < 1 && value !== '') {
-        newRanges[index][field] = '1';
-        setRanges(newRanges);
+      newRanges[index][field] = '1';
+      setRanges(newRanges);
     }
   };
 
@@ -133,7 +133,7 @@ const SplitPdf = () => {
     setError(null);
     setSuccess(null);
   };
-  
+
   const formatBytes = (bytes, decimals = 2) => {
     if (bytes === 0) return '0 Bytes';
     const k = 1024;
@@ -143,71 +143,78 @@ const SplitPdf = () => {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
   }
 
+  const truncateFilename = (name, maxLength = 30) => {
+    if (name.length <= maxLength) {
+      return name;
+    }
+    return name.substring(0, maxLength - 3) + '...';
+  };
+
   return (
     <div className="split-pdf-container">
-        <div className="split-pdf-header">
-            <h1 className="split-pdf-title">Split PDF</h1>
-            <p className="split-pdf-description">Define page ranges to split your PDF into multiple documents.</p>
-        </div>
-        <div className="split-pdf-content">
-            {error && <Alert variant="danger" onClose={() => setError(null)} dismissible>{error}</Alert>}
-            {success && <Alert variant="success" onClose={() => setSuccess(null)} dismissible>{success}</Alert>}
+      <div className="split-pdf-header">
+        <h1 className="split-pdf-title">Split PDF</h1>
+        <p className="split-pdf-description">Define page ranges to split your PDF into multiple documents.</p>
+      </div>
+      <div className="split-pdf-content">
+        {error && <Alert variant="danger" onClose={() => setError(null)} dismissible>{error}</Alert>}
+        {success && <Alert variant="success" onClose={() => setSuccess(null)} dismissible>{success}</Alert>}
 
-            {!file ? (
-                <div {...getRootProps({ className: 'dropzone' })}>
-                    <input {...getInputProps()} />
-                    <div className="dropzone-content">
-                        <FaFilePdf size={48} />
-                        <p>Drag 'n' drop a PDF file here, or click to select a file</p>
-                    </div>
+        {!file ? (
+          <div {...getRootProps({ className: 'dropzone' })}>
+            <input {...getInputProps()} />
+            <div className="dropzone-content">
+              <FaFilePdf size={48} />
+              <p>Drag 'n' drop a PDF file here, or click to select a file</p>
+            </div>
+          </div>
+        ) : (
+          <div className="file-processing-area">
+            <div className="file-list-container">
+              <div className="file-item">
+                <FaFilePdf className="pdf-icon" size={24} />
+                <span className="file-name" title={file.name}>{truncateFilename(file.name)} ({formatBytes(file.size)})</span>
+                <div className="file-item-actions">
+                  <Button variant="link" onClick={removeFile} className="delete-button"><FaTrash /></Button>
                 </div>
-            ) : (
-                <div className="file-processing-area">
-                    <div className="file-list-container">
-                        <div className="file-item">
-                            <FaFilePdf className="pdf-icon" size={24}/>
-                            <span className="file-name" title={file.name}>{file.name} ({formatBytes(file.size)})</span>
-                            <div className="file-item-actions">
-                                <Button variant="link" onClick={removeFile} className="delete-button"><FaTrash /></Button>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div className="ranges-container">
-                      <h4 className="ranges-title">Define Split Ranges (Total pages: {totalPages})</h4>
-                      {ranges.map((range, index) => (
-                        <Form.Group key={index} className="range-item">
-                            <Form.Control 
-                                type="number" 
-                                placeholder="From" 
-                                value={range.from} 
-                                onChange={e => handleRangeChange(index, 'from', e.target.value)}
-                                min="1"
-                                max={totalPages}
-                            />
-                            <span className="range-separator">-</span>
-                            <Form.Control 
-                                type="number" 
-                                placeholder="To" 
-                                value={range.to} 
-                                onChange={e => handleRangeChange(index, 'to', e.target.value)} 
-                                min="1"
-                                max={totalPages}
-                            />
-                            <Button variant="danger" onClick={() => removeRange(index)} className="remove-range-btn"><FaTrash /></Button>
-                        </Form.Group>
-                      ))}
-                      <Button variant="secondary" onClick={addRange} className="add-range-btn"><FaPlus /> Add Range</Button>
-                    </div>
+              </div>
+            </div>
 
-                    <div className="split-button-container">
-                        <Button onClick={handleSplit} disabled={isLoading} size="lg">
-                            {isLoading ? <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" /> : 'Split PDF'}
-                        </Button>
-                    </div>
-                </div>
-            )}
-        </div>
+            <div className="ranges-container">
+              <h4 className="ranges-title">Define Split Ranges (Total pages: {totalPages})</h4>
+              {ranges.map((range, index) => (
+                <Form.Group key={index} className="range-item">
+                  <Form.Control
+                    type="number"
+                    placeholder="From"
+                    value={range.from}
+                    onChange={e => handleRangeChange(index, 'from', e.target.value)}
+                    min="1"
+                    max={totalPages}
+                  />
+                  <span className="range-separator">-</span>
+                  <Form.Control
+                    type="number"
+                    placeholder="To"
+                    value={range.to}
+                    onChange={e => handleRangeChange(index, 'to', e.target.value)}
+                    min="1"
+                    max={totalPages}
+                  />
+                  <Button variant="danger" onClick={() => removeRange(index)} className="remove-range-btn"><FaTrash /></Button>
+                </Form.Group>
+              ))}
+              <Button variant="secondary" onClick={addRange} className="add-range-btn"><FaPlus /> Add Range</Button>
+            </div>
+
+            <div className="split-button-container">
+              <Button onClick={handleSplit} disabled={isLoading} size="lg">
+                {isLoading ? <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" /> : 'Split PDF'}
+              </Button>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

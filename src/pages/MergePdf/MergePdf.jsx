@@ -68,6 +68,13 @@ const MergePdf = () => {
     setIsMerging(false);
   };
 
+  const truncateFilename = (name, maxLength = 30) => {
+    if (name.length <= maxLength) {
+      return name;
+    }
+    return name.substring(0, maxLength - 3) + '...';
+  };
+
   return (
     <div className="merge-pdf-container">
       <div className="merge-pdf-header">
@@ -89,7 +96,7 @@ const MergePdf = () => {
               <List.Item key={file.id} index={index}>
                 <div className="file-item">
                   <VscFilePdf size={24} style={{ color: '#e74c3c' }} />
-                  <span className="file-name" title={file.file.name}>{file.file.name}</span>
+                  <span className="file-name" title={file.file.name}>{truncateFilename(file.file.name)}</span>
                   <div className="file-item-actions">
                     <IconButton icon={<VscChevronUp />} size="xs" onClick={() => moveFile(index, index - 1)} disabled={index === 0} />
                     <IconButton icon={<VscChevronDown />} size="xs" onClick={() => moveFile(index, index + 1)} disabled={index === files.length - 1} />

@@ -1,4 +1,3 @@
-
 :root {
   --primary-bg-color: #2c3e50;
   --secondary-bg-color: #34495e;
@@ -38,15 +37,17 @@ body {
   flex-grow: 1;
   display: flex;
   justify-content: center;
-  align-items: flex-start; /* Align items to the start of the container */
-  padding-top: 5vh; /* Add some padding from the top */
+  align-items: flex-start;
+  /* Align items to the start of the container */
+  padding-top: 5vh;
+  /* Add some padding from the top */
   width: 100%;
 }
 
 
 /* General responsive styles */
 @media (max-width: 768px) {
-    body {
-        font-size: 14px;
-    }
+  body {
+    font-size: 14px;
+  }
 }

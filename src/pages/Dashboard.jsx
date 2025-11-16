@@ -37,7 +37,7 @@ const Dashboard = () => {
           </InputGroup>
         </div>
       </div>
-      
+
       {filteredTools.map(category => (
         <div key={category.title} className="tool-category-section">
           <h2>{category.title}</h2>

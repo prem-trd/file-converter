@@ -11,6 +11,7 @@ import RemovePages from "../pages/RemovePages/RemovePages.jsx";
 import ExtractPages from "../pages/ExtractPages/ExtractPages.jsx";
 import OrganizePdf from "../pages/OrganizePdf/OrganizePdf.jsx";
 import CompressPdf from "../pages/CompressPdf/CompressPdf.jsx";
+import RepairPdf from "../pages/RepairPdf/RepairPdf.jsx";
 
 const router = createBrowserRouter(
   [
@@ -45,6 +46,10 @@ const router = createBrowserRouter(
         {
           path: "compress-pdf",
           element: <CompressPdf />,
+        },
+        {
+          path: "repair-pdf",
+          element: <RepairPdf />,
         },
         {
           path: "*",

@@ -10,33 +10,38 @@ import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { pdfToolCategories, imageToolCategories } from '../../data/tools.jsx';
 import './Header.css';
 
-const ToolsDropdown = ({ title, toolCategories, activeKey }) => (
-  <Nav.Menu title={title} trigger="hover">
-    <div className="tools-dropdown-container">
-      {toolCategories.map(category => (
-        <div className="tool-category-column" key={category.title}>
-          <h6 className="tool-category-title">{category.title}</h6>
-          <Nav vertical>
+const ToolsDropdown = ({ title, toolCategories, activeKey }) => {
+  return (
+    <Nav.Menu title={title} trigger="hover">
+      <div className="tools-dropdown-container">
+        {toolCategories.map(category => {
+          const isCurrentCategoryActive = category.tools.some(tool => `/${tool.key}` === activeKey);
+          return (
+            <div className="tool-category-column" key={category.title}>
+              <h6 className={`tool-category-title ${isCurrentCategoryActive ? 'active-category' : ''}`}>
+                {category.title}
+              </h6>
               {category.tools.map(tool => (
-                  <Nav.Item 
-                      as={Link} 
-                      to={`/${tool.key}`} 
-                      key={tool.key} 
-                      eventKey={`/${tool.key}`} 
-                      className="tool-link-item"
-                      active={activeKey === `/${tool.key}`}>
-                      <div className="tool-link-content">
-                          <span className="tool-icon" style={{ color: tool.color }}>{tool.icon}</span>
-                          <span className="tool-label">{tool.label}</span>
-                      </div>
-                  </Nav.Item>
+                <Nav.Item
+                  as={Link}
+                  to={`/${tool.key}`}
+                  key={tool.key}
+                  eventKey={`/${tool.key}`}
+                  className="tool-link-item"
+                >
+                  <div className="tool-link-content">
+                    <span className="tool-icon" style={{ color: tool.color }}>{tool.icon}</span>
+                    <span className="tool-label">{tool.label}</span>
+                  </div>
+                </Nav.Item>
               ))}
-          </Nav>
-        </div>
-      ))}
-    </div>
-  </Nav.Menu>
-);
+            </div>
+          );
+        })}
+      </div>
+    </Nav.Menu>
+  );
+};
 
 const CustomNavbar = ({ activeKey, user, ...props }) => {
   const navigate = useNavigate();
@@ -66,16 +71,16 @@ const CustomNavbar = ({ activeKey, user, ...props }) => {
           <>
             <Nav.Item>{user.email}</Nav.Item>
             <Nav.Item>
-                <Button appearance="primary" color="red" onClick={handleLogout}>Logout</Button>
+              <Button appearance="primary" color="red" onClick={handleLogout}>Logout</Button>
             </Nav.Item>
           </>
         ) : (
           <>
             <Nav.Item as={Link} to="/signin">
-                <Button appearance="subtle">Login</Button>
+              <Button appearance="subtle">Login</Button>
             </Nav.Item>
             <Nav.Item as={Link} to="/signup">
-                <Button appearance="primary" color="red">Sign up</Button>
+              <Button appearance="primary" color="red">Sign up</Button>
             </Nav.Item>
           </>
         )}
@@ -87,7 +92,7 @@ const CustomNavbar = ({ activeKey, user, ...props }) => {
 export default function Header() {
   const location = useLocation();
   const [user, setUser] = useState(null);
-  
+
   useEffect(() => {
     const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -99,6 +104,6 @@ export default function Header() {
   }, []);
 
   return (
-      <CustomNavbar activeKey={location.pathname} user={user} />
+    <CustomNavbar activeKey={location.pathname} user={user} />
   );
 }
