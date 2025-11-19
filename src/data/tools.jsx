@@ -22,7 +22,7 @@ export const pdfToolCategories = [
     tools: [
       { key: 'compress-pdf', label: 'Compress PDF', description: 'Reduce the file size of your PDF.', icon: <FaCompressArrowsAlt />, color: '#43a047' },
       { key: 'repair-pdf', label: 'Repair PDF', description: 'Fix corrupted or damaged PDFs.', icon: <FaTools />, color: '#43a047' },
-      { key: 'ocr-pdf', label: 'OCR PDF', description: 'Convert scanned PDFs into searchable text.', icon: <FaFileSignature />, color: '#43a047' },
+      // { key: 'ocr-pdf', label: 'OCR PDF', description: 'Convert scanned PDFs into searchable text.', icon: <FaFileSignature />, color: '#43a047' },
     ]
   },
   {

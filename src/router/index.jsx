@@ -12,6 +12,7 @@ import ExtractPages from "../pages/ExtractPages/ExtractPages.jsx";
 import OrganizePdf from "../pages/OrganizePdf/OrganizePdf.jsx";
 import CompressPdf from "../pages/CompressPdf/CompressPdf.jsx";
 import RepairPdf from "../pages/RepairPdf/RepairPdf.jsx";
+import JpgToPdf from "../pages/JpgToPdf/JpgToPdf.jsx";
 
 const router = createBrowserRouter(
   [
@@ -50,6 +51,10 @@ const router = createBrowserRouter(
         {
           path: "repair-pdf",
           element: <RepairPdf />,
+        },
+        {
+          path: "jpg-to-pdf",
+          element: <JpgToPdf />,
         },
         {
           path: "*",

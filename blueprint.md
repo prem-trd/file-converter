@@ -39,10 +39,18 @@ The application will adhere to the highest standards of modern web design, focus
     *   Implemented a user interface for uploading, repairing, and downloading PDF files.
     *   Integrated client-side PDF repair logic using the `pdf-lib` library.
     *   Added a route for the new page in `src/router/index.jsx`.
+*   **JPG to PDF Conversion Feature:**
+    *   Created the `src/pages/JpgToPdf/JpgToPdf.jsx` component and its stylesheet.
+    *   Implemented a user-friendly interface for uploading multiple JPG images using `react-dropzone`.
+    *   Integrated the `jspdf` library to handle the client-side conversion of images into a single PDF document.
+    *   Added a new route `/jpg-to-pdf` in `src/router/index.jsx`.
+    *   Added a tool card to the "Convert to PDF" category on the dashboard for easy access.
 *   **Bug Fixes:**
     *   Resolved `SyntaxError: Unexpected token '<'` by renaming `tools.js` to `tools.jsx` and updating imports.
     *   Fixed invisible card headings by adjusting CSS.
     *   Implemented active tool highlighting in the dropdown menu.
+*   **Feature Reversal:**
+    *   Temporarily removed the "OCR PDF" feature and then fully restored it, including the component, stylesheet, route, and dashboard card, upon user request.
 
 ## 4. Development Plan
 
