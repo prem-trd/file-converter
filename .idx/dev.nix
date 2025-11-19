@@ -7,6 +7,7 @@
   packages = [
     pkgs.nodejs_20
     pkgs.ghostscript
+    pkgs.openssh
   ];
   # Sets environment variables in the workspace
   env = {};
