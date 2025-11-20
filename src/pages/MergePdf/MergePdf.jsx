@@ -90,14 +90,14 @@ const MergePdf = () => {
       </div>
 
       {files.length > 0 && (
-        <div className="file-list-container">
+        <div className="merge-pdf-file-list-container">
           <List bordered>
             {files.map((file, index) => (
               <List.Item key={file.id} index={index}>
-                <div className="file-item">
+                <div className="merge-pdf-file-item">
                   <VscFilePdf size={24} style={{ color: '#e74c3c' }} />
                   <span className="file-name" title={file.file.name}>{truncateFilename(file.file.name)}</span>
-                  <div className="file-item-actions">
+                  <div className="merge-pdf-file-item-actions">
                     <IconButton icon={<VscChevronUp />} size="xs" onClick={() => moveFile(index, index - 1)} disabled={index === 0} />
                     <IconButton icon={<VscChevronDown />} size="xs" onClick={() => moveFile(index, index + 1)} disabled={index === files.length - 1} />
                     <IconButton icon={<VscTrash />} size="xs" onClick={() => removeFile(index)} />

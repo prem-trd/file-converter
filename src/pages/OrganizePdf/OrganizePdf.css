@@ -34,12 +34,45 @@
   gap: 20px;
 }
 
+.organize-pdf-file-name {
+  flex-grow: 1;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+  text-align: left;
+  color: #333;
+}
+
+.organize-pdf-file-item {
+  display: flex;
+  align-items: center;
+  background-color: #f9f9f9;
+  border: 1px solid #eee;
+  border-radius: 6px;
+  padding: 15px 20px;
+  margin-bottom: 10px;
+  gap: 15px;
+}
+
+.organize-pdf-file-item-actions {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
 .file-processing-area {
   width: 100%;
   max-width: 800px;
 }
 
-.file-item-actions {
+.organize-pdf-file-list-container {
+  width: 100%;
+  max-width: 800px;
+}
+
+.organize-pdf-file-item-actions {
   display: flex;
   align-items: center;
   gap: 10px;

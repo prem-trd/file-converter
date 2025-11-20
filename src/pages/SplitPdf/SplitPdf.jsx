@@ -169,21 +169,21 @@ const SplitPdf = () => {
             </div>
           </div>
         ) : (
-          <div className="file-processing-area">
-            <div className="file-list-container">
-              <div className="file-item">
+          <div className="split-pdf-file-processing-area">
+            <div className="split-pdf-file-list-container">
+              <div className="split-pdf-file-item">
                 <FaFilePdf className="pdf-icon" size={24} />
-                <span className="file-name" title={file.name}>{truncateFilename(file.name)} ({formatBytes(file.size)})</span>
+                <span className="split-pdf-file-name" title={file.name}>{truncateFilename(file.name)} ({formatBytes(file.size)})</span>
                 <div className="file-item-actions">
                   <Button variant="link" onClick={removeFile} className="delete-button"><FaTrash /></Button>
                 </div>
               </div>
             </div>
 
-            <div className="ranges-container">
-              <h4 className="ranges-title">Define Split Ranges (Total pages: {totalPages})</h4>
+            <div className="split-pdf-ranges-container">
+              <h4 className="split-pdf-ranges-title">Define Split Ranges (Total pages: {totalPages})</h4>
               {ranges.map((range, index) => (
-                <Form.Group key={index} className="range-item">
+                <Form.Group key={index} className="split-pdf-range-item">
                   <Form.Control
                     type="number"
                     placeholder="From"
@@ -192,7 +192,7 @@ const SplitPdf = () => {
                     min="1"
                     max={totalPages}
                   />
-                  <span className="range-separator">-</span>
+                  <span className="split-pdf-range-separator">-</span>
                   <Form.Control
                     type="number"
                     placeholder="To"
@@ -201,13 +201,13 @@ const SplitPdf = () => {
                     min="1"
                     max={totalPages}
                   />
-                  <Button variant="danger" onClick={() => removeRange(index)} className="remove-range-btn"><FaTrash /></Button>
+                  <Button variant="danger" onClick={() => removeRange(index)} className="split-pdf-remove-range-btn"><FaTrash /></Button>
                 </Form.Group>
               ))}
-              <Button variant="secondary" onClick={addRange} className="add-range-btn"><FaPlus /> Add Range</Button>
+              <Button variant="secondary" onClick={addRange} className="split-pdf-add-range-btn"><FaPlus /> Add Range</Button>
             </div>
 
-            <div className="split-button-container">
+            <div className="split-pdf-split-button-container">
               <Button onClick={handleSplit} disabled={isLoading} size="lg">
                 {isLoading ? <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" /> : 'Split PDF'}
               </Button>

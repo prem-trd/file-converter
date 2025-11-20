@@ -49,14 +49,14 @@
     width: 100%;
 }
 
-.file-list-container {
+.jpg-to-pdf-file-list-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     gap: 1.5rem;
     margin-top: 2rem;
 }
 
-.file-item {
+.jpg-to-pdf-file-item {
     position: relative;
     display: flex;
     flex-direction: column;

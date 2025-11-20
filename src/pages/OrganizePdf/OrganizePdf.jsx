@@ -184,12 +184,12 @@ const OrganizePdf = () => {
                         </div>
                     ) : (
                         <div className="file-processing-area">
-                            <div className="file-list-container">
+                            <div className="organize-pdf-file-list-container">
                                 {files.map(file => (
-                                    <div key={file.id} className="file-item">
+                                    <div key={file.id} className="organize-pdf-file-item">
                                         <FaFilePdf className="pdf-icon" size={24} />
-                                        <span className="file-name" title={file.file.name}>{truncateFilename(file.file.name)} ({formatBytes(file.file.size)})</span>
-                                        <div className="file-item-actions">
+                                        <span className="organize-pdf-file-name" title={file.file.name}>{truncateFilename(file.file.name)} ({formatBytes(file.file.size)})</span>
+                                        <div className="organize-pdf-file-item-actions">
                                             <Button variant="link" onClick={() => handleRemoveFile(file.id)} className="delete-button">
                                                 <FaTrash />
                                             </Button>

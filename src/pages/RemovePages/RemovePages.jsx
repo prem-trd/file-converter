@@ -156,11 +156,11 @@ const RemovePages = () => {
           </div>
         ) : (
           <div className="file-processing-area">
-            <div className="file-list-container">
-              <div className="file-item">
+            <div className="remove-pages-file-list-container">
+              <div className="remove-pages-file-item">
                 <FaFilePdf className="pdf-icon" size={24} />
-                <span className="file-name" title={file.name}>{truncateFilename(file.name)} ({formatBytes(file.size)})</span>
-                <div className="file-item-actions">
+                <span className="remove-pages-file-name" title={file.name}>{truncateFilename(file.name)} ({formatBytes(file.size)})</span>
+                <div className="remove-pages-file-item-actions">
                   <Button variant="link" onClick={removeFile} className="delete-button">
                     <FaTrash />
                   </Button>

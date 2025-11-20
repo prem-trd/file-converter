@@ -109,8 +109,8 @@ const CompressPdf = () => {
             </div>
           </div>
         ) : (
-          <div className="file-list-container">
-            <div className="file-item">
+          <div className="compress-pdf-file-list-container">
+            <div className="compress-pdf-file-item">
               <FaFilePdf className="pdf-icon" size={24} />
               <span className="file-name" title={files[0].name}>{truncateFilename(files[0].name)} ({formatBytes(files[0].size)})</span>
               <div className="file-item-actions">

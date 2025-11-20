@@ -80,9 +80,9 @@ const JpgToPdf = () => {
             </div>
 
             {files.length > 0 && (
-                <div className="file-list-container">
+                <div className="jpg-to-pdf-file-list-container">
                     {files.map((file, i) => (
-                        <div key={i} className="file-item">
+                        <div key={i} className="jpg-to-pdf-file-item">
                              <IconButton 
                                 icon={<CgClose />} 
                                 className="remove-btn" 

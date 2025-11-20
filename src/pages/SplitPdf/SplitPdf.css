@@ -58,15 +58,15 @@
   color: var(--secondary-text-color);
 }
 
-.file-processing-area {
+.split-pdf-file-processing-area {
   width: 100%;
 }
 
-.file-list-container {
+.split-pdf-file-list-container {
   margin-bottom: 20px;
 }
 
-.file-item {
+.split-pdf-file-item {
   display: flex;
   align-items: center;
   background-color: var(--secondary-bg-color);
@@ -76,7 +76,7 @@
   gap: 15px;
 }
 
-.file-name {
+.split-pdf-file-name {
   flex-grow: 1;
   font-weight: 500;
   color: var(--primary-text-color);
@@ -94,7 +94,7 @@
   color: #ff6b81;
 }
 
-.ranges-container {
+.split-pdf-ranges-container {
   margin-top: 30px;
   padding: 20px;
   border: 1px solid #4a627a;
@@ -102,34 +102,34 @@
   background-color: var(--secondary-bg-color);
 }
 
-.ranges-title {
+.split-pdf-ranges-title {
   font-size: 1.2rem;
   font-weight: 600;
   margin-bottom: 20px;
   color: var(--primary-text-color);
 }
 
-.range-item {
+.split-pdf-range-item {
   display: flex;
   align-items: center;
   gap: 10px;
   margin-bottom: 15px;
 }
 
-.range-separator {
+.split-pdf-range-separator {
   font-weight: 500;
   color: var(--primary-text-color);
 }
 
-.remove-range-btn {
+.split-pdf-remove-range-btn {
   height: 38px;
 }
 
-.add-range-btn {
+.split-pdf-add-range-btn {
   width: 100%;
 }
 
-.split-button-container {
+.split-pdf-split-button-container {
   margin-top: 20px;
   text-align: center;
 }

@@ -58,12 +58,12 @@
   color: var(--secondary-text-color);
 }
 
-.file-list-container {
+.merge-pdf-file-list-container {
   width: 100%;
   margin-bottom: 20px;
 }
 
-.file-item {
+.merge-pdf-file-item {
   display: flex;
   align-items: center;
   background-color: var(--secondary-bg-color);
@@ -87,32 +87,32 @@
   text-overflow: ellipsis;
 }
 
-.file-item-actions {
+.merge-pdf-file-item-actions {
   display: flex;
   align-items: center;
   gap: 5px;
 }
 
 /* Normal and hover states use the muted color */
-.file-item-actions .rs-btn-icon {
+.merge-pdf-file-item-actions .rs-btn-icon {
   color: var(--secondary-text-color);
   background-color: rgba(255, 255, 255, 0.1);
   transition: color 0.2s;
 }
 
-.file-item-actions .rs-btn-icon:hover {
+.merge-pdf-file-item-actions .rs-btn-icon:hover {
   color: var(--secondary-text-color);
   background-color: #fff;
 }
 
 /* Disabled state uses the bright color, overriding rsuite's opacity */
-.file-item-actions .rs-btn.rs-btn-disabled,
-.file-item-actions .rs-btn.rs-btn-disabled:hover {
+.merge-pdf-file-item-actions .rs-btn.rs-btn-disabled,
+.merge-pdf-file-item-actions .rs-btn.rs-btn-disabled:hover {
   background-color: transparent !important;
 }
 
-.file-item-actions .rs-btn.rs-btn-disabled .rs-btn-icon,
-.file-item-actions .rs-btn.rs-btn-disabled:hover .rs-btn-icon {
+.merge-pdf-file-item-actions .rs-btn.rs-btn-disabled .rs-btn-icon,
+.merge-pdf-file-item-actions .rs-btn.rs-btn-disabled:hover .rs-btn-icon {
   color: var(--primary-text-color) !important;
   opacity: 0.7 !important;
   /* Use opacity to slightly fade the bright disabled icon */

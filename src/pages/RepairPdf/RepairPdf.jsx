@@ -93,7 +93,7 @@ const RepairPdf = () => {
             <div className="repair-pdf-content">
                 {error && <Alert variant="danger" onClose={() => setError(null)} dismissible>{error}</Alert>}
 
-                <div className="file-upload-area">
+                <div className="repair-pdf-file-upload-area">
                     {!file ? (
                         <div {...getRootProps({ className: 'dropzone' })}>
                             <input {...getInputProps()} />
@@ -103,7 +103,7 @@ const RepairPdf = () => {
                             </div>
                         </div>
                     ) : (
-                        <div className="file-info">
+                        <div className="repair-pdf-file-info">
                             <p><strong>Selected file:</strong> {truncateFilename(file.name)} ({formatBytes(file.size)})</p>
                             <Button onClick={() => { setFile(null); setRepairedPdf(null); }} variant="secondary">Choose a different file</Button>
                         </div>
@@ -118,7 +118,7 @@ const RepairPdf = () => {
                 )}
 
                 {repairedPdf && (
-                    <div className="result-area">
+                    <div className="repair-pdf-result-area">
                         <Alert variant="success">PDF repaired successfully!</Alert>
                         <Button onClick={handleDownload} size="lg" variant="success">
                             <FaDownload /> Download Repaired PDF

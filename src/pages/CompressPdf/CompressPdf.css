@@ -62,11 +62,11 @@
   width: 100%;
 }
 
-.file-list-container {
+.compress-pdf-file-list-container {
   margin-bottom: 20px;
 }
 
-.file-item {
+.compress-pdf-file-item {
   display: flex;
   align-items: center;
   background-color: var(--secondary-bg-color);
