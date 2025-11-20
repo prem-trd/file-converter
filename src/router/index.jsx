@@ -13,6 +13,7 @@ import OrganizePdf from "../pages/OrganizePdf/OrganizePdf.jsx";
 import CompressPdf from "../pages/CompressPdf/CompressPdf.jsx";
 import RepairPdf from "../pages/RepairPdf/RepairPdf.jsx";
 import JpgToPdf from "../pages/JpgToPdf/JpgToPdf.jsx";
+import WordToPdf from "../pages/WordToPdf/WordToPdf.jsx";
 
 const router = createBrowserRouter(
   [
@@ -55,6 +56,10 @@ const router = createBrowserRouter(
         {
           path: "jpg-to-pdf",
           element: <JpgToPdf />,
+        },
+        {
+          path: "word-to-pdf",
+          element: <WordToPdf />,
         },
         {
           path: "*",
