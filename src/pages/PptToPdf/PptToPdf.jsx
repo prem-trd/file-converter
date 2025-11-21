@@ -144,7 +144,7 @@ const PptToPdf = () => {
                 {isLoading && <div className='spinner-container'><Spinner animation="border" /></div>}
 
                 {file && (
-                    <div className="convert-button-container">
+                    <div className="ppt-to-pdf-button-container">
                         <Button onClick={handleConvertToPdf} size="lg" disabled={isLoading}>
                             {isLoading ? 'Converting...' : 'Convert to PDF'}
                         </Button>

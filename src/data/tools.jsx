@@ -32,13 +32,13 @@ export const pdfToolCategories = [
       { key: 'word-to-pdf', label: 'WORD to PDF', description: 'Convert Word documents to PDF.', icon: <FaFileWord />, color: '#1e88e5' },
       // { key: 'powerpoint-to-pdf', label: 'POWERPOINT to PDF', description: 'Convert Powerpoint presentations to PDF.', icon: <FaFilePowerpoint />, color: '#fb8c00' },
       { key: 'excel-to-pdf', label: 'EXCEL to PDF', description: 'Convert Excel spreadsheets to PDF.', icon: <FaFileExcel />, color: '#43a047' },
-      { key: 'html-to-pdf', label: 'HTML to PDF', description: 'Convert webpages to PDF.', icon: <FaHtml5 />, color: '#e53935' },
+      // { key: 'html-to-pdf', label: 'HTML to PDF', description: 'Convert webpages to PDF.', icon: <FaHtml5 />, color: '#e53935' },
     ]
   },
   {
     title: 'CONVERT FROM PDF',
     tools: [
-      { key: 'pdf-to-jpg', label: 'PDF to JPG', description: 'Convert PDF pages to JPG images.', icon: <FaFileImage />, color: '#fdd835' },
+      // { key: 'pdf-to-jpg', label: 'PDF to JPG', description: 'Convert PDF pages to JPG images.', icon: <FaFileImage />, color: '#fdd835' },
       { key: 'pdf-to-word', label: 'PDF to WORD', description: 'Convert PDF to editable Word documents.', icon: <FaFileWord />, color: '#1e88e5' },
       { key: 'pdf-to-powerpoint', label: 'PDF to POWERPOINT', description: 'Convert PDF to editable Powerpoint presentations.', icon: <FaFilePowerpoint />, color: '#fb8c00' },
       { key: 'pdf-to-excel', label: 'PDF to EXCEL', description: 'Convert PDF to editable Excel spreadsheets.', icon: <FaFileExcel />, color: '#43a047' },

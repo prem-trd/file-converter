@@ -17,6 +17,7 @@ import WordToPdf from "../pages/WordToPdf/WordToPdf.jsx";
 import PptToPdf from "../pages/PptToPdf/PptToPdf.jsx";
 import ExcelToPdf from "../pages/ExcelToPdf/ExcelToPdf.jsx";
 import HtmlToPdf from "../pages/HtmlToPdf/HtmlToPdf.jsx";
+import PdfToJpg from "../pages/PdfToJpg/PdfToJpg.jsx";
 
 const router = createBrowserRouter(
   [
@@ -75,6 +76,10 @@ const router = createBrowserRouter(
         {
           path: "html-to-pdf",
           element: <HtmlToPdf />,
+        },
+        {
+          path: "pdf-to-jpg",
+          element: <PdfToJpg />,
         },
         {
           path: "*",

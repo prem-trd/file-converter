@@ -114,7 +114,7 @@ const WordToPdf = () => {
                 {isLoading && <div className='spinner-container'><Spinner animation="border" /></div>}
 
                 {file && (
-                    <div className="convert-button-container">
+                    <div className="word-to-pdf-button-container">
                         <Button onClick={handleConvertToPdf} size="lg" disabled={isLoading}>
                             {isLoading ? 'Converting...' : 'Convert to PDF'}
                         </Button>

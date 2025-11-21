@@ -1,0 +1,109 @@
+
+.pdf-to-jpg-container {
+    max-width: 950px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: var(--secondary-bg-color);
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    font-family: 'Inter', sans-serif;
+}
+
+.pdf-to-jpg-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.pdf-to-jpg-title {
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: var(--primary-text-color);
+    margin-bottom: 15px;
+}
+
+.pdf-to-jpg-description {
+    font-size: 1.15rem;
+    color: var(--secondary-text-color);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.pdf-to-jpg-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.pdf-to-jpg-content .dropzone {
+    width: 100%;
+    max-width: 700px;
+    border: 2px dashed var(--accent-color);
+    border-radius: 12px;
+    padding: 50px;
+    background-color: var(--primary-bg-color);
+    color: var(--secondary-text-color);
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    text-align: center;
+}
+
+.pdf-to-jpg-content .dropzone.active {
+    background-color: var(--accent-color-translucent);
+    border-color: var(--accent-color-dark);
+}
+
+.image-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 25px;
+    margin-top: 40px;
+    width: 100%;
+}
+
+.image-preview-container {
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.image-preview-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.image-preview {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.page-number {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+    color: white;
+    padding: 15px 8px 8px 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-align: right;
+}
+
+.pdf-to-jpg-button-container .btn-primary-tool {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+    font-weight: 600;
+    padding: 12px 30px;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.pdf-to-jpg-button-container .btn-primary-tool:hover {
+    background-color: var(--accent-color-dark);
+    border-color: var(--accent-color-dark);
+}
+

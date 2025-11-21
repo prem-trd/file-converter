@@ -2,7 +2,7 @@
 import React, { useState, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { Button, Spinner, Alert } from 'react-bootstrap';
-import { FaFileCode, FaTrashAlt } from 'react-icons/fa';
+import { FaFileCode, FaTrashAlt, FaExclamationTriangle } from 'react-icons/fa';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import './HtmlToPdf.css';
@@ -36,96 +36,89 @@ const HtmlToPdf = () => {
         setIsLoading(true);
         setError(null);
 
-        try {
-            const reader = new FileReader();
-            reader.onload = (event) => {
-                const htmlContent = event.target.result;
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            const htmlContent = event.target.result;
 
-                const iframe = document.createElement('iframe');
-                iframe.style.position = 'absolute';
-                iframe.style.left = '-9999px';
-                iframe.style.top = '-9999px';
-                iframe.style.width = '1024px'; // A reasonable default width
-                iframe.style.border = 'none';
+            const iframe = document.createElement('iframe');
+            iframe.style.position = 'absolute';
+            iframe.style.left = '-9999px';
+            iframe.style.top = '-9999px';
+            iframe.style.width = '1280px';
+            iframe.style.border = 'none';
+            iframe.sandbox = 'allow-same-origin';
+            document.body.appendChild(iframe);
 
-                document.body.appendChild(iframe);
+            const iframeDoc = iframe.contentWindow.document;
+            iframeDoc.open();
+            iframeDoc.write(htmlContent);
+            iframeDoc.close();
 
-                const iframeDoc = iframe.contentWindow.document;
-                iframeDoc.open();
-                iframeDoc.write(htmlContent);
-                iframeDoc.close();
+            const conversionHandler = async () => {
+                try {
+                    await new Promise(resolve => setTimeout(resolve, 1500));
 
-                iframe.onload = async () => {
-                    try {
-                        const body = iframe.contentWindow.document.body;
-                        const html = iframe.contentWindow.document.documentElement;
+                    const body = iframe.contentWindow.document.body;
+                    const html = iframe.contentWindow.document.documentElement;
 
-                        const images = Array.from(body.getElementsByTagName('img'));
-                        const promises = images.map(img => {
-                            if (img.complete) return Promise.resolve();
-                            return new Promise(resolve => {
-                                img.onload = resolve;
-                                img.onerror = resolve;
-                            });
-                        });
+                    const contentHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
+                    const contentWidth = Math.max(body.scrollWidth, body.offsetWidth, html.clientWidth, html.scrollWidth, html.offsetWidth);
 
-                        await Promise.all(promises);
+                    iframe.style.height = `${contentHeight}px`;
+                    iframe.style.width = `${contentWidth}px`;
 
-                        const height = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
-                        iframe.style.height = `${height}px`;
-                        const width = body.scrollWidth;
-                        iframe.style.width = `${width}px`;
+                    const canvas = await html2canvas(body, {
+                        scale: 2,
+                        useCORS: true,
+                        backgroundColor: '#ffffff',
+                        width: contentWidth,
+                        height: contentHeight,
+                        windowWidth: contentWidth,
+                        windowHeight: contentHeight,
+                        scrollX: 0,
+                        scrollY: 0,
+                        allowTaint: true
+                    });
 
-                        const canvas = await html2canvas(body, {
-                            scale: 2,
-                            useCORS: true,
-                            backgroundColor: '#ffffff',
-                            width: width,
-                            height: height,
-                            windowWidth: width,
-                            windowHeight: height,
-                        });
+                    document.body.removeChild(iframe);
 
+                    const imgData = canvas.toDataURL('image/png');
+                    const pdfWidth = canvas.width;
+                    const pdfHeight = canvas.height;
+
+                    const pdf = new jsPDF({
+                        orientation: pdfWidth > pdfHeight ? 'l' : 'p',
+                        unit: 'px',
+                        format: [pdfWidth, pdfHeight]
+                    });
+
+                    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+                    pdf.save(`${file.name.replace(/\.(html|htm)$/i, '')}.pdf`);
+
+                } catch (err) {
+                    console.error('Error during canvas conversion:', err);
+                    setError('Conversion failed. This is likely because the HTML file is trying to load local images or stylesheets. Please use a self-contained HTML file.');
+                    if (document.body.contains(iframe)) {
                         document.body.removeChild(iframe);
-
-                        const imgData = canvas.toDataURL('image/png');
-
-                        const pdfWidth = canvas.width;
-                        const pdfHeight = canvas.height;
-
-                        const pdf = new jsPDF({
-                            orientation: pdfWidth > pdfHeight ? 'l' : 'p',
-                            unit: 'px',
-                            format: [pdfWidth, pdfHeight]
-                        });
-
-                        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-                        pdf.save(`${file.name.replace(/\.(html|htm)$/i, '')}.pdf`);
-
-                    } catch (err) {
-                        console.error('Error during canvas conversion:', err);
-                        setError('Failed to convert HTML to PDF. The content may have issues.');
-                        if (document.body.contains(iframe)) {
-                            document.body.removeChild(iframe);
-                        }
-                    } finally {
-                        setIsLoading(false);
                     }
-                };
+                } finally {
+                    setIsLoading(false);
+                }
             };
 
-            reader.onerror = () => {
-                setError('Failed to read the file.');
-                setIsLoading(false);
-            };
+            if (iframe.contentWindow.document.readyState === 'complete') {
+                conversionHandler();
+            } else {
+                iframe.onload = conversionHandler;
+            }
+        };
 
-            reader.readAsText(file);
-
-        } catch (err) {
-            console.error('General error:', err);
-            setError('An unexpected error occurred. Please try again.');
+        reader.onerror = () => {
+            setError('Failed to read the file.');
             setIsLoading(false);
-        }
+        };
+
+        reader.readAsText(file);
     };
 
     const handleRemoveFile = () => {
@@ -136,10 +129,11 @@ const HtmlToPdf = () => {
     return (
         <div className="html-to-pdf-container">
             <div className="html-to-pdf-header">
-                <h1 className="html-to-pdf-title">HTML to PDF Converter</h1>
-                <p className="html-to-pdf-description">
-                    Convert your .html files into PDF documents.
-                </p>
+                <h1 className="html-to-pdf-title">HTML File to PDF</h1>
+                <Alert variant="warning" className="mt-3">
+                    <FaExclamationTriangle />
+                    <strong> This tool cannot access local files.</strong> For a correct conversion, your HTML file must be self-contained. This means all images and stylesheets must use full web URLs (e.g., https://...) or be embedded directly in the file.
+                </Alert>
             </div>
 
             <div className="html-to-pdf-content">
@@ -150,17 +144,15 @@ const HtmlToPdf = () => {
                         <input {...getInputProps()} />
                         <div className="dropzone-content">
                             <FaFileCode size={48} className="dropzone-icon" />
-                            <p>Drag 'n' drop a .html file here, or click to select a file</p>
+                            <p>Drag 'n' drop a .html file here, or click to select</p>
                         </div>
                     </div>
                 ) : (
                     <div className="file-display">
-                        <div>
-                            <FaFileCode size={40} className="file-icon" />
-                            <span>{file.name}</span>
-                        </div>
+                        <FaFileCode size={40} className="file-icon" />
+                        <span>{file.name}</span>
                         <Button variant="light" size="sm" onClick={handleRemoveFile}>
-                            <FaTrashAlt style={{ cursor: 'pointer', marginLeft: 'auto', color: '#dc3545' }} />
+                            <FaTrashAlt />
                         </Button>
                     </div>
                 )}
@@ -168,7 +160,7 @@ const HtmlToPdf = () => {
                 {isLoading && <div className='spinner-container'><Spinner animation="border" /></div>}
 
                 {file && !isLoading && (
-                    <div className="convert-button-container">
+                    <div className="html-to-pdf-button-container">
                         <Button onClick={handleConvertToPdf} size="lg">
                             Convert to PDF
                         </Button>

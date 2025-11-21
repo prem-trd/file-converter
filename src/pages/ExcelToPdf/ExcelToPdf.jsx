@@ -152,7 +152,7 @@ const ExcelToPdf = () => {
                 {isLoading && <div className='spinner-container'><Spinner animation="border" /></div>}
 
                 {file && !isLoading && (
-                    <div className="convert-button-container">
+                    <div className="excel-to-pdf-button-container">
                         <Button onClick={handleConvertToPdf} size="lg">
                             Convert to PDF
                         </Button>
