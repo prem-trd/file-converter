@@ -14,6 +14,9 @@ import CompressPdf from "../pages/CompressPdf/CompressPdf.jsx";
 import RepairPdf from "../pages/RepairPdf/RepairPdf.jsx";
 import JpgToPdf from "../pages/JpgToPdf/JpgToPdf.jsx";
 import WordToPdf from "../pages/WordToPdf/WordToPdf.jsx";
+import PptToPdf from "../pages/PptToPdf/PptToPdf.jsx";
+import ExcelToPdf from "../pages/ExcelToPdf/ExcelToPdf.jsx";
+import HtmlToPdf from "../pages/HtmlToPdf/HtmlToPdf.jsx";
 
 const router = createBrowserRouter(
   [
@@ -60,6 +63,18 @@ const router = createBrowserRouter(
         {
           path: "word-to-pdf",
           element: <WordToPdf />,
+        },
+        {
+          path: "powerpoint-to-pdf",
+          element: <PptToPdf />,
+        },
+        {
+          path: "excel-to-pdf",
+          element: <ExcelToPdf />,
+        },
+        {
+          path: "html-to-pdf",
+          element: <HtmlToPdf />,
         },
         {
           path: "*",

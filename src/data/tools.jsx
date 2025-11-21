@@ -30,7 +30,7 @@ export const pdfToolCategories = [
     tools: [
       { key: 'jpg-to-pdf', label: 'JPG to PDF', description: 'Convert JPG images to PDF.', icon: <FaFileImage />, color: '#fdd835' },
       { key: 'word-to-pdf', label: 'WORD to PDF', description: 'Convert Word documents to PDF.', icon: <FaFileWord />, color: '#1e88e5' },
-      { key: 'powerpoint-to-pdf', label: 'POWERPOINT to PDF', description: 'Convert Powerpoint presentations to PDF.', icon: <FaFilePowerpoint />, color: '#fb8c00' },
+      // { key: 'powerpoint-to-pdf', label: 'POWERPOINT to PDF', description: 'Convert Powerpoint presentations to PDF.', icon: <FaFilePowerpoint />, color: '#fb8c00' },
       { key: 'excel-to-pdf', label: 'EXCEL to PDF', description: 'Convert Excel spreadsheets to PDF.', icon: <FaFileExcel />, color: '#43a047' },
       { key: 'html-to-pdf', label: 'HTML to PDF', description: 'Convert webpages to PDF.', icon: <FaHtml5 />, color: '#e53935' },
     ]
