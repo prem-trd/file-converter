@@ -20,6 +20,7 @@ import HtmlToPdf from "../pages/HtmlToPdf/HtmlToPdf.jsx";
 import PdfToJpg from "../pages/PdfToJpg/PdfToJpg.jsx";
 import AddPageNumbers from "../pages/AddPageNumbers/AddPageNumbers.jsx";
 import AddWatermarkPdf from "../pages/AddWatermarkPdf/AddWatermarkPdf.jsx";
+import ProtectPdf from "../pages/ProtectPdf/ProtectPdf.jsx";
 
 const router = createBrowserRouter(
   [
@@ -90,6 +91,10 @@ const router = createBrowserRouter(
         {
           path: "add-watermark-pdf",
           element: <AddWatermarkPdf />,
+        },
+        {
+          path: "protect-pdf",
+          element: <ProtectPdf />,
         },
         {
           path: "*",

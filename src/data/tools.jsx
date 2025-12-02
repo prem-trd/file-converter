@@ -50,15 +50,15 @@ export const pdfToolCategories = [
     tools: [
       { key: 'add-page-numbers', label: 'Add page numbers', description: 'Insert page numbers into your PDF.', icon: <FaListOl />, color: '#5e35b1' },
       { key: 'add-watermark-pdf', label: 'Add watermark', description: 'Add a text or image watermark to your PDF.', icon: <FaWater />, color: '#5e35b1' },
-      { key: 'crop-pdf', label: 'Crop PDF', description: 'Trim the margins of your PDF pages.', icon: <FaCropAlt />, color: '#5e35b1' },
+      // { key: 'crop-pdf', label: 'Crop PDF', description: 'Trim the margins of your PDF pages.', icon: <FaCropAlt />, color: '#5e35b1' },
       // { key: 'edit-pdf', label: 'Edit PDF', description: 'Edit the text and images in your PDF.', icon: <FaEdit />, color: '#5e35b1' },
     ]
   },
   {
     title: 'PDF SECURITY',
     tools: [
-      { key: 'unlock-pdf', label: 'Unlock PDF', description: 'Remove passwords and restrictions from PDFs.', icon: <FaUnlock />, color: '#00897b' },
-      { key: 'protect-pdf', label: 'Protect PDF', description: 'Add a password to your PDF.', icon: <FaLock />, color: '#00897b' },
+      // { key: 'unlock-pdf', label: 'Unlock PDF', description: 'Remove passwords and restrictions from PDFs.', icon: <FaUnlock />, color: '#00897b' },
+      // { key: 'protect-pdf', label: 'Protect PDF', description: 'Add a password to your PDF.', icon: <FaLock />, color: '#00897b' },
       { key: 'sign-pdf', label: 'Sign PDF', description: 'Create and add your signature to a PDF.', icon: <FaSignature />, color: '#00897b' },
       // { key: 'redact-pdf', label: 'Redact PDF', description: 'Permanently remove sensitive content from your PDF.', icon: <IoDocumentLockOutline />, color: '#00897b' },
       // { key: 'compare-pdf', label: 'Compare PDF', description: 'Compare two PDFs to see the differences.', icon: <IoGitCompareOutline />, color: '#00897b' },
