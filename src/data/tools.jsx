@@ -35,24 +35,23 @@ export const pdfToolCategories = [
       // { key: 'html-to-pdf', label: 'HTML to PDF', description: 'Convert webpages to PDF.', icon: <FaHtml5 />, color: '#e53935' },
     ]
   },
-  {
-    title: 'CONVERT FROM PDF',
-    tools: [
-      // { key: 'pdf-to-jpg', label: 'PDF to JPG', description: 'Convert PDF pages to JPG images.', icon: <FaFileImage />, color: '#fdd835' },
-      { key: 'pdf-to-word', label: 'PDF to WORD', description: 'Convert PDF to editable Word documents.', icon: <FaFileWord />, color: '#1e88e5' },
-      { key: 'pdf-to-powerpoint', label: 'PDF to POWERPOINT', description: 'Convert PDF to editable Powerpoint presentations.', icon: <FaFilePowerpoint />, color: '#fb8c00' },
-      { key: 'pdf-to-excel', label: 'PDF to EXCEL', description: 'Convert PDF to editable Excel spreadsheets.', icon: <FaFileExcel />, color: '#43a047' },
-      { key: 'pdf-to-pdfa', label: 'PDF to PDF/A', description: 'Convert PDF to the archival format.', icon: <FaFileArchive />, color: '#757575' },
-    ]
-  },
+  // {
+  //   title: 'CONVERT FROM PDF',
+  //   tools: [
+  //     { key: 'pdf-to-jpg', label: 'PDF to JPG', description: 'Convert PDF pages to JPG images.', icon: <FaFileImage />, color: '#fdd835' },
+  //     { key: 'pdf-to-word', label: 'PDF to WORD', description: 'Convert PDF to editable Word documents.', icon: <FaFileWord />, color: '#1e88e5' },
+  //     { key: 'pdf-to-powerpoint', label: 'PDF to POWERPOINT', description: 'Convert PDF to editable Powerpoint presentations.', icon: <FaFilePowerpoint />, color: '#fb8c00' },
+  //     { key: 'pdf-to-excel', label: 'PDF to EXCEL', description: 'Convert PDF to editable Excel spreadsheets.', icon: <FaFileExcel />, color: '#43a047' },
+  //     { key: 'pdf-to-pdfa', label: 'PDF to PDF/A', description: 'Convert PDF to the archival format.', icon: <FaFileArchive />, color: '#757575' },
+  //   ]
+  // },
   {
     title: 'EDIT PDF',
     tools: [
-      { key: 'rotate-pdf', label: 'Rotate PDF', description: 'Rotate all or specific pages in a PDF.', icon: <FaRedo />, color: '#5e35b1' },
       { key: 'add-page-numbers', label: 'Add page numbers', description: 'Insert page numbers into your PDF.', icon: <FaListOl />, color: '#5e35b1' },
       { key: 'add-watermark-pdf', label: 'Add watermark', description: 'Add a text or image watermark to your PDF.', icon: <FaWater />, color: '#5e35b1' },
       { key: 'crop-pdf', label: 'Crop PDF', description: 'Trim the margins of your PDF pages.', icon: <FaCropAlt />, color: '#5e35b1' },
-      { key: 'edit-pdf', label: 'Edit PDF', description: 'Edit the text and images in your PDF.', icon: <FaEdit />, color: '#5e35b1' },
+      // { key: 'edit-pdf', label: 'Edit PDF', description: 'Edit the text and images in your PDF.', icon: <FaEdit />, color: '#5e35b1' },
     ]
   },
   {
@@ -61,8 +60,8 @@ export const pdfToolCategories = [
       { key: 'unlock-pdf', label: 'Unlock PDF', description: 'Remove passwords and restrictions from PDFs.', icon: <FaUnlock />, color: '#00897b' },
       { key: 'protect-pdf', label: 'Protect PDF', description: 'Add a password to your PDF.', icon: <FaLock />, color: '#00897b' },
       { key: 'sign-pdf', label: 'Sign PDF', description: 'Create and add your signature to a PDF.', icon: <FaSignature />, color: '#00897b' },
-      { key: 'redact-pdf', label: 'Redact PDF', description: 'Permanently remove sensitive content from your PDF.', icon: <IoDocumentLockOutline />, color: '#00897b' },
-      { key: 'compare-pdf', label: 'Compare PDF', description: 'Compare two PDFs to see the differences.', icon: <IoGitCompareOutline />, color: '#00897b' },
+      // { key: 'redact-pdf', label: 'Redact PDF', description: 'Permanently remove sensitive content from your PDF.', icon: <IoDocumentLockOutline />, color: '#00897b' },
+      // { key: 'compare-pdf', label: 'Compare PDF', description: 'Compare two PDFs to see the differences.', icon: <IoGitCompareOutline />, color: '#00897b' },
     ]
   }
 ];
@@ -72,8 +71,8 @@ export const imageToolCategories = [
     title: 'OPTIMIZE',
     tools: [
       { key: 'compress-image', label: 'Compress IMAGE', description: 'Reduce the file size of your images.', icon: <FaCompressArrowsAlt />, color: '#43a047' },
-      { key: 'upscale-image', label: 'Upscale', description: 'Increase the resolution of your images.', icon: <FaExpand />, color: '#43a047' },
-      { key: 'remove-background', label: 'Remove background', description: 'Automatically remove the background from an image.', icon: <FaMagic />, color: '#43a047' },
+      // { key: 'upscale-image', label: 'Upscale', description: 'Increase the resolution of your images.', icon: <FaExpand />, color: '#43a047' },
+      // { key: 'remove-background', label: 'Remove background', description: 'Automatically remove the background from an image.', icon: <FaMagic />, color: '#43a047' },
     ]
   },
   {

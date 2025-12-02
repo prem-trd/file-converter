@@ -1,0 +1,93 @@
+
+.watermark-container {
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.watermark-header {
+    margin-bottom: 30px;
+}
+
+.watermark-content {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+}
+
+.watermark-main-area {
+    display: flex;
+    gap: 30px;
+    text-align: left;
+    width: 100%;
+}
+
+.watermark-options-panel {
+    width: 350px;
+    flex-shrink: 0;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: var(--secondary-bg-color);
+    border: 1px solid var(--border-color);
+    align-self: flex-start;
+}
+
+.image-dropzone {
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.image-preview {
+    max-width: 100%;
+    max-height: 150px;
+    object-fit: contain;
+}
+
+.watermark-preview-area {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.watermark-file-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    background-color: var(--secondary-bg-color);
+    border-radius: 8px;
+}
+
+.file-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.watermark-grid-container {
+    flex-grow: 1;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    overflow-y: auto;
+    background-color: #f8f9fa;
+    max-height: 600px;
+    min-height: 300px; /* Ensure it has some height even when empty */
+}
+
+.watermark-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 15px;
+}
+
+.page-item img {
+    width: 100%;
+    border: 1px solid #eee;
+    border-radius: 4px;
+}

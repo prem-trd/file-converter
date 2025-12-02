@@ -18,6 +18,8 @@ import PptToPdf from "../pages/PptToPdf/PptToPdf.jsx";
 import ExcelToPdf from "../pages/ExcelToPdf/ExcelToPdf.jsx";
 import HtmlToPdf from "../pages/HtmlToPdf/HtmlToPdf.jsx";
 import PdfToJpg from "../pages/PdfToJpg/PdfToJpg.jsx";
+import AddPageNumbers from "../pages/AddPageNumbers/AddPageNumbers.jsx";
+import AddWatermarkPdf from "../pages/AddWatermarkPdf/AddWatermarkPdf.jsx";
 
 const router = createBrowserRouter(
   [
@@ -80,6 +82,14 @@ const router = createBrowserRouter(
         {
           path: "pdf-to-jpg",
           element: <PdfToJpg />,
+        },
+        {
+          path: "add-page-numbers",
+          element: <AddPageNumbers />,
+        },
+        {
+          path: "add-watermark-pdf",
+          element: <AddWatermarkPdf />,
         },
         {
           path: "*",
