@@ -21,6 +21,7 @@ import PdfToJpg from "../pages/PdfToJpg/PdfToJpg.jsx";
 import AddPageNumbers from "../pages/AddPageNumbers/AddPageNumbers.jsx";
 import AddWatermarkPdf from "../pages/AddWatermarkPdf/AddWatermarkPdf.jsx";
 import ProtectPdf from "../pages/ProtectPdf/ProtectPdf.jsx";
+import SignPdf from "../pages/SignPdf/SignPdf.jsx";
 
 const router = createBrowserRouter(
   [
@@ -95,6 +96,10 @@ const router = createBrowserRouter(
         {
           path: "protect-pdf",
           element: <ProtectPdf />,
+        },
+        {
+          path: "sign-pdf",
+          element: <SignPdf />,
         },
         {
           path: "*",

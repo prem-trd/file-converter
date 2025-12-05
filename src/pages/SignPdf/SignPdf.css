@@ -1,0 +1,144 @@
+.sign-pdf-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    width: 100%;
+    max-width: 900px;
+    margin: auto;
+  }
+  
+  .sign-pdf-header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .sign-pdf-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--primary-text-color);
+    margin-bottom: 10px;
+  }
+  
+  .sign-pdf-description {
+    font-size: 1.1rem;
+    color: var(--secondary-text-color);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .upload-section {
+    width: 100%;
+    margin-bottom: 30px;
+  }
+  
+  .dropzone {
+    border: 2px dashed var(--secondary-text-color);
+    border-radius: 8px;
+    padding: 40px;
+    background-color: var(--secondary-bg-color);
+    transition: border-color 0.3s, background-color 0.3s;
+    cursor: pointer;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .dropzone:hover,
+  .dropzone.drag-over {
+    border-color: var(--accent-color);
+    background-color: #3a5067;
+  }
+  
+  .dropzone-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    font-size: 1.1rem;
+    color: var(--secondary-text-color);
+  }
+  
+  .sign-pdf-file-list-container {
+    width: 100%;
+  }
+  
+  .sign-pdf-file-item {
+    display: flex;
+    align-items: center;
+    background-color: var(--secondary-bg-color);
+    border: 1px solid #4a627a;
+    border-radius: 6px;
+    padding: 15px;
+    margin-bottom: 10px;
+    gap: 15px;
+  }
+  
+  .file-name {
+    flex-grow: 1;
+    font-weight: 500;
+    color: var(--primary-text-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .sign-pdf-file-item-actions {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .signature-preview-container {
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  .signature-preview {
+    max-width: 200px;
+    max-height: 100px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-top: 5px;
+  }
+  
+  .remove-signature-btn {
+    margin-top: 5px;
+  }
+
+  .placement-options {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .placement-label {
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--primary-text-color);
+  }
+
+  .page-selection-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .page-selection-label {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--primary-text-color);
+  }
+
+  .page-count-info {
+      font-size: 1rem;
+      color: var(--secondary-text-color);
+  }
+  
+  .sign-button-container {
+    margin-top: 20px;
+    text-align: center;
+  }
