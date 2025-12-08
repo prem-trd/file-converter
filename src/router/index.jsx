@@ -14,6 +14,15 @@ import CompressPdf from "../pages/CompressPdf/CompressPdf.jsx";
 import RepairPdf from "../pages/RepairPdf/RepairPdf.jsx";
 import JpgToPdf from "../pages/JpgToPdf/JpgToPdf.jsx";
 import WordToPdf from "../pages/WordToPdf/WordToPdf.jsx";
+import PptToPdf from "../pages/PptToPdf/PptToPdf.jsx";
+import ExcelToPdf from "../pages/ExcelToPdf/ExcelToPdf.jsx";
+import HtmlToPdf from "../pages/HtmlToPdf/HtmlToPdf.jsx";
+import PdfToJpg from "../pages/PdfToJpg/PdfToJpg.jsx";
+import AddPageNumbers from "../pages/AddPageNumbers/AddPageNumbers.jsx";
+import AddWatermarkPdf from "../pages/AddWatermarkPdf/AddWatermarkPdf.jsx";
+import ProtectPdf from "../pages/ProtectPdf/ProtectPdf.jsx";
+import SignPdf from "../pages/SignPdf/SignPdf.jsx";
+import CompressImage from "../pages/CompressImage/CompressImage.jsx";
 
 const router = createBrowserRouter(
   [
@@ -60,6 +69,42 @@ const router = createBrowserRouter(
         {
           path: "word-to-pdf",
           element: <WordToPdf />,
+        },
+        {
+          path: "powerpoint-to-pdf",
+          element: <PptToPdf />,
+        },
+        {
+          path: "excel-to-pdf",
+          element: <ExcelToPdf />,
+        },
+        {
+          path: "html-to-pdf",
+          element: <HtmlToPdf />,
+        },
+        {
+          path: "pdf-to-jpg",
+          element: <PdfToJpg />,
+        },
+        {
+          path: "add-page-numbers",
+          element: <AddPageNumbers />,
+        },
+        {
+          path: "add-watermark-pdf",
+          element: <AddWatermarkPdf />,
+        },
+        {
+          path: "protect-pdf",
+          element: <ProtectPdf />,
+        },
+        {
+          path: "sign-pdf",
+          element: <SignPdf />,
+        },
+        {
+            path: "compress-image",
+            element: <CompressImage />,
         },
         {
           path: "*",

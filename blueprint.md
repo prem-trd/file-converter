@@ -1,27 +1,47 @@
-# Project Blueprint
+# Blueprint
 
 ## Overview
 
-This is a file converter application that allows users to convert files between different formats. The application is built using React and features a modern, user-friendly interface.
+This document outlines the plan for implementing a new feature: converting Excel spreadsheets to PDF format. The goal is to create a user-friendly tool that allows users to upload an `.xlsx` file and receive a PDF document. The conversion will be handled on the client-side.
 
-## Implemented Features
+**Note on Fidelity:** This initial implementation will convert the primary worksheet of the Excel file into an image-based PDF. It will render the cells as a table, but may not preserve complex formatting, charts, or formulas. This approach ensures reliability and speed. A future server-side implementation could provide higher fidelity.
 
-*   **JPG to PDF Conversion:**
-    *   Users can upload multiple JPG and PNG images.
-    *   Images can be reordered using drag-and-drop.
-    *   Individual images can be rotated or deleted.
-    *   The application converts the images into a single PDF document.
-*   **Organize PDF:**
-    *   Users can upload multiple PDF files.
-    *   Pages can be reordered using drag-and-drop.
-    *   Pages can be rotated or deleted.
-    *   Blank pages can be added.
-    *   The application merges and organizes the pages into a new PDF document.
+## Implementation Plan
 
-## Current Plan: Word to PDF Conversion
+### 1. **Component Creation**
 
-1.  **Create `WordToPdf.jsx` Component:** Build the main page for the Word to PDF feature.
-2.  **Implement UI:** Design a user interface similar to the JPG to PDF and Organize PDF pages, allowing users to upload a `.docx` file.
-3.  **Add Conversion Logic:** Use the `docx-preview` library to render the Word document's content and `jspdf` to save it as a PDF.
-4.  **Add Routing:** Integrate the new page into the application's routing in `App.jsx`.
-5.  **Update Navigation:** Add a link to the new page in the main navigation bar.
+-   **File:** `src/pages/ExcelToPdf/ExcelToPdf.jsx`
+-   **Objective:** Develop a new React component for file upload, conversion, and user feedback.
+
+### 2. **Styling**
+
+-   **File:** `src/pages/ExcelToPdf/ExcelToPdf.css`
+-   **Objective:** Create a dedicated stylesheet for a clean and responsive design.
+
+### 3. **Routing**
+
+-   **File:** `src/App.jsx`
+-   **Objective:** Integrate the new component by adding a route for `/excel-to-pdf`.
+
+### 4. **Dashboard Integration**
+
+-   **File:** `src/data/tools.jsx`
+-   **Objective:** The tool is already defined here. No changes needed.
+
+### 5. **Conversion Logic**
+
+-   **Library:** `xlsx` (SheetJS)
+-   **Objective:** Parse the uploaded `.xlsx` file to extract data from the first worksheet.
+
+### 6. **PDF Generation**
+
+-   **Libraries:** `html2canvas`, `jspdf`
+-   **Objective:**
+    1.  Dynamically generate an HTML table from the parsed Excel data.
+    2.  Use `html2canvas` to capture the rendered HTML table as an image.
+    3.  Use `jspdf` to insert this image into a new PDF document.
+
+### 7. **Dependency Management**
+
+-   **Command:** `npm install xlsx`
+-   **Objective:** Add the necessary library for parsing Excel files.

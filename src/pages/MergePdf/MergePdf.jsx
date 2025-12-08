@@ -5,6 +5,7 @@ import { PDFDocument } from 'pdf-lib';
 import { Button, IconButton, List } from 'rsuite';
 import { VscFilePdf, VscChevronUp, VscChevronDown, VscTrash } from "react-icons/vsc";
 import './MergePdf.css';
+import { FaFilePdf } from 'react-icons/fa';
 
 const MergePdf = () => {
   const [files, setFiles] = useState([]);
@@ -86,7 +87,10 @@ const MergePdf = () => {
 
       <div {...getRootProps({ className: `dropzone ${isDragActive ? 'drag-over' : ''}` })}>
         <input {...getInputProps()} />
-        <p className="dropzone-content">Drag 'n' drop PDF files here, or click to select</p>
+        <div className="dropzone-content">
+          <FaFilePdf size={48} />
+          <p>Drag 'n' drop PDF files here, or click to select</p>
+        </div>
       </div>
 
       {files.length > 0 && (

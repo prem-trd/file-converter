@@ -171,7 +171,7 @@ const JpgToPdf = () => {
                     {isLoading && <div className='spinner-container'><Spinner animation="border" /></div>}
 
                     {files.length > 0 && (
-                        <div className="convert-button-container">
+                        <div className="jpg-to-pdf-button-container">
                             <Button onClick={handleConvertToPdf} size="lg" disabled={isLoading}>
                                 {isLoading ? 'Processing...' : 'Convert to PDF'}
                             </Button>

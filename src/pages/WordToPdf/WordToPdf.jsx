@@ -99,20 +99,22 @@ const WordToPdf = () => {
                         </div>
                     </div>
                 ) : (
-                    <div className="file-display">
-                        <FaFileWord size={40} />
-                        <span>{file.name}</span>
-                        <FaTrashAlt 
-                            onClick={handleRemoveFile} 
-                            style={{ cursor: 'pointer', marginLeft: 'auto', color: '#dc3545' }} 
-                        />
+                    <div className="word-to-pdf-display">
+                        <div>
+                            <FaFileWord size={40} className="file-icon" />
+                            <span>{file.name}</span>
+                        </div>
+                        <Button variant="light" size="sm" onClick={handleRemoveFile}>
+                            <FaTrashAlt style={{ cursor: 'pointer', marginLeft: 'auto', color: '#dc3545' }} />
+                        </Button>
+
                     </div>
                 )}
 
                 {isLoading && <div className='spinner-container'><Spinner animation="border" /></div>}
 
                 {file && (
-                    <div className="convert-button-container">
+                    <div className="word-to-pdf-button-container">
                         <Button onClick={handleConvertToPdf} size="lg" disabled={isLoading}>
                             {isLoading ? 'Converting...' : 'Convert to PDF'}
                         </Button>

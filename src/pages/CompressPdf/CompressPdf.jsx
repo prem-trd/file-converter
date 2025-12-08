@@ -29,7 +29,7 @@ const CompressPdf = () => {
     setFiles(acceptedFiles);
   }, []);
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop, accept: { 'application/pdf': ['.pdf'] } });
+  const { getRootProps, getInputProps } = useDropzone({ onDrop, accept: { 'application/pdf': ['.pdf'] } });
 
   const handleCompress = async () => {
     if (files.length === 0) {
