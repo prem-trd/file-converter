@@ -1,0 +1,163 @@
+.photo-editor-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+    gap: 30px;
+    text-align: center;
+}
+
+.photo-editor-header {
+    width: 100%;
+}
+
+.photo-editor-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--primary-text-color);
+    margin-bottom: 10px;
+}
+
+.photo-editor-description {
+    font-size: 1.1rem;
+    color: var(--secondary-text-color);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.photo-editor-content {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.dropzone {
+    border: 2px dashed var(--secondary-text-color);
+    border-radius: 8px;
+    padding: 40px;
+    background-color: var(--secondary-bg-color);
+    transition: border-color 0.3s, background-color 0.3s, color 0.3s;
+    cursor: pointer;
+    text-align: center;
+    margin-bottom: 30px;
+    color: var(--secondary-text-color);
+}
+
+.dropzone:hover,
+.dropzone.drag-over {
+    border-color: var(--accent-color);
+    background-color: #3a5067;
+    color: var(--primary-text-color);
+}
+
+.dropzone-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.editor-main {
+    display: flex;
+    gap: 40px;
+    width: 100%;
+}
+
+.image-display {
+    flex: 3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--secondary-bg-color);
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.main-image {
+    max-width: 100%;
+    max-height: 70vh;
+    object-fit: contain;
+    transition: filter 0.3s ease;
+}
+
+.controls {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background-color: var(--secondary-bg-color);
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.filter-group label {
+    font-size: 1rem;
+    color: var(--primary-text-color);
+}
+
+.filter-group input[type="range"] {
+    width: 100%;
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+    margin-top: auto;
+}
+
+.btn-primary-tool {
+    background-color: #43a047 !important;
+    color: white !important;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.btn-primary-tool:hover {
+    background-color: #388e3c !important;
+}
+
+.btn-secondary-tool {
+    background-color: #e53935 !important;
+    color: white !important;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.btn-secondary-tool:hover {
+    background-color: #d32f2f !important;
+}
+
+@media (max-width: 992px) {
+    .editor-main {
+        flex-direction: column;
+    }
+
+    .controls {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .filter-group {
+        flex: 1 1 150px;
+    }
+}

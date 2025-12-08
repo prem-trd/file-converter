@@ -23,6 +23,8 @@ import AddWatermarkPdf from "../pages/AddWatermarkPdf/AddWatermarkPdf.jsx";
 import ProtectPdf from "../pages/ProtectPdf/ProtectPdf.jsx";
 import SignPdf from "../pages/SignPdf/SignPdf.jsx";
 import CompressImage from "../pages/CompressImage/CompressImage.jsx";
+import MemeGenerator from "../pages/MemeGenerator/MemeGenerator.jsx";
+import PhotoEditor from "../pages/PhotoEditor/PhotoEditor.jsx";
 
 const router = createBrowserRouter(
   [
@@ -103,8 +105,16 @@ const router = createBrowserRouter(
           element: <SignPdf />,
         },
         {
-            path: "compress-image",
-            element: <CompressImage />,
+          path: "compress-image",
+          element: <CompressImage />,
+        },
+        {
+          path: "meme-generator",
+          element: <MemeGenerator />,
+        },
+        {
+          path: "photo-editor",
+          element: <PhotoEditor />,
         },
         {
           path: "*",
