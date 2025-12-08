@@ -95,14 +95,14 @@ export const imageToolCategories = [
     tools: [
       { key: 'convert-to-jpg', label: 'Convert to JPG', description: 'Convert other image formats to JPG.', icon: <FaFileImage />, color: '#fdd835' },
       { key: 'convert-from-jpg', label: 'Convert from JPG', description: 'Convert JPG images to other formats.', icon: <FaFileImage />, color: '#fdd835' },
-      { key: 'html-to-image', label: 'HTML to IMAGE', description: 'Convert webpages to images.', icon: <FaHtml5 />, color: '#fdd835' },
+      // { key: 'html-to-image', label: 'HTML to IMAGE', description: 'Convert webpages to images.', icon: <FaHtml5 />, color: '#fdd835' },
     ]
   },
   {
     title: 'SECURITY',
     tools: [
       { key: 'watermark-image', label: 'Watermark IMAGE', description: 'Add a text or image watermark to your images.', icon: <FaWater />, color: '#00897b' },
-      { key: 'blur-face', label: 'Blur face', description: 'Blur faces in your images to protect privacy.', icon: <FaUserSecret />, color: '#00897b' },
+      // { key: 'blur-face', label: 'Blur face', description: 'Blur faces in your images to protect privacy.', icon: <FaUserSecret />, color: '#00897b' },
     ]
   }
 ];

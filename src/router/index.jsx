@@ -22,6 +22,7 @@ import AddPageNumbers from "../pages/AddPageNumbers/AddPageNumbers.jsx";
 import AddWatermarkPdf from "../pages/AddWatermarkPdf/AddWatermarkPdf.jsx";
 import ProtectPdf from "../pages/ProtectPdf/ProtectPdf.jsx";
 import SignPdf from "../pages/SignPdf/SignPdf.jsx";
+import CompressImage from "../pages/CompressImage/CompressImage.jsx";
 
 const router = createBrowserRouter(
   [
@@ -100,6 +101,10 @@ const router = createBrowserRouter(
         {
           path: "sign-pdf",
           element: <SignPdf />,
+        },
+        {
+            path: "compress-image",
+            element: <CompressImage />,
         },
         {
           path: "*",

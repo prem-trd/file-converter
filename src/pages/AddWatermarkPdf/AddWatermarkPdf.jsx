@@ -237,8 +237,10 @@ const AddWatermarkPdf = () => {
                 {!file ? (
                     <div {...getPdfRootProps({ className: 'dropzone' })}>
                         <input {...getPdfInputProps()} />
-                        <FaFilePdf size={48} />
-                        <p>Drag and drop a PDF file here, or click to select a file</p>
+                        <div className="dropzone-content">
+                            <FaFilePdf size={48} />
+                            <p>Drag and drop a PDF file here, or click to select a file</p>
+                        </div>
                     </div>
                 ) : (
                     <div className="watermark-main-area">
