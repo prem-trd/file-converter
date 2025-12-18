@@ -69,8 +69,8 @@ const MemeGenerator = () => {
               <h1 className="meme-generator-title">Meme Generator</h1>
               <p className="meme-generator-description">Create your own memes by adding text to images.</p>
             </div>
-            <div className="meme-generator-content" ref={containerRef}>
-                {!image && (
+            <div className="meme-generator-content">
+                {!image ? (
                     <div {...getRootProps({ className: 'dropzone' })}>
                         <input {...getInputProps()} />
                         <div className="dropzone-content">
@@ -78,12 +78,45 @@ const MemeGenerator = () => {
                             <p>Drag & drop an image here, or click to select a file</p>
                         </div>
                     </div>
-                )}
+                ) : (
+                    <div className="editor-main">
+                        <div className="image-display">
+                          <Stage width={imageSize.width} height={imageSize.height} ref={stageRef}>
+                              <Layer>
+                                  <MemeImage src={image} width={imageSize.width} height={imageSize.height} />
+                                  <Text
+                                      text={topText}
+                                      fontSize={fontSize}
+                                      fontFamily={fontFamily}
+                                      fill={fontColor}
+                                      stroke={borderColor}
+                                      strokeWidth={strokeWidth}
+                                      x={imageSize.width / 10}
+                                      y={imageSize.height / 10}
+                                      width={imageSize.width * 0.8}
+                                      align='center'
+                                      draggable
+                                  />
+                                  <Text
+                                      text={bottomText}
+                                      fontSize={fontSize}
+                                      fontFamily={fontFamily}
+                                      fill={fontColor}
+                                      stroke={borderColor}
+                                      strokeWidth={strokeWidth}
+                                      x={imageSize.width / 10}
+                                      y={imageSize.height - (imageSize.height / 10) - fontSize}
+                                      width={imageSize.width * 0.8}
+                                      align='center'
+                                      draggable
+                                  />
+                              </Layer>
+                          </Stage>
+                        </div>
 
-                {image && (
-                    <div className="meme-editor">
-                        <div className="meme-controls">
-                            <div className="meme-inputs">
+                        <div className="controls">
+                            <div className="filter-group">
+                                <label>Top Text</label>
                                 <input
                                     type="text"
                                     placeholder="Top Text"
@@ -91,6 +124,9 @@ const MemeGenerator = () => {
                                     onChange={(e) => setTopText(e.target.value)}
                                     className="meme-input"
                                 />
+                            </div>
+                            <div className="filter-group">
+                                <label>Bottom Text</label>
                                 <input
                                     type="text"
                                     placeholder="Bottom Text"
@@ -99,70 +135,68 @@ const MemeGenerator = () => {
                                     className="meme-input"
                                 />
                             </div>
-                            <div className="meme-settings">
-                                <div className="meme-setting">
-                                    <label htmlFor="font-family">Font</label>
-                                    <select
-                                        id="font-family"
-                                        value={fontFamily}
-                                        onChange={(e) => setFontFamily(e.target.value)}
-                                        className="meme-input"
-                                    >
-                                        <option value="Impact">Impact</option>
-                                        <option value="Arial">Arial</option>
-                                        <option value="Comic Sans MS">Comic Sans MS</option>
-                                        <option value="Verdana">Verdana</option>
-                                        <option value="Times New Roman">Times New Roman</option>
-                                        <option value="Courier New">Courier New</option>
-                                        <option value="Georgia">Georgia</option>
-                                        <option value="Palatino">Palatino</option>
-                                        <option value="Garamond">Garamond</option>
-                                        <option value="Bookman">Bookman</option>
-                                        <option value="Avant Garde">Avant Garde</option>
-                                    </select>
-                                </div>
-                                <div className="meme-setting">
-                                    <label htmlFor="font-size">Font Size</label>
-                                    <input
-                                        type="number"
-                                        id="font-size"
-                                        value={fontSize}
-                                        onChange={(e) => setFontSize(parseInt(e.target.value, 10))}
-                                        className="meme-input"
-                                    />
-                                </div>
-                                <div className="meme-setting">
-                                    <label htmlFor="font-color">Font Color</label>
-                                    <input
-                                        type="color"
-                                        id="font-color"
-                                        value={fontColor}
-                                        onChange={(e) => setFontColor(e.target.value)}
-                                        className="meme-input"
-                                    />
-                                </div>
-                                <div className="meme-setting">
-                                    <label htmlFor="border-color">Border Color</label>
-                                    <input
-                                        type="color"
-                                        id="border-color"
-                                        value={borderColor}
-                                        onChange={(e) => setBorderColor(e.target.value)}
-                                        className="meme-input"
-                                    />
-                                </div>
-                                <div className="meme-setting">
-                                    <label htmlFor="stroke-width">Border Width</label>
-                                    <input
-                                        type="number"
-                                        id="stroke-width"
-                                        value={strokeWidth}
-                                        onChange={(e) => setStrokeWidth(parseInt(e.target.value, 10))}
-                                        className="meme-input"
-                                    />
-                                </div>
+                            <div className="filter-group">
+                                <label htmlFor="font-family">Font</label>
+                                <select
+                                    id="font-family"
+                                    value={fontFamily}
+                                    onChange={(e) => setFontFamily(e.target.value)}
+                                    className="meme-input"
+                                >
+                                    <option value="Impact">Impact</option>
+                                    <option value="Arial">Arial</option>
+                                    <option value="Comic Sans MS">Comic Sans MS</option>
+                                    <option value="Verdana">Verdana</option>
+                                    <option value="Times New Roman">Times New Roman</option>
+                                    <option value="Courier New">Courier New</option>
+                                    <option value="Georgia">Georgia</option>
+                                    <option value="Palatino">Palatino</option>
+                                    <option value="Garamond">Garamond</option>
+                                    <option value="Bookman">Bookman</option>
+                                    <option value="Avant Garde">Avant Garde</option>
+                                </select>
                             </div>
-                            <div className="meme-setting">
+                            <div className="filter-group">
+                                <label htmlFor="font-size">Font Size</label>
+                                <input
+                                    type="number"
+                                    id="font-size"
+                                    value={fontSize}
+                                    onChange={(e) => setFontSize(parseInt(e.target.value, 10))}
+                                    className="meme-input"
+                                />
+                            </div>
+                            <div className="filter-group">
+                                <label htmlFor="font-color">Font Color</label>
+                                <input
+                                    type="color"
+                                    id="font-color"
+                                    value={fontColor}
+                                    onChange={(e) => setFontColor(e.target.value)}
+                                    className="meme-input"
+                                />
+                            </div>
+                            <div className="filter-group">
+                                <label htmlFor="border-color">Border Color</label>
+                                <input
+                                    type="color"
+                                    id="border-color"
+                                    value={borderColor}
+                                    onChange={(e) => setBorderColor(e.target.value)}
+                                    className="meme-input"
+                                />
+                            </div>
+                            <div className="filter-group">
+                                <label htmlFor="stroke-width">Border Width</label>
+                                <input
+                                    type="number"
+                                    id="stroke-width"
+                                    value={strokeWidth}
+                                    onChange={(e) => setStrokeWidth(parseInt(e.target.value, 10))}
+                                    className="meme-input"
+                                />
+                            </div>
+                            <div className="filter-group">
                                 <label htmlFor="image-size">Image Size</label>
                                 <input
                                     type="range"
@@ -177,49 +211,14 @@ const MemeGenerator = () => {
                                     className="meme-slider"
                                 />
                             </div>
-                        </div>
-
-                        <div className="meme-canvas">
-                            <Stage width={imageSize.width} height={imageSize.height} ref={stageRef}>
-                                <Layer>
-                                    <MemeImage src={image} width={imageSize.width} height={imageSize.height} />
-                                    <Text
-                                        text={topText}
-                                        fontSize={fontSize}
-                                        fontFamily={fontFamily}
-                                        fill={fontColor}
-                                        stroke={borderColor}
-                                        strokeWidth={strokeWidth}
-                                        x={imageSize.width / 10}
-                                        y={imageSize.height / 10}
-                                        width={imageSize.width * 0.8}
-                                        align='center'
-                                        draggable
-                                    />
-                                    <Text
-                                        text={bottomText}
-                                        fontSize={fontSize}
-                                        fontFamily={fontFamily}
-                                        fill={fontColor}
-                                        stroke={borderColor}
-                                        strokeWidth={strokeWidth}
-                                        x={imageSize.width / 10}
-                                        y={imageSize.height - (imageSize.height / 10) - fontSize}
-                                        width={imageSize.width * 0.8}
-                                        align='center'
-                                        draggable
-                                    />
-                                </Layer>
-                            </Stage>
-                        </div>
-
-                        <div className="meme-generator-button-container">
-                            <button onClick={downloadMeme} className="btn btn-primary-tool">
-                                <FiDownload /> Download Meme
-                            </button>
-                            <button onClick={cancelMeme} className="btn btn-secondary-tool">
-                                <FiX /> Cancel
-                            </button>
+                            <div className="button-group">
+                                <button onClick={downloadMeme} className="btn btn-primary-tool">
+                                    <FiDownload /> Download Meme
+                                </button>
+                                <button onClick={cancelMeme} className="btn btn-secondary-tool">
+                                    <FiX /> Cancel
+                                </button>
+                            </div>
                         </div>
                     </div>
                 )}
