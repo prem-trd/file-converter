@@ -1,0 +1,161 @@
+.file-page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    padding: 40px 20px;
+    gap: 30px;
+    width: 100%;
+}
+
+.file-page-header {
+    text-align: center;
+    width: 100%;
+}
+
+.file-page-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--primary-text-color);
+    margin-bottom: 10px;
+}
+
+.file-page-description {
+    font-size: 1.1rem;
+    color: var(--secondary-text-color);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.dropzone {
+    border: 2px dashed var(--secondary-text-color);
+    border-radius: 8px;
+    padding: 40px;
+    background-color: var(--secondary-bg-color);
+    transition: border-color 0.3s, background-color 0.3s, color 0.3s;
+    cursor: pointer;
+    width: 100%;
+    max-width: 800px; 
+    color: var(--secondary-text-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dropzone:hover,
+.dropzone.drag-over {
+    border-color: var(--accent-color);
+    background-color: #3a5067;
+    color: var(--primary-text-color);
+}
+
+.dropzone.error {
+    border-color: #e53935;
+}
+
+.dropzone-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.error-message {
+    color: #e53935;
+    font-size: 0.9rem;
+    margin-top: 10px;
+}
+
+.file-page-main {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    max-width: 1200px;
+}
+
+.image-preview-container {
+    flex: 3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--secondary-bg-color);
+    border-radius: 8px;
+    min-height: 400px;
+    padding: 20px;
+}
+
+.image-preview {
+    max-width: 100%;
+    max-height: 400px;
+    object-fit: contain;
+    border-radius: 4px;
+}
+
+.file-page-sidebar {
+    flex: 1;
+    background-color: var(--secondary-bg-color);
+    padding: 20px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.settings-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.settings-group label {
+    font-weight: 500;
+    color: var(--primary-text-color);
+}
+
+.format-select {
+    background-color: #3a5067;
+    color: var(--primary-text-color);
+    border: 1px solid var(--secondary-text-color);
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.sidebar-buttons {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.download-button, .back-button {
+    padding: 15px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 1rem;
+    transition: background-color 0.3s, filter 0.3s;
+}
+
+.download-button {
+    background-color: var(--accent-color);
+    color: var(--primary-text-color);
+}
+
+.download-button:hover {
+    filter: brightness(1.2);
+}
+
+.back-button {
+    background-color: var(--secondary-bg-color);
+    border: 1px solid var(--secondary-text-color);
+    color: var(--primary-text-color);
+}
+
+.back-button:hover {
+    background-color: #3a5067;
+}
