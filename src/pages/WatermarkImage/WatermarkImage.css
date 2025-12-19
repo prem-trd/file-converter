@@ -1,4 +1,4 @@
-.file-page-container {
+.watermark-image-container {
     display: flex;
     flex-direction: column;
     align-items: center; 
@@ -7,26 +7,26 @@
     width: 100%;
 }
 
-.file-page-header {
+.watermark-image-header {
     text-align: center;
     width: 100%;
 }
 
-.file-page-title {
+.watermark-image-title {
     font-size: 2.5rem;
     font-weight: 700;
     color: var(--primary-text-color);
     margin-bottom: 10px;
 }
 
-.file-page-description {
+.watermark-image-description {
     font-size: 1.1rem;
     color: var(--secondary-text-color);
     max-width: 800px;
     margin: 0 auto;
 }
 
-.dropzone {
+.watermark-image-dropzone {
     border: 2px dashed var(--secondary-text-color);
     border-radius: 8px;
     padding: 40px;
@@ -41,28 +41,28 @@
     align-items: center;
 }
 
-.dropzone:hover,
-.dropzone.drag-over {
+.watermark-image-dropzone:hover,
+.watermark-image-dropzone.drag-over {
     border-color: var(--accent-color);
     background-color: #3a5067;
     color: var(--primary-text-color);
 }
 
-.dropzone-content {
+.watermark-image-dropzone-content {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 10px;
 }
 
-.file-page-main {
+.watermark-image-main {
     display: flex;
     gap: 20px;
     width: 100%;
     max-width: 1200px;
 }
 
-.image-preview-container {
+.watermark-image-preview-container {
     flex: 3;
     display: flex;
     justify-content: center;
@@ -73,14 +73,14 @@
     padding: 20px;
 }
 
-.image-preview {
+.watermark-image-preview {
     max-width: 100%;
     max-height: 500px;
     object-fit: contain;
     border-radius: 4px;
 }
 
-.file-page-sidebar {
+.watermark-image-sidebar {
     flex: 1;
     background-color: var(--secondary-bg-color);
     padding: 20px;
@@ -90,25 +90,25 @@
     gap: 20px;
 }
 
-.settings-group {
+.watermark-image-settings-group {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
-.settings-group label {
+.watermark-image-settings-group label {
     font-weight: 500;
     color: var(--primary-text-color);
 }
 
-.sidebar-buttons {
+.watermark-image-sidebar-buttons {
     margin-top: auto;
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
-.download-button, .back-button {
+.watermark-image-download-button, .watermark-image-back-button {
     padding: 15px;
     border: none;
     cursor: pointer;
@@ -121,32 +121,32 @@
     transition: background-color 0.3s, filter 0.3s;
 }
 
-.download-button {
+.watermark-image-download-button {
     background-color: var(--accent-color);
     color: var(--primary-text-color);
 }
 
-.download-button:hover {
+.watermark-image-download-button:hover {
     filter: brightness(1.2);
 }
 
-.back-button {
+.watermark-image-back-button {
     background-color: var(--secondary-bg-color);
     border: 1px solid var(--secondary-text-color);
     color: var(--primary-text-color);
 }
 
-.back-button:hover {
+.watermark-image-back-button:hover {
     background-color: #3a5067;
 }
 
-.watermark-tabs {
+.watermark-image-tabs {
     display: flex;
     gap: 10px;
     margin-bottom: 15px;
 }
 
-.watermark-tabs button {
+.watermark-image-tabs button {
     flex: 1;
     padding: 10px;
     border: 1px solid var(--secondary-text-color);
@@ -161,13 +161,13 @@
     transition: background-color 0.3s, color 0.3s;
 }
 
-.watermark-tabs button.active {
+.watermark-image-tabs button.active {
     background-color: var(--accent-color);
     color: var(--primary-text-color);
     border-color: var(--accent-color);
 }
 
-.dropzone-small {
+.watermark-image-dropzone-small {
     border: 2px dashed var(--secondary-text-color);
     border-radius: 8px;
     padding: 20px;
@@ -177,14 +177,14 @@
     color: var(--secondary-text-color);
 }
 
-.dropzone-small img {
+.watermark-image-dropzone-small img {
     max-width: 100%;
     max-height: 80px;
     border-radius: 4px;
 }
 
-.settings-group input[type="text"],
-.settings-group select {
+.watermark-image-settings-group input[type="text"],
+.watermark-image-settings-group select {
     background-color: #3a5067;
     color: var(--primary-text-color);
     border: 1px solid var(--secondary-text-color);
@@ -193,7 +193,7 @@
     font-size: 1rem;
 }
 
-.settings-group input[type="color"] {
+.watermark-image-settings-group input[type="color"] {
     padding: 0;
     height: 40px;
     border-radius: 5px;

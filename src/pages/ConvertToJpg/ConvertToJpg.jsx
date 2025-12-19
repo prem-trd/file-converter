@@ -70,10 +70,10 @@ const ConvertToJpg = () => {
     };
 
     return (
-        <div className='file-page-container'>
-            <div className='file-page-header'>
-                <h1 className='file-page-title'>Convert to JPG</h1>
-                <p className='file-page-description'>Easily convert your images to JPG format, with options for background color and SVG stroke color.</p>
+        <div className='convert-to-jpg-container'>
+            <div className='convert-to-jpg-header'>
+                <h1 className='convert-to-jpg-title'>Convert to JPG</h1>
+                <p className='convert-to-jpg-description'>Easily convert your images to JPG format, with options for background color and SVG stroke color.</p>
             </div>
 
             {!file ? (
@@ -85,60 +85,60 @@ const ConvertToJpg = () => {
                     </div>
                 </div>
             ) : (
-                <div className="file-page-main">
-                    <div className="image-preview-container" style={{ backgroundColor }}>
+                <div className="convert-to-jpg-main">
+                    <div className="convert-to-jpg-image-preview-container" style={{ backgroundColor }}>
                         <img
                             src={getSvgPreview()}
                             alt="Preview"
-                            className='image-preview'
+                            className='convert-to-jpg-image-preview'
                         />
                     </div>
 
-                    <div className="file-page-sidebar">
+                    <div className="convert-to-jpg-sidebar">
 
                         {isSvg && (<>
-                            <div className='settings-group'>
+                            <div className='convert-to-jpg-settings-group'>
                                 <label>Background Color:</label>
-                                <div className='color-picker-container'>
-                                    <div className='color-picker-wrapper'>
-                                        <div className='color-picker-swatch' style={{ backgroundColor }}></div>
+                                <div className='convert-to-jpg-color-picker-container'>
+                                    <div className='convert-to-jpg-color-picker-wrapper'>
+                                        <div className='convert-to-jpg-color-picker-swatch' style={{ backgroundColor }}></div>
                                         <input
                                             type='color'
                                             value={backgroundColor}
                                             onChange={(e) => setBackgroundColor(e.target.value)}
-                                            className='color-picker-input'
+                                            className='convert-to-jpg-color-picker-input'
                                         />
                                     </div>
-                                    <span className='color-hex'>{backgroundColor}</span>
+                                    <span className='convert-to-jpg-color-hex'>{backgroundColor}</span>
                                 </div>
                             </div>
-                            <div className='settings-group'>
+                            <div className='convert-to-jpg-settings-group'>
                                 <label>SVG Stroke Color:</label>
-                                <div className='color-picker-container'>
-                                    <div className='color-picker-wrapper'>
-                                        <div className='color-picker-swatch' style={{ backgroundColor: svgStrokeColor }}></div>
+                                <div className='convert-to-jpg-color-picker-container'>
+                                    <div className='convert-to-jpg-color-picker-wrapper'>
+                                        <div className='convert-to-jpg-color-picker-swatch' style={{ backgroundColor: svgStrokeColor }}></div>
                                         <input
                                             type='color'
                                             value={svgStrokeColor}
                                             onChange={(e) => setSvgStrokeColor(e.target.value)}
-                                            className='color-picker-input'
+                                            className='convert-to-jpg-color-picker-input'
                                         />
                                     </div>
-                                    <span className='color-hex'>{svgStrokeColor}</span>
+                                    <span className='convert-to-jpg-color-hex'>{svgStrokeColor}</span>
                                 </div>
                             </div>
                         </>
                         )}
 
-                        <div className="sidebar-buttons">
+                        <div className="convert-to-jpg-sidebar-buttons">
                             <button
-                                className='download-button'
+                                className='convert-to-jpg-download-button'
                                 onClick={handleDownload}
                             >
                                 <FaDownload /> Download as JPG
                             </button>
                             <button
-                                className='back-button'
+                                className='convert-to-jpg-back-button'
                                 onClick={() => setFile(null)}
                             >
                                 <FaArrowLeft /> Back
