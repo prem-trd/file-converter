@@ -23,6 +23,14 @@ import AddWatermarkPdf from "../pages/AddWatermarkPdf/AddWatermarkPdf.jsx";
 import ProtectPdf from "../pages/ProtectPdf/ProtectPdf.jsx";
 import SignPdf from "../pages/SignPdf/SignPdf.jsx";
 import CompressImage from "../pages/CompressImage/CompressImage.jsx";
+import MemeGenerator from "../pages/MemeGenerator/MemeGenerator.jsx";
+import PhotoEditor from "../pages/PhotoEditor/PhotoEditor.jsx";
+import ResizeImage from "../pages/ResizeImage/ResizeImage.jsx";
+import CropImage from "../pages/CropImage/CropImage.jsx";
+import RotateImage from "../pages/RotateImage/RotateImage.jsx";
+import ConvertToJpg from "../pages/ConvertToJpg/ConvertToJpg.jsx";
+import ConvertFromJpg from "../pages/ConvertFromJpg/ConvertFromJpg.jsx";
+import WatermarkImage from "../pages/WatermarkImage/WatermarkImage.jsx";
 
 const router = createBrowserRouter(
   [
@@ -95,6 +103,10 @@ const router = createBrowserRouter(
           element: <AddWatermarkPdf />,
         },
         {
+          path: "watermark-image",
+          element: <WatermarkImage />,
+        },
+        {
           path: "protect-pdf",
           element: <ProtectPdf />,
         },
@@ -103,8 +115,36 @@ const router = createBrowserRouter(
           element: <SignPdf />,
         },
         {
-            path: "compress-image",
-            element: <CompressImage />,
+          path: "compress-image",
+          element: <CompressImage />,
+        },
+        {
+          path: "resize-image",
+          element: <ResizeImage />,
+        },
+        {
+          path: "crop-image",
+          element: <CropImage />,
+        },
+        {
+          path: "rotate-image",
+          element: <RotateImage />,
+        },
+        {
+          path: "convert-to-jpg",
+          element: <ConvertToJpg />,
+        },
+        {
+          path: "convert-from-jpg",
+          element: <ConvertFromJpg />,
+        },
+        {
+          path: "meme-generator",
+          element: <MemeGenerator />,
+        },
+        {
+          path: "photo-editor",
+          element: <PhotoEditor />,
         },
         {
           path: "*",

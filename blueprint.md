@@ -2,46 +2,82 @@
 
 ## Overview
 
-This document outlines the plan for implementing a new feature: converting Excel spreadsheets to PDF format. The goal is to create a user-friendly tool that allows users to upload an `.xlsx` file and receive a PDF document. The conversion will be handled on the client-side.
+This project is a web-based utility application offering a comprehensive suite of tools for both PDF and image manipulation. Users can perform a wide range of tasks directly in their browser, from file conversion to content editing. Each tool is built as a modular React component, ensuring a clean and maintainable codebase.
 
-**Note on Fidelity:** This initial implementation will convert the primary worksheet of the Excel file into an image-based PDF. It will render the cells as a table, but may not preserve complex formatting, charts, or formulas. This approach ensures reliability and speed. A future server-side implementation could provide higher fidelity.
+## Implemented PDF Tools
 
-## Implementation Plan
+### Organization
 
-### 1. **Component Creation**
+-   **Merge PDF:** Combine multiple PDF files into a single document.
+-   **Split PDF:** Extract specific pages from a PDF to create a new file.
+-   **Remove Pages:** Delete selected pages from a PDF.
+-   **Extract Pages:** Create a new PDF from a selection of pages.
+-   **Organize PDF:** Reorder, add, or delete pages within a PDF.
 
--   **File:** `src/pages/ExcelToPdf/ExcelToPdf.jsx`
--   **Objective:** Develop a new React component for file upload, conversion, and user feedback.
+### Optimization
 
-### 2. **Styling**
+-   **Compress PDF:** Reduce the file size of a PDF.
+-   **Repair PDF:** Attempt to fix corrupted or damaged PDF files.
 
--   **File:** `src/pages/ExcelToPdf/ExcelToPdf.css`
--   **Objective:** Create a dedicated stylesheet for a clean and responsive design.
+### Conversion to PDF
 
-### 3. **Routing**
+-   **JPG to PDF:** Convert JPG images into a PDF document.
+-   **WORD to PDF:** Convert Microsoft Word documents to PDF.
+-   **EXCEL to PDF:** Convert Microsoft Excel spreadsheets to PDF.
 
--   **File:** `src/App.jsx`
--   **Objective:** Integrate the new component by adding a route for `/excel-to-pdf`.
+### PDF Editing
 
-### 4. **Dashboard Integration**
+-   **Add Page Numbers:** Insert page numbers into a PDF.
+-   **Add Watermark:** Apply a text or image watermark to a PDF.
 
--   **File:** `src/data/tools.jsx`
--   **Objective:** The tool is already defined here. No changes needed.
+### PDF Security
 
-### 5. **Conversion Logic**
+-   **Sign PDF:** Add a digital signature to a PDF.
 
--   **Library:** `xlsx` (SheetJS)
--   **Objective:** Parse the uploaded `.xlsx` file to extract data from the first worksheet.
+## Implemented Image Tools
 
-### 6. **PDF Generation**
+### Optimization
 
--   **Libraries:** `html2canvas`, `jspdf`
--   **Objective:**
-    1.  Dynamically generate an HTML table from the parsed Excel data.
-    2.  Use `html2canvas` to capture the rendered HTML table as an image.
-    3.  Use `jspdf` to insert this image into a new PDF document.
+-   **Compress IMAGE:** Reduce the file size of images.
 
-### 7. **Dependency Management**
+### Creation
 
--   **Command:** `npm install xlsx`
--   **Objective:** Add the necessary library for parsing Excel files.
+-   **Meme Generator:** Create memes from images.
+-   **Photo Editor:** Edit and enhance photos.
+
+### Modification
+
+-   **Resize IMAGE:** Change the dimensions of an image.
+-   **Crop IMAGE:** Trim images to a desired size.
+-   **Rotate IMAGE:** Rotate images.
+
+### Conversion
+
+-   **Convert to JPG:** Convert various image formats to JPG.
+-   **Convert from JPG:** Convert JPG images to other formats (e.g., PNG, WebP).
+
+### Security
+
+-   **Watermark IMAGE:** Add a text or image watermark to an image.
+
+---
+
+## Latest Change: CSS Class Name Refactoring
+
+### Objective
+
+To refactor shared and generic CSS class names across multiple components into unique, component-specific class names. This prevents style collisions and improves code maintainability by ensuring that styles for one component do not unintentionally affect another.
+
+### Components Refactored
+
+1.  **`WatermarkImage`**
+    *   **Files:** `src/pages/WatermarkImage/WatermarkImage.jsx`, `src/pages/WatermarkImage/WatermarkImage.css`
+    *   **Change:** All CSS classes were prefixed with `watermark-image-`.
+
+2.  **`ConvertFromJpg`**
+    *   **Files:** `src/pages/ConvertFromJpg/ConvertFromJpg.jsx`, `src/pages/ConvertFromJpg/ConvertFromJpg.css`
+    *   **Change:** All CSS classes were prefixed with `convert-from-jpg-`.
+
+3.  **`ConvertToJpg`**
+    *   **Files:** `src/pages/ConvertToJpg/ConvertToJpg.jsx`, `src/pages/ConvertToJpg/ConvertToJpg.css`
+    *   **Change:** All CSS classes were prefixed with `convert-to-jpg-`.

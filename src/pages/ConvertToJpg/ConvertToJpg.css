@@ -1,0 +1,175 @@
+.convert-to-jpg-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    padding: 40px 20px;
+    gap: 30px;
+    width: 100%;
+}
+
+.convert-to-jpg-header {
+    text-align: center;
+    width: 100%;
+}
+
+.convert-to-jpg-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--primary-text-color);
+    margin-bottom: 10px;
+}
+
+.convert-to-jpg-description {
+    font-size: 1.1rem;
+    color: var(--secondary-text-color);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.convert-to-jpg-dropzone {
+    border: 2px dashed var(--secondary-text-color);
+    border-radius: 8px;
+    padding: 40px;
+    background-color: var(--secondary-bg-color);
+    transition: border-color 0.3s, background-color 0.3s, color 0.3s;
+    cursor: pointer;
+    width: 100%;
+    max-width: 800px; 
+    color: var(--secondary-text-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.convert-to-jpg-dropzone:hover,
+.convert-to-jpg-dropzone.drag-over {
+    border-color: var(--accent-color);
+    background-color: #3a5067;
+    color: var(--primary-text-color);
+}
+
+.convert-to-jpg-dropzone-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.convert-to-jpg-main {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    max-width: 1200px;
+}
+
+.convert-to-jpg-image-preview-container {
+    flex: 3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--secondary-bg-color);
+    border-radius: 8px;
+    min-height: 400px;
+    padding: 20px;
+}
+
+.convert-to-jpg-image-preview {
+    max-width: 100%;
+    max-height: 400px;
+    object-fit: contain;
+    border-radius: 4px;
+}
+
+.convert-to-jpg-sidebar {
+    flex: 1;
+    background-color: var(--secondary-bg-color);
+    padding: 20px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.convert-to-jpg-settings-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.convert-to-jpg-settings-group label {
+    font-weight: 500;
+    color: var(--primary-text-color);
+}
+
+.convert-to-jpg-color-picker-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.convert-to-jpg-color-picker-wrapper {
+    position: relative;
+    width: 32px;
+    height: 32px;
+}
+
+.convert-to-jpg-color-picker-swatch {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 1px solid var(--secondary-text-color);
+}
+
+.convert-to-jpg-color-picker-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.convert-to-jpg-color-hex {
+    font-family: monospace;
+    color: var(--secondary-text-color);
+}
+
+.convert-to-jpg-sidebar-buttons {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.convert-to-jpg-download-button, .convert-to-jpg-back-button {
+    padding: 15px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 1rem;
+    transition: background-color 0.3s, filter 0.3s;
+}
+
+.convert-to-jpg-download-button {
+    background-color: var(--accent-color);
+    color: var(--primary-text-color);
+}
+
+.convert-to-jpg-download-button:hover {
+    filter: brightness(1.2);
+}
+
+.convert-to-jpg-back-button {
+    background-color: var(--secondary-bg-color);
+    border: 1px solid var(--secondary-text-color);
+    color: var(--primary-text-color);
+}
+
+.convert-to-jpg-back-button:hover {
+    background-color: #3a5067;
+}
