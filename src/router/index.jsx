@@ -25,6 +25,8 @@ import SignPdf from "../pages/SignPdf/SignPdf.jsx";
 import CompressImage from "../pages/CompressImage/CompressImage.jsx";
 import MemeGenerator from "../pages/MemeGenerator/MemeGenerator.jsx";
 import PhotoEditor from "../pages/PhotoEditor/PhotoEditor.jsx";
+import ResizeImage from "../pages/ResizeImage/ResizeImage.jsx";
+import CropImage from "../pages/CropImage/CropImage.jsx";
 
 const router = createBrowserRouter(
   [
@@ -107,6 +109,14 @@ const router = createBrowserRouter(
         {
           path: "compress-image",
           element: <CompressImage />,
+        },
+        {
+          path: "resize-image",
+          element: <ResizeImage />,
+        },
+        {
+          path: "crop-image",
+          element: <CropImage />,
         },
         {
           path: "meme-generator",
