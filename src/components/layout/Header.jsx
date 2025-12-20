@@ -66,7 +66,7 @@ const CustomNavbar = ({ activeKey, user, ...props }) => {
         <ToolsDropdown title="ALL PDF TOOLS" toolCategories={pdfToolCategories} activeKey={activeKey} />
         <ToolsDropdown title="ALL IMAGE TOOLS" toolCategories={imageToolCategories} activeKey={activeKey} />
       </Nav>
-      <Nav pullRight>
+      {/* <Nav pullRight>
         {user ? (
           <>
             <Nav.Item>{user.email}</Nav.Item>
@@ -84,7 +84,7 @@ const CustomNavbar = ({ activeKey, user, ...props }) => {
             </Nav.Item>
           </>
         )}
-      </Nav>
+      </Nav> */}
     </Navbar>
   );
 };
