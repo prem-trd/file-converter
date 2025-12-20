@@ -34,6 +34,7 @@ import WatermarkImage from "../pages/WatermarkImage/WatermarkImage.jsx";
 import PrivacyNotice from "../pages/PrivacyNotice/PrivacyNotice.jsx";
 import TermsAndConditions from "../pages/TermsAndConditions/TermsAndConditions.jsx";
 import ContactUs from "../pages/ContactUs/ContactUs.jsx";
+import ThankYou from "../pages/ThankYou/ThankYou.jsx";
 
 const router = createBrowserRouter(
   [
@@ -160,6 +161,10 @@ const router = createBrowserRouter(
         {
             path: "contact-us",
             element: <ContactUs />,
+        },
+        {
+          path: "/thank-you",
+          element: <ThankYou />,
         },
         {
           path: "*",
