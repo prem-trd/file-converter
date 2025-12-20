@@ -59,14 +59,14 @@ const CustomNavbar = ({ activeKey, user, ...props }) => {
 
   return (
     <Navbar {...props} className="custom-navbar">
-      <Navbar.Brand as={Link} to="/">
-        <img src="/logo.svg" alt="logo" height="24" />
+      <Navbar.Brand as={Link} to="/" style={{ padding: '0px',margin:'5px 0px' }}>
+        <img src="/logo.png" alt="logo" height="60" width={80} />
       </Navbar.Brand>
       <Nav activeKey={activeKey} style={{ flex: 1 }}>
         <ToolsDropdown title="ALL PDF TOOLS" toolCategories={pdfToolCategories} activeKey={activeKey} />
         <ToolsDropdown title="ALL IMAGE TOOLS" toolCategories={imageToolCategories} activeKey={activeKey} />
       </Nav>
-      <Nav pullRight>
+      {/* <Nav pullRight>
         {user ? (
           <>
             <Nav.Item>{user.email}</Nav.Item>
@@ -84,7 +84,7 @@ const CustomNavbar = ({ activeKey, user, ...props }) => {
             </Nav.Item>
           </>
         )}
-      </Nav>
+      </Nav> */}
     </Navbar>
   );
 };

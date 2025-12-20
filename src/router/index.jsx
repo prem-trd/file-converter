@@ -31,6 +31,10 @@ import RotateImage from "../pages/RotateImage/RotateImage.jsx";
 import ConvertToJpg from "../pages/ConvertToJpg/ConvertToJpg.jsx";
 import ConvertFromJpg from "../pages/ConvertFromJpg/ConvertFromJpg.jsx";
 import WatermarkImage from "../pages/WatermarkImage/WatermarkImage.jsx";
+import PrivacyNotice from "../pages/PrivacyNotice/PrivacyNotice.jsx";
+import TermsAndConditions from "../pages/TermsAndConditions/TermsAndConditions.jsx";
+import ContactUs from "../pages/ContactUs/ContactUs.jsx";
+import ThankYou from "../pages/ThankYou/ThankYou.jsx";
 
 const router = createBrowserRouter(
   [
@@ -145,6 +149,22 @@ const router = createBrowserRouter(
         {
           path: "photo-editor",
           element: <PhotoEditor />,
+        },
+        {
+            path: "privacy-notice",
+            element: <PrivacyNotice />,
+        },
+        {
+            path: "terms-and-conditions",
+            element: <TermsAndConditions />,
+        },
+        {
+            path: "contact-us",
+            element: <ContactUs />,
+        },
+        {
+          path: "/thank-you",
+          element: <ThankYou />,
         },
         {
           path: "*",

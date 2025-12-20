@@ -62,22 +62,18 @@ This project is a web-based utility application offering a comprehensive suite o
 
 ---
 
-## Latest Change: CSS Class Name Refactoring
+## Latest Change: Footer Simplification
 
 ### Objective
 
-To refactor shared and generic CSS class names across multiple components into unique, component-specific class names. This prevents style collisions and improves code maintainability by ensuring that styles for one component do not unintentionally affect another.
+To simplify the footer for a cleaner, more minimalist design suitable for an individual developer. The previous footer with social media links was replaced with a simple copyright notice and essential links.
 
-### Components Refactored
+### Implementation Steps
 
-1.  **`WatermarkImage`**
-    *   **Files:** `src/pages/WatermarkImage/WatermarkImage.jsx`, `src/pages/WatermarkImage/WatermarkImage.css`
-    *   **Change:** All CSS classes were prefixed with `watermark-image-`.
+1.  **`Footer.jsx` Refactoring:**
+    *   The component at `src/components/layout/Footer.jsx` was updated.
+    *   The new structure consists of a copyright notice on the left and four links (Privacy Notice, Terms & Conditions, Imprint, Contact Us) on the right.
 
-2.  **`ConvertFromJpg`**
-    *   **Files:** `src/pages/ConvertFromJpg/ConvertFromJpg.jsx`, `src/pages/ConvertFromJpg/ConvertFromJpg.css`
-    *   **Change:** All CSS classes were prefixed with `convert-from-jpg-`.
-
-3.  **`ConvertToJpg`**
-    *   **Files:** `src/pages/ConvertToJpg/ConvertToJpg.jsx`, `src/pages/ConvertToJpg/ConvertToJpg.css`
-    *   **Change:** All CSS classes were prefixed with `convert-to-jpg-`.
+2.  **`Footer.css` Styling Update:**
+    *   The CSS file at `src/components/layout/Footer.css` was updated to reflect the new design.
+    *   The new styling uses a light background (`#f8f9fa`), subtle text color (`#6c757d`), and a clean, horizontal layout using Flexbox, inspired by the user-provided image.
