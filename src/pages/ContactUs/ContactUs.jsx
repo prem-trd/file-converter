@@ -24,7 +24,7 @@ const ContactUs = () => {
     const form = e.target;
     const data = new FormData(form);
 
-    fetch("/", {
+    fetch(window.location.pathname, {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: new URLSearchParams(data).toString(),
