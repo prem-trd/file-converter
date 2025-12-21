@@ -15,13 +15,14 @@ const ContactUs = () => {
         className="contact-form"
         name="contact"
         method="POST"
-        action="/thank-you" // This tells Netlify where to redirect after a successful submission
+        action="/"
         data-netlify="true"
         data-netlify-honeypot="bot-field"
       >
         {/* You need this hidden field for Netlify to identify the form */}
         <input type="hidden" name="form-name" value="contact" />
         <input type="hidden" name="bot-field" />
+        <input type="hidden" name="redirect" value="/thank-you" />
 
         <h2>Send Us a Message</h2>
 
