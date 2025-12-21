@@ -44,21 +44,13 @@ const ContactUs = () => {
         feel free to reach out. We’ll do our best to respond as soon as possible.
       </p>
 
-      {/* <p>
-        <strong>Email:</strong>{' '}
-        <a href="mailto:your.email@example.com">
-          your.email@example.com
-        </a>
-      </p> */}
-
       <form
         className="contact-form"
         name="contact"
         method="POST"
-        netlify
+        action="/thank-you"
         data-netlify="true"
         data-netlify-honeypot="bot-field"
-        onSubmit={handleSubmit}
       >
         {/* REQUIRED hidden fields */}
         <input type="hidden" name="form-name" value="contact" />
