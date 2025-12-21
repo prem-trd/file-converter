@@ -1,40 +1,7 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
 import './ContactUs.css';
 
 const ContactUs = () => {
-  const navigate = useNavigate();
-
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const data = new FormData(form);
-
-    fetch(window.location.pathname, {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams(data).toString(),
-    })
-      .then(() => navigate("/thank-you"))
-      .catch(error => alert(error));
-
-    setFormData({ name: '', email: '', message: '' });
-  };
-
   return (
     <div className="contact-container">
       <h1>Contact Us</h1>
@@ -48,11 +15,11 @@ const ContactUs = () => {
         className="contact-form"
         name="contact"
         method="POST"
-        action="/thank-you"
+        action="/thank-you" // This tells Netlify where to redirect after a successful submission
         data-netlify="true"
         data-netlify-honeypot="bot-field"
       >
-        {/* REQUIRED hidden fields */}
+        {/* You need this hidden field for Netlify to identify the form */}
         <input type="hidden" name="form-name" value="contact" />
         <input type="hidden" name="bot-field" />
 
@@ -70,8 +37,6 @@ const ContactUs = () => {
             id="name"
             name="name"
             placeholder="Your name"
-            value={formData.name}
-            onChange={handleChange}
           />
         </div>
 
@@ -83,8 +48,6 @@ const ContactUs = () => {
             name="email"
             placeholder="your@email.com"
             required
-            value={formData.email}
-            onChange={handleChange}
           />
         </div>
 
@@ -96,8 +59,6 @@ const ContactUs = () => {
             rows="5"
             placeholder="Write your message here..."
             required
-            value={formData.message}
-            onChange={handleChange}
           ></textarea>
         </div>
 

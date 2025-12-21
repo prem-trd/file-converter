@@ -151,19 +151,19 @@ const router = createBrowserRouter(
           element: <PhotoEditor />,
         },
         {
-            path: "privacy-notice",
-            element: <PrivacyNotice />,
+          path: "privacy-notice",
+          element: <PrivacyNotice />,
         },
         {
-            path: "terms-and-conditions",
-            element: <TermsAndConditions />,
+          path: "terms-and-conditions",
+          element: <TermsAndConditions />,
         },
         {
-            path: "contact-us",
-            element: <ContactUs />,
+          path: "contact-us",
+          element: <ContactUs />,
         },
         {
-          path: "/thank-you",
+          path: "thank-you",
           element: <ThankYou />,
         },
         {
