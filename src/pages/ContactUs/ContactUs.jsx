@@ -19,7 +19,7 @@ const ContactUs = () => {
         data-netlify="true"
         data-netlify-honeypot="bot-field"
       >
-        {/* You need this hidden field for Netlify to identify the form */}
+        {/* Netlify required hidden fields */}
         <input type="hidden" name="form-name" value="contact" />
         <input type="hidden" name="bot-field" />
         <input type="hidden" name="redirect" value="/thank-you" />
@@ -32,12 +32,13 @@ const ContactUs = () => {
         </p>
 
         <div className="form-group">
-          <label htmlFor="name">Name</label>
+          <label htmlFor="name">Name *</label>
           <input
             type="text"
             id="name"
             name="name"
             placeholder="Your name"
+            required
           />
         </div>
 
