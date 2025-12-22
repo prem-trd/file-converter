@@ -1,5 +1,6 @@
 
 import React, { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { pdfToolCategories, imageToolCategories } from '../data/tools.jsx';
 import ToolCard from '../components/ToolCard';
 import { Input, InputGroup } from 'rsuite';
@@ -21,6 +22,11 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard-container">
+      <Helmet>
+        <title>All-in-One PDF & Image Tools - Free & Online</title>
+        <meta name="description" content="Your one-stop solution for all your file conversion needs. Merge, split, compress, convert, and edit PDFs and images with our comprehensive suite of online tools." />
+        <link rel="canonical" href={`${window.location.origin}/`} />
+      </Helmet>
       <div className="dashboard-header">
         <h1>The All-in-One PDF & Image Solution</h1>
         <p>Your one-stop shop for all your file conversion needs. Merge, split, compress, and convert with ease.</p>

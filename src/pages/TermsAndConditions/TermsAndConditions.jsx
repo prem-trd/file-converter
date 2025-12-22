@@ -1,9 +1,15 @@
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
 import './TermsAndConditions.css';
 
 const TermsAndConditions = () => {
   return (
     <div className="terms-container">
+      <Helmet>
+        <title>Terms & Conditions - Image & PDF Tools</title>
+        <meta name="description" content="Read the terms and conditions for using our free online image and PDF tools. Understand your rights and responsibilities when using our services." />
+        <link rel="canonical" href={`${window.location.origin}/terms-and-conditions`} />
+      </Helmet>
       <h1>Terms & Conditions</h1>
 
       <p>

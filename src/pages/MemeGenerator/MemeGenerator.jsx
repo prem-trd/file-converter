@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useDropzone } from 'react-dropzone';
 import { Stage, Layer, Image, Text } from 'react-konva';
 import useImage from 'use-image';
@@ -65,6 +66,12 @@ const MemeGenerator = () => {
 
     return (
         <div className="meme-generator-container">
+            <Helmet>
+                <title>Meme Generator - Create Your Own Memes Online for Free</title>
+                <meta name="description" content="Easily create custom memes with our free online meme generator. Upload an image, add top and bottom text, customize the font, and download your creation.
+                " />
+                <link rel="canonical" href={`${window.location.origin}/meme-generator`} />
+            </Helmet>
             <div className="meme-generator-header">
               <h1 className="meme-generator-title">Meme Generator</h1>
               <p className="meme-generator-description">Create your own memes by adding text to images.</p>

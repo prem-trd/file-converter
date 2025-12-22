@@ -1,5 +1,6 @@
 
 import React, { useState, useCallback } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useDropzone } from 'react-dropzone';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -125,6 +126,11 @@ const JpgToPdf = () => {
     return (
         <DndProvider backend={HTML5Backend}>
             <div className="jpg-to-pdf-container">
+                <Helmet>
+                    <title>JPG to PDF - Convert Images to PDF Online</title>
+                    <meta name="description" content="Easily convert your JPG and PNG images to a single PDF file. Drag and drop, reorder, rotate, and combine your images into a professional PDF document for free." />
+                    <link rel="canonical" href={`${window.location.origin}/jpg-to-pdf`} />
+                </Helmet>
                 <div className="jpg-to-pdf-header">
                     <h1 className="jpg-to-pdf-title">JPG to PDF Converter</h1>
                     <p className="jpg-to-pdf-description">

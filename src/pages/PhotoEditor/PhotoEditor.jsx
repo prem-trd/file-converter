@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useDropzone } from 'react-dropzone';
 import { FaFileImage, FaCrop } from 'react-icons/fa';
 import { FiDownload, FiTrash2, FiRotateCcw, FiXCircle, FiArrowLeft } from 'react-icons/fi';
@@ -124,6 +125,11 @@ const PhotoEditor = () => {
 
     return (
         <div className="photo-editor-container">
+            <Helmet>
+                <title>Photo Editor - Edit Your Photos Online for Free</title>
+                <meta name="description" content="A free online photo editor that allows you to apply filters, crop, and make adjustments to your images. Easy to use, no registration required." />
+                <link rel="canonical" href={`${window.location.origin}/photo-editor`} />
+            </Helmet>
             <div className="photo-editor-header">
                 <h1 className="photo-editor-title">Photo Editor</h1>
                 <p className="photo-editor-description">

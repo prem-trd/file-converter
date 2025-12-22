@@ -1,5 +1,6 @@
 
 import React, { useState, useCallback } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useDropzone } from 'react-dropzone';
 import { PDFDocument } from 'pdf-lib';
 import { Button, Form, Alert, Spinner } from 'react-bootstrap';
@@ -152,6 +153,11 @@ const SplitPdf = () => {
 
   return (
     <div className="split-pdf-container">
+      <Helmet>
+        <title>Split PDF - Extract Pages from PDF Files Online</title>
+        <meta name="description" content="Easily split a PDF into multiple documents by defining page ranges. Our online tool lets you extract specific pages from your PDF for free." />
+        <link rel="canonical" href={`${window.location.origin}/split-pdf`} />
+      </Helmet>
       <div className="split-pdf-header">
         <h1 className="split-pdf-title">Split PDF</h1>
         <p className="split-pdf-description">Define page ranges to split your PDF into multiple documents.</p>

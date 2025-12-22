@@ -1,5 +1,6 @@
 
 import React, { useState, useCallback } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useDropzone } from 'react-dropzone';
 import { Button, Input, InputGroup, List, IconButton, Message, toaster, Loader } from 'rsuite';
 import { VscFilePdf, VscLock, VscTrash } from "react-icons/vsc";
@@ -51,6 +52,11 @@ const ProtectPdf = () => {
 
     return (
         <div className="protect-pdf-container">
+             <Helmet>
+                <title>Protect PDF - Add Password to Your PDF</title>
+                <meta name="description" content="Secure your PDF files by adding a password. Our free online tool allows you to encrypt your PDF, preventing unauthorized access." />
+                 <link rel="canonical" href={`${window.location.origin}/protect-pdf`} />
+            </Helmet>
             <div className="protect-pdf-header">
                 <h1 className="protect-pdf-title">Protect PDF File</h1>
                 <p className="protect-pdf-description">

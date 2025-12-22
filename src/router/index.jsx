@@ -1,40 +1,43 @@
 
+import React, { Suspense, lazy } from "react";
 import { createBrowserRouter } from "react-router-dom";
 import Layout from "../components/layout/Layout";
-import Dashboard from "../pages/Dashboard";
-import NotFound from "../pages/NotFound";
-import SignIn from "../pages/SignIn";
-import SignUp from "../pages/SignUp";
-import MergePdf from "../pages/MergePdf/MergePdf.jsx";
-import SplitPdf from "../pages/SplitPdf/SplitPdf.jsx";
-import RemovePages from "../pages/RemovePages/RemovePages.jsx";
-import ExtractPages from "../pages/ExtractPages/ExtractPages.jsx";
-import OrganizePdf from "../pages/OrganizePdf/OrganizePdf.jsx";
-import CompressPdf from "../pages/CompressPdf/CompressPdf.jsx";
-import RepairPdf from "../pages/RepairPdf/RepairPdf.jsx";
-import JpgToPdf from "../pages/JpgToPdf/JpgToPdf.jsx";
-import WordToPdf from "../pages/WordToPdf/WordToPdf.jsx";
-import PptToPdf from "../pages/PptToPdf/PptToPdf.jsx";
-import ExcelToPdf from "../pages/ExcelToPdf/ExcelToPdf.jsx";
-import HtmlToPdf from "../pages/HtmlToPdf/HtmlToPdf.jsx";
-import PdfToJpg from "../pages/PdfToJpg/PdfToJpg.jsx";
-import AddPageNumbers from "../pages/AddPageNumbers/AddPageNumbers.jsx";
-import AddWatermarkPdf from "../pages/AddWatermarkPdf/AddWatermarkPdf.jsx";
-import ProtectPdf from "../pages/ProtectPdf/ProtectPdf.jsx";
-import SignPdf from "../pages/SignPdf/SignPdf.jsx";
-import CompressImage from "../pages/CompressImage/CompressImage.jsx";
-import MemeGenerator from "../pages/MemeGenerator/MemeGenerator.jsx";
-import PhotoEditor from "../pages/PhotoEditor/PhotoEditor.jsx";
-import ResizeImage from "../pages/ResizeImage/ResizeImage.jsx";
-import CropImage from "../pages/CropImage/CropImage.jsx";
-import RotateImage from "../pages/RotateImage/RotateImage.jsx";
-import ConvertToJpg from "../pages/ConvertToJpg/ConvertToJpg.jsx";
-import ConvertFromJpg from "../pages/ConvertFromJpg/ConvertFromJpg.jsx";
-import WatermarkImage from "../pages/WatermarkImage/WatermarkImage.jsx";
-import PrivacyNotice from "../pages/PrivacyNotice/PrivacyNotice.jsx";
-import TermsAndConditions from "../pages/TermsAndConditions/TermsAndConditions.jsx";
-import ContactUs from "../pages/ContactUs/ContactUs.jsx";
-import ThankYou from "../pages/ThankYou/ThankYou.jsx";
+import Loader from "../components/Loader";
+
+const Dashboard = lazy(() => import("../pages/Dashboard"));
+const NotFound = lazy(() => import("../pages/NotFound"));
+const SignIn = lazy(() => import("../pages/SignIn"));
+const SignUp = lazy(() => import("../pages/SignUp"));
+const MergePdf = lazy(() => import("../pages/MergePdf/MergePdf.jsx"));
+const SplitPdf = lazy(() => import("../pages/SplitPdf/SplitPdf.jsx"));
+const RemovePages = lazy(() => import("../pages/RemovePages/RemovePages.jsx"));
+const ExtractPages = lazy(() => import("../pages/ExtractPages/ExtractPages.jsx"));
+const OrganizePdf = lazy(() => import("../pages/OrganizePdf/OrganizePdf.jsx"));
+const CompressPdf = lazy(() => import("../pages/CompressPdf/CompressPdf.jsx"));
+const RepairPdf = lazy(() => import("../pages/RepairPdf/RepairPdf.jsx"));
+const JpgToPdf = lazy(() => import("../pages/JpgToPdf/JpgToPdf.jsx"));
+const WordToPdf = lazy(() => import("../pages/WordToPdf/WordToPdf.jsx"));
+const PptToPdf = lazy(() => import("../pages/PptToPdf/PptToPdf.jsx"));
+const ExcelToPdf = lazy(() => import("../pages/ExcelToPdf/ExcelToPdf.jsx"));
+const HtmlToPdf = lazy(() => import("../pages/HtmlToPdf/HtmlToPdf.jsx"));
+const PdfToJpg = lazy(() => import("../pages/PdfToJpg/PdfToJpg.jsx"));
+const AddPageNumbers = lazy(() => import("../pages/AddPageNumbers/AddPageNumbers.jsx"));
+const AddWatermarkPdf = lazy(() => import("../pages/AddWatermarkPdf/AddWatermarkPdf.jsx"));
+const ProtectPdf = lazy(() => import("../pages/ProtectPdf/ProtectPdf.jsx"));
+const SignPdf = lazy(() => import("../pages/SignPdf/SignPdf.jsx"));
+const CompressImage = lazy(() => import("../pages/CompressImage/CompressImage.jsx"));
+const MemeGenerator = lazy(() => import("../pages/MemeGenerator/MemeGenerator.jsx"));
+const PhotoEditor = lazy(() => import("../pages/PhotoEditor/PhotoEditor.jsx"));
+const ResizeImage = lazy(() => import("../pages/ResizeImage/ResizeImage.jsx"));
+const CropImage = lazy(() => import("../pages/CropImage/CropImage.jsx"));
+const RotateImage = lazy(() => import("../pages/RotateImage/RotateImage.jsx"));
+const ConvertToJpg = lazy(() => import("../pages/ConvertToJpg/ConvertToJpg.jsx"));
+const ConvertFromJpg = lazy(() => import("../pages/ConvertFromJpg/ConvertFromJpg.jsx"));
+const WatermarkImage = lazy(() => import("../pages/WatermarkImage/WatermarkImage.jsx"));
+const PrivacyNotice = lazy(() => import("../pages/PrivacyNotice/PrivacyNotice.jsx"));
+const TermsAndConditions = lazy(() => import("../pages/TermsAndConditions/TermsAndConditions.jsx"));
+const ContactUs = lazy(() => import("../pages/ContactUs/ContactUs.jsx"));
+const ThankYou = lazy(() => import("../pages/ThankYou/ThankYou.jsx"));
 
 const router = createBrowserRouter(
   [
@@ -44,141 +47,141 @@ const router = createBrowserRouter(
       children: [
         {
           index: true,
-          element: <Dashboard />,
+          element: <Suspense fallback={<Loader />}><Dashboard /></Suspense>,
         },
         {
           path: "merge-pdf",
-          element: <MergePdf />,
+          element: <Suspense fallback={<Loader />}><MergePdf /></Suspense>,
         },
         {
           path: "split-pdf",
-          element: <SplitPdf />,
+          element: <Suspense fallback={<Loader />}><SplitPdf /></Suspense>,
         },
         {
           path: "remove-pages",
-          element: <RemovePages />,
+          element: <Suspense fallback={<Loader />}><RemovePages /></Suspense>,
         },
         {
           path: "extract-pages",
-          element: <ExtractPages />,
+          element: <Suspense fallback={<Loader />}><ExtractPages /></Suspense>,
         },
         {
           path: "organize-pdf",
-          element: <OrganizePdf />,
+          element: <Suspense fallback={<Loader />}><OrganizePdf /></Suspense>,
         },
         {
           path: "compress-pdf",
-          element: <CompressPdf />,
+          element: <Suspense fallback={<Loader />}><CompressPdf /></Suspense>,
         },
         {
           path: "repair-pdf",
-          element: <RepairPdf />,
+          element: <Suspense fallback={<Loader />}><RepairPdf /></Suspense>,
         },
         {
           path: "jpg-to-pdf",
-          element: <JpgToPdf />,
+          element: <Suspense fallback={<Loader />}><JpgToPdf /></Suspense>,
         },
         {
           path: "word-to-pdf",
-          element: <WordToPdf />,
+          element: <Suspense fallback={<Loader />}><WordToPdf /></Suspense>,
         },
         {
           path: "powerpoint-to-pdf",
-          element: <PptToPdf />,
+          element: <Suspense fallback={<Loader />}><PptToPdf /></Suspense>,
         },
         {
           path: "excel-to-pdf",
-          element: <ExcelToPdf />,
+          element: <Suspense fallback={<Loader />}><ExcelToPdf /></Suspense>,
         },
         {
           path: "html-to-pdf",
-          element: <HtmlToPdf />,
+          element: <Suspense fallback={<Loader />}><HtmlToPdf /></Suspense>,
         },
         {
           path: "pdf-to-jpg",
-          element: <PdfToJpg />,
+          element: <Suspense fallback={<Loader />}><PdfToJpg /></Suspense>,
         },
         {
           path: "add-page-numbers",
-          element: <AddPageNumbers />,
+          element: <Suspense fallback={<Loader />}><AddPageNumbers /></Suspense>,
         },
         {
           path: "add-watermark-pdf",
-          element: <AddWatermarkPdf />,
+          element: <Suspense fallback={<Loader />}><AddWatermarkPdf /></Suspense>,
         },
         {
           path: "watermark-image",
-          element: <WatermarkImage />,
+          element: <Suspense fallback={<Loader />}><WatermarkImage /></Suspense>,
         },
         {
           path: "protect-pdf",
-          element: <ProtectPdf />,
+          element: <Suspense fallback={<Loader />}><ProtectPdf /></Suspense>,
         },
         {
           path: "sign-pdf",
-          element: <SignPdf />,
+          element: <Suspense fallback={<Loader />}><SignPdf /></Suspense>,
         },
         {
           path: "compress-image",
-          element: <CompressImage />,
+          element: <Suspense fallback={<Loader />}><CompressImage /></Suspense>,
         },
         {
           path: "resize-image",
-          element: <ResizeImage />,
+          element: <Suspense fallback={<Loader />}><ResizeImage /></Suspense>,
         },
         {
           path: "crop-image",
-          element: <CropImage />,
+          element: <Suspense fallback={<Loader />}><CropImage /></Suspense>,
         },
         {
           path: "rotate-image",
-          element: <RotateImage />,
+          element: <Suspense fallback={<Loader />}><RotateImage /></Suspense>,
         },
         {
           path: "convert-to-jpg",
-          element: <ConvertToJpg />,
+          element: <Suspense fallback={<Loader />}><ConvertToJpg /></Suspense>,
         },
         {
           path: "convert-from-jpg",
-          element: <ConvertFromJpg />,
+          element: <Suspense fallback={<Loader />}><ConvertFromJpg /></Suspense>,
         },
         {
           path: "meme-generator",
-          element: <MemeGenerator />,
+          element: <Suspense fallback={<Loader />}><MemeGenerator /></Suspense>,
         },
         {
           path: "photo-editor",
-          element: <PhotoEditor />,
+          element: <Suspense fallback={<Loader />}><PhotoEditor /></Suspense>,
         },
         {
           path: "privacy-notice",
-          element: <PrivacyNotice />,
+          element: <Suspense fallback={<Loader />}><PrivacyNotice /></Suspense>,
         },
         {
           path: "terms-and-conditions",
-          element: <TermsAndConditions />,
+          element: <Suspense fallback={<Loader />}><TermsAndConditions /></Suspense>,
         },
         {
           path: "contact-us",
-          element: <ContactUs />,
+          element: <Suspense fallback={<Loader />}><ContactUs /></Suspense>,
         },
         {
           path: "thank-you",
-          element: <ThankYou />,
+          element: <Suspense fallback={<Loader />}><ThankYou /></Suspense>,
         },
         {
           path: "*",
-          element: <NotFound />,
+          element: <Suspense fallback={<Loader />}><NotFound /></Suspense>,
         },
       ],
     },
     {
       path: "/signin",
-      element: <SignIn />,
+      element: <Suspense fallback={<Loader />}><SignIn /></Suspense>,
     },
     {
       path: "/signup",
-      element: <SignUp />,
+      element: <Suspense fallback={<Loader />}><SignUp /></Suspense>,
     },
   ],
   {

@@ -1,5 +1,6 @@
 
 import React, { useState, useCallback } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useDropzone } from 'react-dropzone';
 import { pdfjs } from 'react-pdf';
 import { Button, Spinner, Alert } from 'react-bootstrap';
@@ -97,6 +98,11 @@ const PdfToJpg = () => {
 
     return (
         <div className="pdf-to-jpg-container">
+            <Helmet>
+                 <title>PDF to JPG - Free Online PDF to Image Converter</title>
+                 <meta name="description" content="Convert your PDF files to high-quality JPG images for free. Our online tool quickly turns each PDF page into a separate image, perfect for sharing or editing." />
+                <link rel="canonical" href={`${window.location.origin}/pdf-to-jpg`} />
+            </Helmet>
             <div className="pdf-to-jpg-header">
                 <h1 className="pdf-to-jpg-title">PDF to JPG Converter</h1>
                 <p className="pdf-to-jpg-description">

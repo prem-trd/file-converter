@@ -1,5 +1,6 @@
 
 import React, { useState, useCallback } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useDropzone } from 'react-dropzone';
 import { FaFileImage, FaDownload, FaArrowLeft } from 'react-icons/fa';
 import './ConvertFromJpg.css';
@@ -63,6 +64,12 @@ const ConvertFromJpg = () => {
 
     return (
         <div className='convert-from-jpg-container'>
+            <Helmet>
+                <title>Convert from JPG - Free Online JPG to PNG, WebP, and GIF Converter</title>
+                <meta name="description" content="Easily convert your JPG images to other formats like PNG, WebP, or GIF for free. Our online converter is fast, secure, and easy to use."
+                />
+                <link rel="canonical" href={`${window.location.origin}/convert-from-jpg`} />
+            </Helmet>
             <div className='convert-from-jpg-header'>
                 <h1 className='convert-from-jpg-title'>Convert from JPG</h1>
                 <p className='convert-from-jpg-description'>Easily convert your JPG images to other formats like PNG or WebP.</p>

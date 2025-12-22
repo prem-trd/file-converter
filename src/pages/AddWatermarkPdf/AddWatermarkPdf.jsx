@@ -1,5 +1,6 @@
 
 import React, { useState, useCallback, useEffect, useRef } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useDropzone } from 'react-dropzone';
 import { PDFDocument, rgb, degrees, StandardFonts, BlendMode } from 'pdf-lib';
 import { Button, Spinner, Alert, Form, Row, Col, Tabs, Tab } from 'react-bootstrap';
@@ -226,6 +227,11 @@ const AddWatermarkPdf = () => {
 
     return (
         <div className="watermark-container">
+            <Helmet>
+                <title>Add Watermark to PDF - Online PDF Watermarking Tool</title>
+                <meta name="description" content="Easily add a text or image watermark to your PDF files. Customize the font, color, opacity, and position of your watermark. Free and secure." />
+                <link rel="canonical" href={`${window.location.origin}/add-watermark-pdf`} />
+            </Helmet>
             <div className="watermark-header">
                 <h1>Add Watermark to PDF</h1>
                 <p>Apply a text or image watermark to your PDF files with customizable options.</p>
@@ -256,7 +262,7 @@ const AddWatermarkPdf = () => {
                                         <Col sm={6}><Form.Control type="number" name="fontSize" value={textOptions.fontSize} onChange={handleTextOptionsChange} min="6" /></Col>
                                     </Form.Group>
                                     <Form.Group as={Row} className="mb-3">
-                                        <Form.Label column sm={4}>Pattern</Form.Label>
+.                                        <Form.Label column sm={4}>Pattern</Form.Label>
                                         <Col sm={8}>
                                             <Form.Select name="tiling" value={textOptions.tiling} onChange={handleTextOptionsChange}>
                                                 <option value="single">Single</option>

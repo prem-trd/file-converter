@@ -1,5 +1,6 @@
 
 import React, { useState, useCallback } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useDropzone } from 'react-dropzone';
 import Cropper from 'react-easy-crop';
 import { FaFileImage, FaDownload, FaTrash, FaUndo, FaRedo } from 'react-icons/fa';
@@ -68,6 +69,12 @@ const CropImage = () => {
 
   return (
     <div className="crop-image-container">
+      <Helmet>
+        <title>Crop Image Online - Free Image Cropper</title>
+        <meta name="description" content="Crop and resize your images online for free. Our easy-to-use image cropper lets you zoom, rotate, and select the perfect area to crop."
+        />
+        <link rel="canonical" href={`${window.location.origin}/crop-image`} />
+      </Helmet>
       <div className="crop-image-header">
         <h1 className="crop-image-title">Crop Image</h1>
         <p className="crop-image-description">Upload an image, drag the borders to create your desired crop, and download the result.</p>

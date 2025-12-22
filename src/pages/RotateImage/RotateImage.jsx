@@ -1,5 +1,6 @@
 
 import React, { useState, useCallback } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useDropzone } from 'react-dropzone';
 import { FaFileImage, FaDownload, FaTrash, FaUndo, FaRedo } from 'react-icons/fa';
 import './RotateImage.css';
@@ -62,6 +63,12 @@ const RotateImage = () => {
 
   return (
     <div className="rotate-image-container">
+        <Helmet>
+            <title>Rotate Image Online - Free Image Rotator</title>
+            <meta name="description" content="Easily rotate your images online for free. Upload an image, choose the rotation angle, and download the rotated image instantly."
+            />
+            <link rel="canonical" href={`${window.location.origin}/rotate-image`} />
+        </Helmet>
       <div className="rotate-image-header">
         <h1 className="rotate-image-title">Rotate Image</h1>
         <p className="rotate-image-description">Upload an image, rotate it as you wish, and download the result.</p>

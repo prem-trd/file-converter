@@ -1,5 +1,6 @@
 
 import React, { useState, useCallback } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useDropzone } from 'react-dropzone';
 import { PDFDocument } from 'pdf-lib';
 import { Button, Spinner, Alert } from 'react-bootstrap';
@@ -83,6 +84,11 @@ const RepairPdf = () => {
 
     return (
         <div className="repair-pdf-container">
+            <Helmet>
+                <title>Repair PDF - Fix Corrupted PDF Files Online</title>
+                <meta name="description" content="Attempt to repair corrupted or damaged PDF files online for free. Our tool tries to reconstruct your PDF to recover as much data as possible." />
+                <link rel="canonical" href={`${window.location.origin}/repair-pdf`} />
+            </Helmet>
             <div className="repair-pdf-header">
                 <h1 className="repair-pdf-title">Repair PDF</h1>
                 <p className="repair-pdf-description">

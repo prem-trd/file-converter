@@ -1,5 +1,6 @@
 
 import React, { useState, useCallback } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useDropzone } from 'react-dropzone';
 import { Button, Alert, Spinner, Form } from 'react-bootstrap';
 import { FaFilePdf, FaTrash } from 'react-icons/fa';
@@ -121,6 +122,11 @@ const ExtractPages = () => {
 
   return (
     <div className="extract-pages-container">
+        <Helmet>
+            <title>Extract PDF Pages - Select and Save Pages from your PDF</title>
+            <meta name="description" content="Easily extract specific pages from your PDF documents online for free. Select the pages you want to keep and create a new PDF with just those pages." />
+            <link rel="canonical" href={`${window.location.origin}/extract-pages`} />
+      </Helmet>
       <div className="extract-pages-header">
         <h1 className="extract-pages-title">Extract PDF Pages</h1>
         <p className="extract-pages-description">Select and extract specific pages from your PDF file.</p>
