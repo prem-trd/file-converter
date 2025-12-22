@@ -82,78 +82,79 @@ const ConvertToJpg = () => {
                 <h1 className='convert-to-jpg-title'>Convert to JPG</h1>
                 <p className='convert-to-jpg-description'>Easily convert your images to JPG format, with options for background color and SVG stroke color.</p>
             </div>
-
-            {!file ? (
-                <div {...getRootProps({ className: `dropzone ${isDragActive ? 'drag-over' : ''}` })}>
-                    <input {...getInputProps()} />
-                    <div className="dropzone-content">
-                        <FaFileImage size={50} />
-                        <p>Drag & drop an image here, or click to select a file</p>
-                    </div>
-                </div>
-            ) : (
-                <div className="convert-to-jpg-main">
-                    <div className="convert-to-jpg-image-preview-container" style={{ backgroundColor }}>
-                        <img
-                            src={getSvgPreview()}
-                            alt="Preview"
-                            className='convert-to-jpg-image-preview'
-                        />
-                    </div>
-
-                    <div className="convert-to-jpg-sidebar">
-
-                        {isSvg && (<>
-                            <div className='convert-to-jpg-settings-group'>
-                                <label>Background Color:</label>
-                                <div className='convert-to-jpg-color-picker-container'>
-                                    <div className='convert-to-jpg-color-picker-wrapper'>
-                                        <div className='convert-to-jpg-color-picker-swatch' style={{ backgroundColor }}></div>
-                                        <input
-                                            type='color'
-                                            value={backgroundColor}
-                                            onChange={(e) => setBackgroundColor(e.target.value)}
-                                            className='convert-to-jpg-color-picker-input'
-                                        />
-                                    </div>
-                                    <span className='convert-to-jpg-color-hex'>{backgroundColor}</span>
-                                </div>
-                            </div>
-                            <div className='convert-to-jpg-settings-group'>
-                                <label>SVG Stroke Color:</label>
-                                <div className='convert-to-jpg-color-picker-container'>
-                                    <div className='convert-to-jpg-color-picker-wrapper'>
-                                        <div className='convert-to-jpg-color-picker-swatch' style={{ backgroundColor: svgStrokeColor }}></div>
-                                        <input
-                                            type='color'
-                                            value={svgStrokeColor}
-                                            onChange={(e) => setSvgStrokeColor(e.target.value)}
-                                            className='convert-to-jpg-color-picker-input'
-                                        />
-                                    </div>
-                                    <span className='convert-to-jpg-color-hex'>{svgStrokeColor}</span>
-                                </div>
-                            </div>
-                        </>
-                        )}
-
-                        <div className="convert-to-jpg-sidebar-buttons">
-                            <button
-                                className='convert-to-jpg-download-button'
-                                onClick={handleDownload}
-                            >
-                                <FaDownload /> Download as JPG
-                            </button>
-                            <button
-                                className='convert-to-jpg-back-button'
-                                onClick={() => setFile(null)}
-                            >
-                                <FaArrowLeft /> Back
-                            </button>
+            <div className='convert-to-jpg-content'>
+                {!file ? (
+                    <div {...getRootProps({ className: `dropzone ${isDragActive ? 'drag-over' : ''}` })}>
+                        <input {...getInputProps()} />
+                        <div className="dropzone-content">
+                            <FaFileImage size={50} />
+                            <p>Drag & drop an image here, or click to select a file</p>
                         </div>
                     </div>
-                </div>
-            )}
+                ) : (
+                    <div className="convert-to-jpg-main">
+                        <div className="convert-to-jpg-image-preview-container" style={{ backgroundColor }}>
+                            <img
+                                src={getSvgPreview()}
+                                alt="Preview"
+                                className='convert-to-jpg-image-preview'
+                            />
+                        </div>
+
+                        <div className="convert-to-jpg-sidebar">
+
+                            {isSvg && (<>
+                                <div className='convert-to-jpg-settings-group'>
+                                    <label>Background Color:</label>
+                                    <div className='convert-to-jpg-color-picker-container'>
+                                        <div className='convert-to-jpg-color-picker-wrapper'>
+                                            <div className='convert-to-jpg-color-picker-swatch' style={{ backgroundColor }}></div>
+                                            <input
+                                                type='color'
+                                                value={backgroundColor}
+                                                onChange={(e) => setBackgroundColor(e.target.value)}
+                                                className='convert-to-jpg-color-picker-input'
+                                            />
+                                        </div>
+                                        <span className='convert-to-jpg-color-hex'>{backgroundColor}</span>
+                                    </div>
+                                </div>
+                                <div className='convert-to-jpg-settings-group'>
+                                    <label>SVG Stroke Color:</label>
+                                    <div className='convert-to-jpg-color-picker-container'>
+                                        <div className='convert-to-jpg-color-picker-wrapper'>
+                                            <div className='convert-to-jpg-color-picker-swatch' style={{ backgroundColor: svgStrokeColor }}></div>
+                                            <input
+                                                type='color'
+                                                value={svgStrokeColor}
+                                                onChange={(e) => setSvgStrokeColor(e.target.value)}
+                                                className='convert-to-jpg-color-picker-input'
+                                            />
+                                        </div>
+                                        <span className='convert-to-jpg-color-hex'>{svgStrokeColor}</span>
+                                    </div>
+                                </div>
+                            </>
+                            )}
+
+                            <div className="convert-to-jpg-sidebar-buttons">
+                                <button
+                                    className='convert-to-jpg-download-button'
+                                    onClick={handleDownload}
+                                >
+                                    <FaDownload /> Download as JPG
+                                </button>
+                                <button
+                                    className='convert-to-jpg-back-button'
+                                    onClick={() => setFile(null)}
+                                >
+                                    <FaArrowLeft /> Back
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )}
+            </div>
         </div>
     );
 };

@@ -8,11 +8,15 @@ import {
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { pdfToolCategories, imageToolCategories } from '../../data/tools.jsx';
+import useMediaQuery from '../../hooks/useMediaQuery.jsx';
 import './Header.css';
+import logo from '/logo.png';
 
 const ToolsDropdown = ({ title, toolCategories, activeKey }) => {
+  const isMobile = useMediaQuery('(max-width: 992px)');
+
   return (
-    <Nav.Menu title={title} trigger="hover">
+    <Nav.Menu title={title} trigger={isMobile ? 'click' : 'hover'}>
       <div className="tools-dropdown-container">
         {toolCategories.map(category => {
           const isCurrentCategoryActive = category.tools.some(tool => `/${tool.key}` === activeKey);
@@ -59,8 +63,8 @@ const CustomNavbar = ({ activeKey, user, ...props }) => {
 
   return (
     <Navbar {...props} className="custom-navbar">
-      <Navbar.Brand as={Link} to="/" style={{ padding: '0px',margin:'5px 0px' }}>
-        <img src="/logo.png" alt="logo" height="60" width={80} />
+      <Navbar.Brand as={Link} to="/" style={{ padding: '0px', margin: '5px 0px' }}>
+        <img src={logo} alt="logo" height="60" width={80} />
       </Navbar.Brand>
       <Nav activeKey={activeKey} style={{ flex: 1 }}>
         <ToolsDropdown title="ALL PDF TOOLS" toolCategories={pdfToolCategories} activeKey={activeKey} />

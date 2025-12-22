@@ -22,20 +22,29 @@ body {
 }
 
 .dropzone {
-  border: 2px dashed #495057;
-  border-radius: 12px;
-  padding: 60px 30px;
-  background-color: #FFFFFF;
-  color: #495057;
-  transition: border-color 0.3s;
+  border: 2px dashed var(--secondary-text-color);
+  border-radius: 8px;
+  padding: 40px;
+  background-color: var(--secondary-bg-color);
+  transition: border-color 0.3s, background-color 0.3s, color 0.3s;
   cursor: pointer;
   text-align: center;
-  width: 100%;
-  max-width: 800px;
+  margin-bottom: 30px;
+  color: var(--secondary-text-color);
 }
 
-.dropzone:hover {
-  border-color: #007bff;
+.dropzone:hover,
+.dropzone.drag-over {
+  border-color: var(--accent-color);
+  background-color: #3a5067;
+  color: var(--primary-text-color);
+}
+
+.dropzone-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
 }
 
 .file-item {

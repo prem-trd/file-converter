@@ -44,7 +44,7 @@ const RemovePages = () => {
     }
   }, []);
 
-  const { getRootProps, getInputProps } = useDropzone({ onDrop, accept: { 'application/pdf': ['.pdf'] }, maxFiles: 1 });
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop, accept: { 'application/pdf': ['.pdf'] }, maxFiles: 1 });
 
   const handleCheckboxChange = (pageNumber, checked) => {
     const newPagesToRemove = new Set(pagesToRemove);
@@ -138,10 +138,10 @@ const RemovePages = () => {
 
   return (
     <div className="remove-pages-container">
-        <Helmet>
-            <title>Remove PDF Pages - Delete Pages from PDFs Online</title>
-            <meta name="description" content="Easily remove specific pages from your PDF documents online for free. Select the pages you want to delete and create a new, streamlined PDF." />
-            <link rel="canonical" href={`${window.location.origin}/remove-pages`} />
+      <Helmet>
+        <title>Remove PDF Pages - Delete Pages from PDFs Online</title>
+        <meta name="description" content="Easily remove specific pages from your PDF documents online for free. Select the pages you want to delete and create a new, streamlined PDF." />
+        <link rel="canonical" href={`${window.location.origin}/remove-pages`} />
       </Helmet>
       <div className="remove-pages-header">
         <h1 className="remove-pages-title">Remove PDF Pages</h1>
@@ -153,7 +153,7 @@ const RemovePages = () => {
         {success && <Alert variant="success" onClose={() => setSuccess(null)} dismissible>{success}</Alert>}
 
         {!file ? (
-          <div {...getRootProps({ className: 'dropzone' })}>
+          <div {...getRootProps({ className: `dropzone ${isDragActive ? 'drag-over' : ''}` })}>
             <input {...getInputProps()} />
             <div className="dropzone-content">
               <FaFilePdf size={48} />

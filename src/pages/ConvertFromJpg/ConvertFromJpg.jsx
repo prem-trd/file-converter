@@ -74,58 +74,59 @@ const ConvertFromJpg = () => {
                 <h1 className='convert-from-jpg-title'>Convert from JPG</h1>
                 <p className='convert-from-jpg-description'>Easily convert your JPG images to other formats like PNG or WebP.</p>
             </div>
-
-            {!file ? (
-                <div {...getRootProps({ className: `dropzone ${isDragActive ? 'drag-over' : ''} ${error ? 'error' : ''}` })}>
-                    <input {...getInputProps()} />
-                    <div className="dropzone-content">
-                        <FaFileImage size={50} />
-                        <p>Drag & drop a JPG image here, or click to select a file</p>
-                        {error && <p className="convert-from-jpg-error-message">{error}</p>}
-                    </div>
-                </div>
-            ) : (
-                <div className="convert-from-jpg-main">
-                    <div className="convert-from-jpg-image-preview-container">
-                        <img
-                            src={file.preview}
-                            alt="Preview"
-                            className='convert-from-jpg-image-preview'
-                        />
-                    </div>
-
-                    <div className="convert-from-jpg-sidebar">
-                        <div className='convert-from-jpg-settings-group'>
-                            <label htmlFor='outputFormat'>Output Format:</label>
-                            <select
-                                id='outputFormat'
-                                value={outputFormat}
-                                onChange={(e) => setOutputFormat(e.target.value)}
-                                className='convert-from-jpg-format-select'
-                            >
-                                <option value='png'>PNG</option>
-                                <option value='webp'>WebP</option>
-                                <option value='gif'>GIF</option>
-                            </select>
-                        </div>
-
-                        <div className="convert-from-jpg-sidebar-buttons">
-                            <button
-                                className='convert-from-jpg-download-button'
-                                onClick={handleDownload}
-                            >
-                                <FaDownload /> Download as {outputFormat.toUpperCase()}
-                            </button>
-                            <button
-                                className='convert-from-jpg-back-button'
-                                onClick={handleBack}
-                            >
-                                <FaArrowLeft /> Back
-                            </button>
+            <div className="convert-from-jpg-content">
+                {!file ? (
+                    <div {...getRootProps({ className: `dropzone ${isDragActive ? 'drag-over' : ''} ${error ? 'error' : ''}` })}>
+                        <input {...getInputProps()} />
+                        <div className="dropzone-content">
+                            <FaFileImage size={50} />
+                            <p>Drag & drop a JPG image here, or click to select a file</p>
+                            {error && <p className="convert-from-jpg-error-message">{error}</p>}
                         </div>
                     </div>
-                </div>
-            )}
+                ) : (
+                    <div className="convert-from-jpg-main">
+                        <div className="convert-from-jpg-image-preview-container">
+                            <img
+                                src={file.preview}
+                                alt="Preview"
+                                className='convert-from-jpg-image-preview'
+                            />
+                        </div>
+
+                        <div className="convert-from-jpg-sidebar">
+                            <div className='convert-from-jpg-settings-group'>
+                                <label htmlFor='outputFormat'>Output Format:</label>
+                                <select
+                                    id='outputFormat'
+                                    value={outputFormat}
+                                    onChange={(e) => setOutputFormat(e.target.value)}
+                                    className='convert-from-jpg-format-select'
+                                >
+                                    <option value='png'>PNG</option>
+                                    <option value='webp'>WebP</option>
+                                    <option value='gif'>GIF</option>
+                                </select>
+                            </div>
+
+                            <div className="convert-from-jpg-sidebar-buttons">
+                                <button
+                                    className='convert-from-jpg-download-button'
+                                    onClick={handleDownload}
+                                >
+                                    <FaDownload /> Download as {outputFormat.toUpperCase()}
+                                </button>
+                                <button
+                                    className='convert-from-jpg-back-button'
+                                    onClick={handleBack}
+                                >
+                                    <FaArrowLeft /> Back
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )}
+            </div>
         </div>
     );
 };

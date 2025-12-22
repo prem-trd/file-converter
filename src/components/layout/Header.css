@@ -99,3 +99,16 @@
   white-space: nowrap;
   /* Prevent tool labels from wrapping */
 }
+
+@media (max-width: 992px) {
+  .tools-dropdown-container {
+    flex-direction: column;
+    gap: 20px;
+    max-height: 70vh;
+    /* Limit height on smaller screens */
+    overflow-y: auto;
+    /* Enable vertical scroll */
+    overflow-x: hidden;
+    /* Disable horizontal scroll */
+  }
+}
