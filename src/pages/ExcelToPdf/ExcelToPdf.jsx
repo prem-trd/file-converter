@@ -1,5 +1,6 @@
 
 import React, { useState, useCallback } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useDropzone } from 'react-dropzone';
 import { Button, Spinner, Alert } from 'react-bootstrap';
 import { FaFileExcel, FaTrashAlt } from 'react-icons/fa';
@@ -119,6 +120,11 @@ const ExcelToPdf = () => {
 
     return (
         <div className="excel-to-pdf-container">
+            <Helmet>
+                <title>Excel to PDF - Convert XLSX to PDF Online for Free</title>
+                <meta name="description" content="Easily convert your Microsoft Excel (.xlsx) spreadsheets to high-quality PDF files. Our online converter is fast, free, and preserves your formatting." />
+                <link rel="canonical" href={`${window.location.origin}/excel-to-pdf`} />
+            </Helmet>
             <div className="excel-to-pdf-header">
                 <h1 className="excel-to-pdf-title">Excel to PDF Converter</h1>
                 <p className="excel-to-pdf-description">

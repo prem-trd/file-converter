@@ -1,5 +1,6 @@
 
 import React, { useState, useCallback } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useDropzone } from 'react-dropzone';
 import { Button, Alert, Spinner, Form } from 'react-bootstrap';
 import { FaFilePdf, FaTrash } from 'react-icons/fa';
@@ -137,6 +138,11 @@ const RemovePages = () => {
 
   return (
     <div className="remove-pages-container">
+        <Helmet>
+            <title>Remove PDF Pages - Delete Pages from PDFs Online</title>
+            <meta name="description" content="Easily remove specific pages from your PDF documents online for free. Select the pages you want to delete and create a new, streamlined PDF." />
+            <link rel="canonical" href={`${window.location.origin}/remove-pages`} />
+      </Helmet>
       <div className="remove-pages-header">
         <h1 className="remove-pages-title">Remove PDF Pages</h1>
         <p className="remove-pages-description">Select and remove specific pages from your PDF file.</p>

@@ -1,5 +1,6 @@
 
 import React, { useState, useCallback, useEffect, useRef } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useDropzone } from 'react-dropzone';
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 import { Button, Spinner, Alert, Form, Row, Col } from 'react-bootstrap';
@@ -197,6 +198,11 @@ const AddPageNumbers = () => {
 
     return (
         <div className="page-numbers-container">
+            <Helmet>
+                <title>Add Page Numbers to PDF - Easily Number Your PDF Pages</title>
+                <meta name="description" content="Easily add page numbers to your PDF documents online for free. Customize the position, format, font, and style of your page numbers with a live preview." />
+                <link rel="canonical" href={`${window.location.origin}/add-page-numbers`} />
+            </Helmet>
             <div className="page-numbers-header">
                 <h1 className="page-numbers-title">Add Page Numbers to PDF</h1>
                 <p className="page-numbers-description">Easily insert page numbers into your PDF file. Customize position, format, and more.</p>

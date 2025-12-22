@@ -1,5 +1,6 @@
 
 import React, { useState, useCallback } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useDropzone } from 'react-dropzone';
 import { Button, Spinner, Alert } from 'react-bootstrap';
 import { FaFilePowerpoint, FaTrashAlt } from 'react-icons/fa';
@@ -112,6 +113,11 @@ const PptToPdf = () => {
 
     return (
         <div className="ppt-to-pdf-container">
+            <Helmet>
+                <title>PowerPoint to PDF Converter - Free Online Tool</title>
+                <meta name="description" content="Convert your PowerPoint presentations (.pptx) to PDF for free. This tool extracts images from your slides and compiles them into a single PDF file." />
+                <link rel="canonical" href={`${window.location.origin}/powerpoint-to-pdf`} />
+            </Helmet>
             <div className="ppt-to-pdf-header">
                 <h1 className="ppt-to-pdf-title">PowerPoint to PDF Converter</h1>
                 <p className="ppt-to-pdf-description">

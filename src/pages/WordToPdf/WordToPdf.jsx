@@ -1,5 +1,6 @@
 
 import React, { useState, useCallback } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useDropzone } from 'react-dropzone';
 import { Button, Spinner, Alert } from 'react-bootstrap';
 import { FaFileWord, FaTrashAlt } from 'react-icons/fa';
@@ -80,6 +81,11 @@ const WordToPdf = () => {
 
     return (
         <div className="word-to-pdf-container">
+            <Helmet>
+                <title>Word to PDF - Convert DOCX to PDF Online for Free</title>
+                <meta name="description" content="Easily convert your Microsoft Word (.docx) documents to high-quality PDF files. Our online converter is fast, free, and easy to use." />
+                <link rel="canonical" href={`${window.location.origin}/word-to-pdf`} />
+            </Helmet>
             <div className="word-to-pdf-header">
                 <h1 className="word-to-pdf-title">Word to PDF Converter</h1>
                 <p className="word-to-pdf-description">

@@ -1,9 +1,15 @@
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
 import './PrivacyNotice.css';
 
 const PrivacyNotice = () => {
   return (
     <div className="privacy-container">
+      <Helmet>
+        <title>Privacy Policy - Image & PDF Tools</title>
+        <meta name="description" content="Read the privacy policy for Image & PDF Tools. We are committed to protecting your privacy and handling your data responsibly." />
+        <link rel="canonical" href={`${window.location.origin}/privacy-policy`} />
+      </Helmet>
       <h1>Privacy Policy</h1>
 
       <p>

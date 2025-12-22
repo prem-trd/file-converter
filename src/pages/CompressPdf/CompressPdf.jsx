@@ -1,5 +1,6 @@
 
 import React, { useState, useCallback } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useDropzone } from 'react-dropzone';
 import { Button, Alert, Spinner } from 'react-bootstrap';
 import { FaFilePdf, FaTrash } from 'react-icons/fa';
@@ -91,6 +92,11 @@ const CompressPdf = () => {
 
   return (
     <div className="compress-pdf-container">
+      <Helmet>
+        <title>Compress PDF - Reduce PDF File Size Online for Free</title>
+        <meta name="description" content="Reduce the file size of your PDF documents quickly and easily. Our online PDF compressor is free and maintains the quality of your files." />
+        <link rel="canonical" href={`${window.location.origin}/compress-pdf`} />
+      </Helmet>
       <div className="compress-pdf-header">
         <h1 className="compress-pdf-title">Compress PDF</h1>
         <p className="compress-pdf-description">Reduce the file size of your PDF files.</p>

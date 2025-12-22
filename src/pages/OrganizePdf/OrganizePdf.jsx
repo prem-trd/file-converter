@@ -1,5 +1,6 @@
 
 import React, { useState, useCallback } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useDropzone } from 'react-dropzone';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -164,6 +165,11 @@ const OrganizePdf = () => {
     return (
         <DndProvider backend={HTML5Backend}>
             <div className="organize-pdf-container">
+                <Helmet>
+                    <title>Organize PDF Pages - Reorder, Rotate, and Delete PDF Pages</title>
+                    <meta name="description" content="Easily organize your PDF files online. Drag and drop to reorder pages, rotate pages, and delete pages from your PDF. Create a perfectly organized document for free." />
+                    <link rel="canonical" href={`${window.location.origin}/organize-pdf`} />
+                </Helmet>
                 <div className="organize-pdf-header">
                     <h1 className="organize-pdf-title">Organize PDF Pages</h1>
                     <p className="organize-pdf-description">

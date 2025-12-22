@@ -1,5 +1,6 @@
 
 import React, { useState, useCallback } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useDropzone } from 'react-dropzone';
 import { Form, Row, Col, Spinner } from 'react-bootstrap';
 import imageCompression from 'browser-image-compression';
@@ -91,6 +92,11 @@ const CompressImage = () => {
 
     return (
         <div className="compress-image-container">
+            <Helmet>
+                <title>Compress Image - Online Image Compressor to Reduce File Size</title>
+                <meta name="description" content="Easily compress your images online to reduce their file size without losing quality. Our free image compressor works with JPG, PNG, and other formats." />
+                <link rel="canonical" href={`${window.location.origin}/compress-image`} />
+            </Helmet>
             <div className="compress-image-header">
                 <h1 className="compress-image-title">Image Compressor</h1>
                 <p className="compress-image-description">Reduce the file size of your images with our easy-to-use compression tool.</p>

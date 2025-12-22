@@ -1,5 +1,6 @@
 
 import React, { useState, useCallback } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useDropzone } from 'react-dropzone';
 import { FaFileImage, FaDownload, FaArrowLeft } from 'react-icons/fa';
 import './ConvertToJpg.css';
@@ -71,6 +72,12 @@ const ConvertToJpg = () => {
 
     return (
         <div className='convert-to-jpg-container'>
+            <Helmet>
+                <title>Convert to JPG - Free Online Image to JPG Converter</title>
+                <meta name="description" content="Easily convert your images to JPG format online for free. Our tool supports various image formats and provides options for background color and SVG stroke customization."
+                />
+                <link rel="canonical" href={`${window.location.origin}/convert-to-jpg`} />
+            </Helmet>
             <div className='convert-to-jpg-header'>
                 <h1 className='convert-to-jpg-title'>Convert to JPG</h1>
                 <p className='convert-to-jpg-description'>Easily convert your images to JPG format, with options for background color and SVG stroke color.</p>

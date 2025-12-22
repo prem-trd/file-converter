@@ -1,5 +1,6 @@
 
 import React, { useState, useCallback, useRef, useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useDropzone } from 'react-dropzone';
 import { FaFileImage, FaDownload, FaArrowLeft, FaFont, FaImage } from 'react-icons/fa';
 import './WatermarkImage.css';
@@ -144,6 +145,11 @@ const WatermarkImage = () => {
 
     return (
         <div className='watermark-image-container'>
+            <Helmet>
+                <title>Watermark Image - Free Online Image Watermarking Tool</title>
+                <meta name="description" content="Easily add a text or image watermark to your images online for free. Customize opacity, rotation, position, and tiling to protect your images." />
+                <link rel="canonical" href={`${window.location.origin}/watermark-image`} />
+            </Helmet>
             <div className='watermark-image-header'>
                 <h1 className='watermark-image-title'>Watermark Image</h1>
                 <p className='watermark-image-description'>Add a text or image watermark to your images with customizable options.</p>

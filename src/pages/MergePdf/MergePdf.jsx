@@ -1,5 +1,6 @@
 
 import React, { useState, useCallback } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useDropzone } from 'react-dropzone';
 import { PDFDocument } from 'pdf-lib';
 import { Button, IconButton, List } from 'rsuite';
@@ -78,6 +79,11 @@ const MergePdf = () => {
 
   return (
     <div className="merge-pdf-container">
+      <Helmet>
+        <title>Merge PDF - Combine PDF Files Online for Free</title>
+        <meta name="description" content="Easily merge multiple PDF files into one document. Drag, drop, reorder, and combine your PDFs online for free with our easy-to-use tool." />
+        <link rel="canonical" href={`${window.location.origin}/merge-pdf`} />
+      </Helmet>
       <div className="merge-pdf-header">
         <h1 className="merge-pdf-title">Merge PDF Files</h1>
         <p className="merge-pdf-description">

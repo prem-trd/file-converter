@@ -1,5 +1,6 @@
 
 import React, { useState, useCallback } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useDropzone } from 'react-dropzone';
 import { Button, Spinner, Alert } from 'react-bootstrap';
 import { FaFileCode, FaTrashAlt, FaExclamationTriangle } from 'react-icons/fa';
@@ -128,6 +129,11 @@ const HtmlToPdf = () => {
 
     return (
         <div className="html-to-pdf-container">
+            <Helmet>
+                <title>HTML to PDF Converter - Free Online Tool</title>
+                <meta name="description" content="Convert your HTML files to high-quality PDF documents for free. Our online tool accurately renders your HTML, including CSS and images, into a downloadable PDF." />
+                <link rel="canonical" href={`${window.location.origin}/html-to-pdf`} />
+            </Helmet>
             <div className="html-to-pdf-header">
                 <h1 className="html-to-pdf-title">HTML File to PDF</h1>
                 <Alert variant="warning" className="mt-3">

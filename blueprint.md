@@ -23,7 +23,13 @@ This project is a web-based utility application offering a comprehensive suite o
 
 -   **JPG to PDF:** Convert JPG images into a PDF document.
 -   **WORD to PDF:** Convert Microsoft Word documents to PDF.
+-   **PowerPoint to PDF:** Convert Microsoft PowerPoint documents to PDF.
 -   **EXCEL to PDF:** Convert Microsoft Excel spreadsheets to PDF.
+-   **HTML to PDF:** Convert HTML files to PDF.
+
+### Conversion from PDF
+
+-   **PDF to JPG:** Convert PDF pages to JPG images.
 
 ### PDF Editing
 
@@ -32,6 +38,7 @@ This project is a web-based utility application offering a comprehensive suite o
 
 ### PDF Security
 
+-   **Protect PDF:** Add a password to a PDF.
 -   **Sign PDF:** Add a digital signature to a PDF.
 
 ## Implemented Image Tools
@@ -62,18 +69,14 @@ This project is a web-based utility application offering a comprehensive suite o
 
 ---
 
-## Latest Change: Footer Simplification
+## Latest Change: Code Refactoring and Cleanup
 
 ### Objective
 
-To simplify the footer for a cleaner, more minimalist design suitable for an individual developer. The previous footer with social media links was replaced with a simple copyright notice and essential links.
+To improve code quality, remove redundancies, and ensure the project is clean and maintainable.
 
 ### Implementation Steps
 
-1.  **`Footer.jsx` Refactoring:**
-    *   The component at `src/components/layout/Footer.jsx` was updated.
-    *   The new structure consists of a copyright notice on the left and four links (Privacy Notice, Terms & Conditions, Imprint, Contact Us) on the right.
-
-2.  **`Footer.css` Styling Update:**
-    *   The CSS file at `src/components/layout/Footer.css` was updated to reflect the new design.
-    *   The new styling uses a light background (`#f8f9fa`), subtle text color (`#6c757d`), and a clean, horizontal layout using Flexbox, inspired by the user-provided image.
+1.  **`tools.jsx` Cleanup:** Updated `src/data/tools.jsx` to remove commented-out and unavailable tool definitions. This ensures the dashboard accurately reflects the application's implemented features.
+2.  **Redundant Component Removal:** Deleted the `src/pages/AddWatermark` directory and its contents (`AddWatermark.jsx`, `AddWatermark.css`). This component was a duplicate of the more feature-rich `AddWatermarkPdf.jsx`.
+3.  **Router Verification:** Confirmed that `src/router/index.jsx` correctly routes to the `AddWatermarkPdf` component and does not contain any broken links from the deleted component.

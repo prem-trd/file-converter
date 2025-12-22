@@ -1,5 +1,6 @@
 
 import React, { useState, useCallback } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useDropzone } from 'react-dropzone';
 import { Button, Message, toaster, Loader, Row, Col, IconButton, RadioGroup, Radio, InputNumber } from 'rsuite';
 import { VscFilePdf, VscTrash } from "react-icons/vsc";
@@ -152,6 +153,11 @@ const SignPdf = () => {
 
     return (
         <div className="sign-pdf-container">
+            <Helmet>
+                <title>Sign PDF Online - Add Your Signature to a PDF for Free</title>
+                <meta name="description" content="Easily sign your PDF documents online. Upload your PDF and an image of your signature, choose the placement, and download the signed file securely. No registration required." />
+                <link rel="canonical" href={`${window.location.origin}/sign-pdf`} />
+            </Helmet>
             <div className="sign-pdf-header">
                 <h1 className="sign-pdf-title">Sign PDF File</h1>
                 <p className="sign-pdf-description">

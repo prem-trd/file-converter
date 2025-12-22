@@ -1,5 +1,6 @@
 
 import React, { useState, useCallback, useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useDropzone } from 'react-dropzone';
 import { FaFileImage, FaDownload, FaTrash } from 'react-icons/fa';
 import './ResizeImage.css';
@@ -77,6 +78,12 @@ const ResizeImage = () => {
 
   return (
     <div className="resize-image-container">
+      <Helmet>
+        <title>Resize Image Online - Free Image Resizer Tool</title>
+        <meta name="description" content="Easily resize any image online for free. Specify the exact dimensions (width and height) and download the resized image instantly without losing quality."
+        />
+        <link rel="canonical" href={`${window.location.origin}/resize-image`} />
+      </Helmet>
       <div className="resize-image-header">
         <h1 className="resize-image-title">Resize Image</h1>
         <p className="resize-image-description">Easily resize your image to the perfect dimensions for any project.</p>

@@ -1,9 +1,15 @@
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
 import './ContactUs.css';
 
 const ContactUs = () => {
   return (
     <div className="contact-container">
+      <Helmet>
+        <title>Contact Us - Image & PDF Tools</title>
+        <meta name="description" content="Contact us for support, feedback, or any questions about our free online image and PDF tools. We're here to help!" />
+        <link rel="canonical" href={`${window.location.origin}/contact-us`} />
+      </Helmet>
       <h1>Contact Us</h1>
 
       <p>
