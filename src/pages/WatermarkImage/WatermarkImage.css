@@ -207,3 +207,20 @@
     border: 1px solid var(--secondary-text-color);
     cursor: pointer;
 }
+
+@media (max-width: 992px) {
+    .watermark-image-main {
+        flex-direction: column;
+    }
+
+    .watermark-image-preview-container,
+    .watermark-image-sidebar {
+        flex: none;
+        width: 100%;
+    }
+
+    .watermark-image-preview-container {
+        min-height: 300px;
+        height: 40vh;
+    }
+}

@@ -50,8 +50,9 @@
 
 .main-image {
     max-width: 100%;
-    height: auto;
-    border-radius: 8px;
+    max-height: 70vh;
+    object-fit: contain;
+    transition: filter 0.3s ease;
 }
 
 .controls {
@@ -130,4 +131,23 @@
 
 .btn-secondary-tool:hover {
     background-color: #d32f2f !important;
+}
+
+@media (max-width: 992px) {
+    .editor-main {
+        flex-direction: column;
+    }
+
+    .image-display,
+    .controls {
+        flex: none;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .image-display {
+        min-height: 200px;
+        height: auto;
+        padding: 10px;
+    }
 }

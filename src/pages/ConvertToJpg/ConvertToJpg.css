@@ -180,3 +180,20 @@
 .convert-to-jpg-back-button:hover {
     background-color: #3a5067;
 }
+
+@media (max-width: 992px) {
+    .convert-to-jpg-main {
+        flex-direction: column;
+    }
+
+    .convert-to-jpg-image-preview-container,
+    .convert-to-jpg-sidebar {
+        flex: none;
+        width: 100%;
+    }
+
+    .convert-to-jpg-image-preview-container {
+        min-height: 300px;
+        height: 40vh;
+    }
+}

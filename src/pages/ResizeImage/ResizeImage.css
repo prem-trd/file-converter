@@ -54,6 +54,7 @@
     flex-direction: column;
     align-items: center;
     gap: 10px;
+    width: 100%;
 }
 
 .preview-column h3 {
@@ -155,4 +156,26 @@
 
 .remove-file-button:hover {
     background-color: #d32f2f !important;
+}
+
+@media (max-width: 992px) {
+    .resize-main {
+        flex-direction: column;
+    }
+
+    .image-preview-area,
+    .controls {
+        flex: none;
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .image-preview-area {
+        flex-direction: column;
+    }
+
+    .preview-image {
+        max-height: 30vh;
+    }
 }

@@ -133,3 +133,20 @@
 .remove-file-button:hover {
     background-color: #d32f2f !important;
 }
+
+@media (max-width: 992px) {
+    .crop-main {
+        flex-direction: column;
+    }
+
+    .cropper-wrapper {
+        flex: none;
+        width: 100%;
+        height: 40vh;
+    }
+
+    .controls {
+        flex: none;
+        width: 100%;
+    }
+}

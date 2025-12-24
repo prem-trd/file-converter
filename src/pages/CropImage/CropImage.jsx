@@ -59,13 +59,17 @@ const CropImage = () => {
     const { width, height } = mediaSize;
     const container = document.querySelector('.cropper-wrapper');
     if (container) {
-      const { width: containerWidth, height: containerHeight } = container.getBoundingClientRect();
-      const widthRatio = containerWidth / width;
-      const heightRatio = containerHeight / height;
-      const newZoom = Math.min(widthRatio, heightRatio);
-      setZoom(newZoom);
+        const { width: containerWidth, height: containerHeight } = container.getBoundingClientRect();
+        if (width > 0 && height > 0 && containerWidth > 0 && containerHeight > 0) {
+            const widthRatio = containerWidth / width;
+            const heightRatio = containerHeight / height;
+            const newZoom = Math.min(widthRatio, heightRatio);
+            setZoom(newZoom);
+        } else {
+            setZoom(1); // Fallback to a safe zoom level
+        }
     }
-  }, []);
+}, []);
 
   return (
     <div className="crop-image-container">
@@ -113,7 +117,7 @@ const CropImage = () => {
                   min={0.1}
                   max={3}
                   step={0.01}
-                  onChange={(e) => setZoom(e.target.value)}
+                  onChange={(e) => setZoom(parseFloat(e.target.value) || 1)}
                 />
               </div>
               <div className="slider-group">
@@ -124,7 +128,7 @@ const CropImage = () => {
                   min={0}
                   max={360}
                   step={1}
-                  onChange={(e) => setRotation(e.target.value)}
+                  onChange={(e) => setRotation(parseInt(e.target.value, 10) || 0)}
                 />
               </div>
               <div className="button-group">

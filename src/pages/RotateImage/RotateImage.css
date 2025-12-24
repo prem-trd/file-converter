@@ -86,7 +86,6 @@
     gap: 10px;
 }
 
-
 .rotate-button {
     background-color: #6c757d;
     color: white;
@@ -142,4 +141,21 @@
 
 .remove-file-button:hover {
     background-color: #d32f2f !important;
+}
+
+@media (max-width: 992px) {
+    .rotate-main {
+        flex-direction: column;
+    }
+
+    .image-preview-wrapper {
+        flex: none;
+        width: 100%;
+        height: 40vh;
+    }
+
+    .controls {
+        flex: none;
+        width: 100%;
+    }
 }

@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useDropzone } from 'react-dropzone';
@@ -8,34 +9,50 @@ import { FaFileImage } from 'react-icons/fa';
 import './MemeGenerator.css';
 
 const MemeImage = ({ src, width, height }) => {
-    const [image] = useImage(src);
-    return <Image image={image} width={width} height={height} />;
+    const [img] = useImage(src);
+    return <Image image={img} width={width} height={height} />;
 };
 
 const MemeGenerator = () => {
     const [image, setImage] = useState(null);
     const [topText, setTopText] = useState('');
     const [bottomText, setBottomText] = useState('');
-    const [imageSize, setImageSize] = useState({ width: 500, height: 500 });
+    const [imageSize, setImageSize] = useState({ width: 0, height: 0 });
     const [fontSize, setFontSize] = useState(40);
     const [fontColor, setFontColor] = useState('#ffffff');
     const [borderColor, setBorderColor] = useState('#000000');
     const [fontFamily, setFontFamily] = useState('Impact');
     const [strokeWidth, setStrokeWidth] = useState(2);
+    const [aspectRatio, setAspectRatio] = useState(0);
     const stageRef = useRef(null);
     const containerRef = useRef(null);
 
-    useEffect(() => {
-        if (containerRef.current) {
-            const width = containerRef.current.offsetWidth;
-            setImageSize({ width, height: width });
+    const calculateSize = () => {
+        if (containerRef.current && aspectRatio) {
+            const containerWidth = containerRef.current.offsetWidth;
+            const newWidth = containerWidth;
+            const newHeight = newWidth / aspectRatio;
+            setImageSize({ width: newWidth, height: newHeight });
         }
-    }, [image]);
+    };
+
+    useEffect(() => {
+        if (image) {
+            calculateSize();
+        }
+        window.addEventListener('resize', calculateSize);
+        return () => window.removeEventListener('resize', calculateSize);
+    }, [image, aspectRatio]);
 
     const onDrop = (acceptedFiles) => {
         const reader = new FileReader();
-        reader.onload = () => {
-            setImage(reader.result);
+        reader.onload = (e) => {
+            const img = new window.Image();
+            img.onload = () => {
+                setAspectRatio(img.width / img.height);
+                setImage(e.target.result);
+            };
+            img.src = e.target.result;
         };
         reader.readAsDataURL(acceptedFiles[0]);
     };
@@ -49,7 +66,7 @@ const MemeGenerator = () => {
     });
 
     const downloadMeme = () => {
-        const dataURL = stageRef.current.toDataURL();
+        const dataURL = stageRef.current.toDataURL({ pixelRatio: 3 });
         const link = document.createElement('a');
         link.download = 'meme.png';
         link.href = dataURL;
@@ -62,14 +79,15 @@ const MemeGenerator = () => {
         setImage(null);
         setTopText('');
         setBottomText('');
+        setAspectRatio(0);
+        setImageSize({ width: 0, height: 0 });
     };
 
     return (
         <div className="meme-generator-container">
             <Helmet>
                 <title>Meme Generator - Create Your Own Memes Online for Free</title>
-                <meta name="description" content="Easily create custom memes with our free online meme generator. Upload an image, add top and bottom text, customize the font, and download your creation.
-                " />
+                <meta name="description" content="Easily create custom memes with our free online meme generator. Upload an image, add top and bottom text, customize the font, and download your creation." />
                 <link rel="canonical" href={`${window.location.origin}/meme-generator`} />
             </Helmet>
             <div className="meme-generator-header">
@@ -87,38 +105,40 @@ const MemeGenerator = () => {
                     </div>
                 ) : (
                     <div className="editor-main">
-                        <div className="image-display">
-                          <Stage width={imageSize.width} height={imageSize.height} ref={stageRef}>
-                              <Layer>
-                                  <MemeImage src={image} width={imageSize.width} height={imageSize.height} />
-                                  <Text
-                                      text={topText}
-                                      fontSize={fontSize}
-                                      fontFamily={fontFamily}
-                                      fill={fontColor}
-                                      stroke={borderColor}
-                                      strokeWidth={strokeWidth}
-                                      x={imageSize.width / 10}
-                                      y={imageSize.height / 10}
-                                      width={imageSize.width * 0.8}
-                                      align='center'
-                                      draggable
-                                  />
-                                  <Text
-                                      text={bottomText}
-                                      fontSize={fontSize}
-                                      fontFamily={fontFamily}
-                                      fill={fontColor}
-                                      stroke={borderColor}
-                                      strokeWidth={strokeWidth}
-                                      x={imageSize.width / 10}
-                                      y={imageSize.height - (imageSize.height / 10) - fontSize}
-                                      width={imageSize.width * 0.8}
-                                      align='center'
-                                      draggable
-                                  />
-                              </Layer>
-                          </Stage>
+                        <div className="image-display" ref={containerRef}>
+                          {imageSize.width > 0 && (
+                            <Stage width={imageSize.width} height={imageSize.height} ref={stageRef}>
+                                <Layer>
+                                    <MemeImage src={image} width={imageSize.width} height={imageSize.height} />
+                                    <Text
+                                        text={topText}
+                                        fontSize={fontSize}
+                                        fontFamily={fontFamily}
+                                        fill={fontColor}
+                                        stroke={borderColor}
+                                        strokeWidth={strokeWidth}
+                                        x={20}
+                                        y={30}
+                                        width={imageSize.width - 40}
+                                        align='center'
+                                        draggable
+                                    />
+                                    <Text
+                                        text={bottomText}
+                                        fontSize={fontSize}
+                                        fontFamily={fontFamily}
+                                        fill={fontColor}
+                                        stroke={borderColor}
+                                        strokeWidth={strokeWidth}
+                                        x={20}
+                                        y={imageSize.height - 30 - fontSize}
+                                        width={imageSize.width - 40}
+                                        align='center'
+                                        draggable
+                                    />
+                                </Layer>
+                            </Stage>
+                          )}
                         </div>
 
                         <div className="controls">
@@ -201,21 +221,6 @@ const MemeGenerator = () => {
                                     value={strokeWidth}
                                     onChange={(e) => setStrokeWidth(parseInt(e.target.value, 10))}
                                     className="meme-input"
-                                />
-                            </div>
-                            <div className="filter-group">
-                                <label htmlFor="image-size">Image Size</label>
-                                <input
-                                    type="range"
-                                    id="image-size"
-                                    min="200"
-                                    max="1000"
-                                    value={imageSize.width}
-                                    onChange={(e) => {
-                                        const newSize = parseInt(e.target.value, 10);
-                                        setImageSize({ width: newSize, height: newSize });
-                                    }}
-                                    className="meme-slider"
                                 />
                             </div>
                             <div className="button-group">

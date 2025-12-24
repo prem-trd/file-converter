@@ -123,13 +123,14 @@
         flex-direction: column;
     }
 
+    .image-display,
     .controls {
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: center;
+        flex: none;
+        width: 100%;
     }
 
-    .filter-group {
-        flex: 1 1 150px;
+    .image-display {
+        min-height: 300px;
+        height: 40vh;
     }
 }
