@@ -25,32 +25,11 @@
   margin: 0 auto;
 }
 
-.dropzone {
-  border: 3px dashed #e0e0e0;
-  border-radius: 8px;
-  padding: 60px 30px;
-  background-color: #fafafa;
-  transition: border-color 0.3s, background-color 0.3s;
-  cursor: pointer;
-  text-align: center;
-  width: 100%;
-  max-width: 800px;
-  margin-bottom: 30px;
-}
-
-.dropzone.drag-over {
-  border-color: #c0c0c0;
-  background-color: #f0f0f0;
-}
-
-.dropzone-content {
-  font-size: 1.2rem;
-  color: #666;
-}
 .file-processing-area {
   width: 100%;
   max-width: 800px;
 }
+
 .remove-pages-content {
   width: 100%;
   max-width: 800px;

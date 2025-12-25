@@ -1,43 +1,40 @@
-
 .watermark-container {
-    padding: 40px 20px;
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    width: 100%;
+    max-width: 900px;
+    margin: auto;
 }
 
 .watermark-header {
+    text-align: center;
     margin-bottom: 30px;
+}
+
+.watermark-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--primary-text-color);
+    margin-bottom: 10px;
+}
+
+.watermark-description {
+    font-size: 1.1rem;
+    color: var(--secondary-text-color);
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 .watermark-content {
     width: 100%;
-    max-width: 1400px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: center;
 }
 
-.dropzone {
-  border: 2px dashed var(--secondary-text-color);
-  border-radius: 8px;
-  padding: 40px;
-  background-color: var(--secondary-bg-color);
-  transition: border-color 0.3s, background-color 0.3s, color 0.3s;
-  cursor: pointer;
-  text-align: center;
-  margin-bottom: 30px;
-  color: var(--secondary-text-color);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 15px;
-}
-
-.dropzone:hover,
-.dropzone.drag-over {
-  border-color: var(--accent-color);
-  background-color: #3a5067;
-  color: var(--primary-text-color);
+.watermark-action-button {
+    text-align: center;
+    margin-top: 20px;
 }
 
 .watermark-main-area {
@@ -101,7 +98,8 @@
     overflow-y: auto;
     background-color: #f8f9fa;
     max-height: 600px;
-    min-height: 300px; /* Ensure it has some height even when empty */
+    min-height: 300px;
+    /* Ensure it has some height even when empty */
 }
 
 .watermark-grid {
@@ -114,4 +112,14 @@
     width: 100%;
     border: 1px solid #eee;
     border-radius: 4px;
+}
+
+@media (max-width: 768px) {
+    .watermark-main-area {
+        flex-direction: column;
+    }
+
+    .watermark-options-panel {
+        width: 100%;
+    }
 }

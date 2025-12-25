@@ -154,65 +154,66 @@ const WatermarkImage = () => {
                 <h1 className='watermark-image-title'>Watermark Image</h1>
                 <p className='watermark-image-description'>Add a text or image watermark to your images with customizable options.</p>
             </div>
-
-            {!mainImage ? (
-                <div {...getMainRootProps({ className: `dropzone ${isMainDragActive ? 'drag-over' : ''}` })}>
-                    <input {...getMainInputProps()} />
-                    <div className="dropzone-content">
-                        <FaFileImage size={50} />
-                        <p>Drag & drop your image here, or click to select</p>
+            <div className='watermark-image-content'>
+                {!mainImage ? (
+                    <div {...getMainRootProps({ className: `dropzone` })}>
+                        <input {...getMainInputProps()} />
+                        <div className="dropzone-content">
+                            <FaFileImage size={50} />
+                            <p>Drag & drop your image here, or click to select</p>
+                        </div>
                     </div>
-                </div>
-            ) : (
-                <div className="watermark-image-main">
-                    <div className="watermark-image-preview-container">
-                        <canvas ref={canvasRef} className='watermark-image-preview' />
-                    </div>
-
-                    <div className="watermark-image-sidebar">
-                        <div className="watermark-image-tabs">
-                            <button className={watermarkType === 'text' ? 'active' : ''} onClick={() => setWatermarkType('text')}><FaFont /> Text</button>
-                            <button className={watermarkType === 'image' ? 'active' : ''} onClick={() => setWatermarkType('image')}><FaImage /> Image</button>
+                ) : (
+                    <div className="watermark-image-main">
+                        <div className="watermark-image-preview-container">
+                            <canvas ref={canvasRef} className='watermark-image-preview' />
                         </div>
 
-                        {watermarkType === 'text' ? (
-                            <div className='watermark-image-settings-group'>
-                                <label>Text</label>
-                                <input type="text" value={textOptions.text} onChange={(e) => setTextOptions({ ...textOptions, text: e.target.value })} />
-                                <label>Font Size</label>
-                                <input type="range" min="12" max="128" value={textOptions.fontSize} onChange={(e) => setTextOptions({ ...textOptions, fontSize: Number(e.target.value) })} />
-                                <label>Color</label>
-                                <input type="color" value={textOptions.color} onChange={(e) => setTextOptions({ ...textOptions, color: e.target.value })} />
-                                <label>Opacity</label>
-                                <input type="range" min="0" max="1" step="0.1" value={textOptions.opacity} onChange={(e) => setTextOptions({ ...textOptions, opacity: Number(e.target.value) })} />
-                                <label>Rotation</label>
-                                <input type="range" min="-180" max="180" value={textOptions.rotation} onChange={(e) => setTextOptions({ ...textOptions, rotation: Number(e.target.value) })} />
-                                <label>Mode</label>
-                                <select value={textOptions.mode} onChange={(e) => setTextOptions({ ...textOptions, mode: e.target.value })}>
-                                    <option value="single">Single</option>
-                                    <option value="tile">Tile</option>
-                                </select>
+                        <div className="watermark-image-sidebar">
+                            <div className="watermark-image-tabs">
+                                <button className={watermarkType === 'text' ? 'active' : ''} onClick={() => setWatermarkType('text')}><FaFont /> Text</button>
+                                <button className={watermarkType === 'image' ? 'active' : ''} onClick={() => setWatermarkType('image')}><FaImage /> Image</button>
                             </div>
-                        ) : (
-                            <div className='watermark-image-settings-group'>
-                                <div {...getWatermarkRootProps({ className: `watermark-image-dropzone-small ${isWatermarkDragActive ? 'drag-over' : ''}` })}>
-                                    <input {...getWatermarkInputProps()} />
-                                    {watermarkImage ? <img src={watermarkImage} alt="watermark preview" /> : <p>Drop watermark image</p>}
+
+                            {watermarkType === 'text' ? (
+                                <div className='watermark-image-settings-group'>
+                                    <label>Text</label>
+                                    <input type="text" value={textOptions.text} onChange={(e) => setTextOptions({ ...textOptions, text: e.target.value })} />
+                                    <label>Font Size</label>
+                                    <input type="range" min="12" max="128" value={textOptions.fontSize} onChange={(e) => setTextOptions({ ...textOptions, fontSize: Number(e.target.value) })} />
+                                    <label>Color</label>
+                                    <input type="color" value={textOptions.color} onChange={(e) => setTextOptions({ ...textOptions, color: e.target.value })} />
+                                    <label>Opacity</label>
+                                    <input type="range" min="0" max="1" step="0.1" value={textOptions.opacity} onChange={(e) => setTextOptions({ ...textOptions, opacity: Number(e.target.value) })} />
+                                    <label>Rotation</label>
+                                    <input type="range" min="-180" max="180" value={textOptions.rotation} onChange={(e) => setTextOptions({ ...textOptions, rotation: Number(e.target.value) })} />
+                                    <label>Mode</label>
+                                    <select value={textOptions.mode} onChange={(e) => setTextOptions({ ...textOptions, mode: e.target.value })}>
+                                        <option value="single">Single</option>
+                                        <option value="tile">Tile</option>
+                                    </select>
                                 </div>
-                                <label>Scale</label>
-                                <input type="range" min="0.05" max="1" step="0.05" value={imageOptions.scale} onChange={(e) => setImageOptions({ ...imageOptions, scale: Number(e.target.value) })} />
-                                <label>Opacity</label>
-                                <input type="range" min="0" max="1" step="0.1" value={imageOptions.opacity} onChange={(e) => setImageOptions({ ...imageOptions, opacity: Number(e.target.value) })} />
-                            </div>
-                        )}
+                            ) : (
+                                <div className='watermark-image-settings-group'>
+                                    <div {...getWatermarkRootProps({ className: `watermark-image-dropzone-small ${isWatermarkDragActive ? 'drag-over' : ''}` })}>
+                                        <input {...getWatermarkInputProps()} />
+                                        {watermarkImage ? <img src={watermarkImage} alt="watermark preview" /> : <p>Drop watermark image</p>}
+                                    </div>
+                                    <label>Scale</label>
+                                    <input type="range" min="0.05" max="1" step="0.05" value={imageOptions.scale} onChange={(e) => setImageOptions({ ...imageOptions, scale: Number(e.target.value) })} />
+                                    <label>Opacity</label>
+                                    <input type="range" min="0" max="1" step="0.1" value={imageOptions.opacity} onChange={(e) => setImageOptions({ ...imageOptions, opacity: Number(e.target.value) })} />
+                                </div>
+                            )}
 
-                        <div className="watermark-image-sidebar-buttons">
-                            <button className='watermark-image-download-button' onClick={handleDownload}><FaDownload /> Download Image</button>
-                            <button className='watermark-image-back-button' onClick={handleBack}><FaArrowLeft /> Back</button>
+                            <div className="watermark-image-sidebar-buttons">
+                                <button className='watermark-image-download-button' onClick={handleDownload}><FaDownload /> Download Image</button>
+                                <button className='watermark-image-back-button' onClick={handleBack}><FaArrowLeft /> Back</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            )}
+                )}
+            </div>
         </div>
     );
 };

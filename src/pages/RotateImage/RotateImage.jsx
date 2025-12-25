@@ -89,7 +89,7 @@ const RotateImage = () => {
                 <img 
                     src={imageSrc} 
                     alt="Preview" 
-                    style={{ transform: `rotate(${rotation}deg)`}} 
+                    style={{ transform: `rotate(${rotation || 0}deg)`}} 
                     className='image-preview'
                 />
             </div>
@@ -102,7 +102,7 @@ const RotateImage = () => {
                   min={0}
                   max={360}
                   step={1}
-                  onChange={(e) => setRotation(parseInt(e.target.value))}
+                  onChange={(e) => setRotation(parseInt(e.target.value) || 0)}
                 />
               </div>
               <div className="button-group">

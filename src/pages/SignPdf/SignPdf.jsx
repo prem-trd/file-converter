@@ -142,13 +142,13 @@ const SignPdf = () => {
         setSignatureFile(null);
         setSignaturePreview(null);
     };
-    
+
     const truncateFilename = (name, maxLength = 30) => {
         if (name.length <= maxLength) {
-          return name;
+            return name;
         }
         return name.substring(0, maxLength - 3) + '...';
-      };
+    };
 
 
     return (
@@ -167,31 +167,31 @@ const SignPdf = () => {
 
             <Row gutter={30} className="upload-section">
                 <Col md={12}>
-                    <div {...getPdfRootProps({ className: `dropzone ${isPdfDragActive ? 'drag-over' : ''}` })}>
+                    <div {...getPdfRootProps({ className: `dropzone` })}>
                         <input {...getPdfInputProps()} />
                         <p className="dropzone-content">Drop PDF here, or click to select</p>
                     </div>
                     {pdfFile && (
-                         <div className="sign-pdf-file-list-container">
-                             <div className="sign-pdf-file-item">
-                                 <VscFilePdf size={24} style={{ color: '#e74c3c' }} />
-                                 <span className="file-name" title={pdfFile.name}>{truncateFilename(pdfFile.name)}</span>
-                                 <div className="sign-pdf-file-item-actions">
-                                     <IconButton icon={<VscTrash />} size="xs" onClick={removePdfFile} />
-                                 </div>
-                             </div>
-                             {numPages && (
+                        <div className="sign-pdf-file-list-container">
+                            <div className="sign-pdf-file-item">
+                                <VscFilePdf size={24} style={{ color: '#e74c3c' }} />
+                                <span className="file-name" title={pdfFile.name}>{truncateFilename(pdfFile.name)}</span>
+                                <div className="sign-pdf-file-item-actions">
+                                    <IconButton icon={<VscTrash />} size="xs" onClick={removePdfFile} />
+                                </div>
+                            </div>
+                            {numPages && (
                                 <div className="page-selection-container">
                                     <label className="page-selection-label">Page to sign:</label>
                                     <InputNumber value={pageNumber} onChange={setPageNumber} min={1} max={numPages} />
                                     <span className="page-count-info">of {numPages}</span>
                                 </div>
                             )}
-                         </div>
+                        </div>
                     )}
                 </Col>
                 <Col md={12}>
-                    <div {...getSignatureRootProps({ className: `dropzone ${isSignatureDragActive ? 'drag-over' : ''}` })}>
+                    <div {...getSignatureRootProps({ className: `dropzone` })}>
                         <input {...getSignatureInputProps()} />
                         <p className="dropzone-content">Drop signature here, or click to select</p>
                     </div>

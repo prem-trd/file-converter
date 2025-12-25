@@ -91,11 +91,13 @@ const MergePdf = () => {
         </p>
       </div>
 
-      <div {...getRootProps({ className: `dropzone ${isDragActive ? 'drag-over' : ''}` })}>
-        <input {...getInputProps()} />
-        <div className="dropzone-content">
-          <FaFilePdf size={48} />
-          <p>Drag 'n' drop PDF files here, or click to select</p>
+      <div className='merge-pdf-content'>
+        <div {...getRootProps({ className: `dropzone` })}>
+          <input {...getInputProps()} />
+          <div className="dropzone-content">
+            <FaFilePdf size={48} />
+            <p>Drag 'n' drop PDF files here, or click to select</p>
+          </div>
         </div>
       </div>
 

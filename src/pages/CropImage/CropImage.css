@@ -2,13 +2,16 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 40px 20px;
-    gap: 30px;
-    text-align: center;
+    justify-content: center;
+    padding: 20px;
+    width: 100%;
+    max-width: 900px;
+    margin: auto;
 }
 
 .crop-image-header {
-    width: 100%;
+    text-align: center;
+    margin-bottom: 30px;
 }
 
 .crop-image-title {
@@ -27,36 +30,6 @@
 
 .crop-image-content {
     width: 100%;
-    max-width: 1200px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-}
-
-.dropzone {
-    border: 2px dashed var(--secondary-text-color);
-    border-radius: 8px;
-    padding: 40px;
-    background-color: var(--secondary-bg-color);
-    transition: border-color 0.3s, background-color 0.3s, color 0.3s;
-    cursor: pointer;
-    width: 100%;
-    color: var(--secondary-text-color);
-}
-
-.dropzone:hover,
-.dropzone.drag-over {
-    border-color: var(--accent-color);
-    background-color: #3a5067;
-    color: var(--primary-text-color);
-}
-
-.dropzone-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
 }
 
 .crop-main {
@@ -159,4 +132,21 @@
 
 .remove-file-button:hover {
     background-color: #d32f2f !important;
+}
+
+@media (max-width: 992px) {
+    .crop-main {
+        flex-direction: column;
+    }
+
+    .cropper-wrapper {
+        flex: none;
+        width: 100%;
+        height: 40vh;
+    }
+
+    .controls {
+        flex: none;
+        width: 100%;
+    }
 }

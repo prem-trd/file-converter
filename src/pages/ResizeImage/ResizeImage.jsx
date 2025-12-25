@@ -29,8 +29,8 @@ const ResizeImage = () => {
           const ctx = canvas.getContext('2d');
 
           const aspectRatio = img.width / img.height;
-          let newWidth = width ? parseInt(width, 10) : 0;
-          let newHeight = height ? parseInt(height, 10) : 0;
+          let newWidth = parseInt(width, 10) || 0;
+          let newHeight = parseInt(height, 10) || 0;
 
           if (newWidth && !newHeight) {
             newHeight = Math.round(newWidth / aspectRatio);
@@ -41,11 +41,14 @@ const ResizeImage = () => {
             newHeight = img.height;
           }
           
-          canvas.width = newWidth;
-          canvas.height = newHeight;
-
-          ctx.drawImage(img, 0, 0, newWidth, newHeight);
-          setResizedPreview(canvas.toDataURL(file.type));
+          if (newWidth > 0 && newHeight > 0) {
+            canvas.width = newWidth;
+            canvas.height = newHeight;
+            ctx.drawImage(img, 0, 0, newWidth, newHeight);
+            setResizedPreview(canvas.toDataURL(file.type));
+          } else {
+            setResizedPreview(null);
+          }
         };
         img.src = event.target.result;
       };

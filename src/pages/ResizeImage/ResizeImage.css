@@ -2,13 +2,16 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 40px 20px;
-    gap: 30px;
-    text-align: center;
+    justify-content: center;
+    padding: 20px;
+    width: 100%;
+    max-width: 900px;
+    margin: auto;
 }
 
 .resize-image-header {
-    width: 100%;
+    text-align: center;
+    margin-bottom: 30px;
 }
 
 .resize-image-title {
@@ -27,36 +30,6 @@
 
 .resize-image-content {
     width: 100%;
-    max-width: 1200px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-}
-
-.dropzone {
-    border: 2px dashed var(--secondary-text-color);
-    border-radius: 8px;
-    padding: 40px;
-    background-color: var(--secondary-bg-color);
-    transition: border-color 0.3s, background-color 0.3s, color 0.3s;
-    cursor: pointer;
-    width: 100%;
-    color: var(--secondary-text-color);
-}
-
-.dropzone:hover,
-.dropzone.drag-over {
-    border-color: var(--accent-color);
-    background-color: #3a5067;
-    color: var(--primary-text-color);
-}
-
-.dropzone-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
 }
 
 .resize-main {
@@ -81,6 +54,7 @@
     flex-direction: column;
     align-items: center;
     gap: 10px;
+    width: 100%;
 }
 
 .preview-column h3 {
@@ -162,8 +136,8 @@
 }
 
 .resize-button:disabled {
-  background-color: #ccc !important;
-  cursor: not-allowed;
+    background-color: #ccc !important;
+    cursor: not-allowed;
 }
 
 .remove-file-button {
@@ -182,4 +156,26 @@
 
 .remove-file-button:hover {
     background-color: #d32f2f !important;
+}
+
+@media (max-width: 992px) {
+    .resize-main {
+        flex-direction: column;
+    }
+
+    .image-preview-area,
+    .controls {
+        flex: none;
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .image-preview-area {
+        flex-direction: column;
+    }
+
+    .preview-image {
+        max-height: 30vh;
+    }
 }

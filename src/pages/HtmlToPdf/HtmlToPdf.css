@@ -1,15 +1,17 @@
-
 .html-to-pdf-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 40px 20px;
-    gap: 30px;
-    text-align: center;
+    justify-content: center;
+    padding: 20px;
+    width: 100%;
+    max-width: 900px;
+    margin: auto;
 }
 
 .html-to-pdf-header {
-    width: 100%;
+    text-align: center;
+    margin-bottom: 30px;
 }
 
 .html-to-pdf-title {
@@ -28,11 +30,6 @@
 
 .html-to-pdf-content {
     width: 100%;
-    max-width: 800px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
 }
 
 .file-display {
@@ -48,7 +45,8 @@
 }
 
 .file-display .file-icon {
-    color: #E44D26; /* HTML5 Orange */
+    color: #E44D26;
+    /* HTML5 Orange */
     font-size: 2.5rem;
 }
 
@@ -58,13 +56,15 @@
 
 .html-to-pdf-button-container {
     margin-top: 20px;
+    text-align: center;
 }
 
 .html-render-container {
     position: absolute;
     left: -9999px;
     top: auto;
-    width: 800px; /* A reasonable width for rendering */
+    width: 800px;
+    /* A reasonable width for rendering */
     height: auto;
     overflow: visible;
     background-color: white;

@@ -101,66 +101,67 @@ const CompressImage = () => {
                 <h1 className="compress-image-title">Image Compressor</h1>
                 <p className="compress-image-description">Reduce the file size of your images with our easy-to-use compression tool.</p>
             </div>
-
-            {!originalFile ? (
-                <div {...getRootProps({ className: `dropzone ${isDragActive ? 'drag-over' : ''}` })}>
-                    <input {...getInputProps()} />
-                    <div className="dropzone-content">
-                        <FaFileImage size={48} />
-                        <p>Drag & drop an image here, or click to select a file</p>
-                    </div>
-                </div>
-            ) : (
-                <div className="file-processing-area">
-                    <div className="compress-image-file-list-container">
-                        <div className="compress-image-file-item">
-                            <span className="file-name">{originalFile.name}</span>
-                            <RsuiteButton appearance="subtle" icon={<TrashIcon />} onClick={clearState} />
+            <div className="compress-content">
+                {!originalFile ? (
+                    <div {...getRootProps({ className: `dropzone` })}>
+                        <input {...getInputProps()} />
+                        <div className="dropzone-content">
+                            <FaFileImage size={48} />
+                            <p>Drag & drop an image here, or click to select a file</p>
                         </div>
                     </div>
-                    <Row className="g-5 preview-section">
-                        <Col md={12} lg={6} className="image-preview-container">
-                            <h3>Original Image</h3>
-                            <img src={originalPreview} alt="Original" className="preview-image" />
-                            {originalFile && <p>Size: {formatBytes(originalFile.size)}</p>}
-                        </Col>
-                        <Col md={12} lg={6} className="image-preview-container">
-                            <h3>Compressed Image</h3>
-                            {isLoading ? (
-                                <div className="d-flex justify-content-center align-items-center h-100">
-                                    <Progress.Circle percent={30} strokeColor="#ffc107" />
-                                </div>
-                            ) : (
-                                compressedPreview ? (
-                                    <img src={compressedPreview} alt="Compressed" className="preview-image" />
+                ) : (
+                    <div className="file-processing-area">
+                        <div className="compress-image-file-list-container">
+                            <div className="compress-image-file-item">
+                                <span className="file-name">{originalFile.name}</span>
+                                <RsuiteButton appearance="subtle" icon={<TrashIcon />} onClick={clearState} />
+                            </div>
+                        </div>
+                        <Row className="g-5 preview-section">
+                            <Col md={12} lg={6} className="image-preview-container">
+                                <h3>Original Image</h3>
+                                <img src={originalPreview} alt="Original" className="preview-image" />
+                                {originalFile && <p>Size: {formatBytes(originalFile.size)}</p>}
+                            </Col>
+                            <Col md={12} lg={6} className="image-preview-container">
+                                <h3>Compressed Image</h3>
+                                {isLoading ? (
+                                    <div className="d-flex justify-content-center align-items-center h-100">
+                                        <Progress.Circle percent={30} strokeColor="#ffc107" />
+                                    </div>
                                 ) : (
-                                    <div className="empty-preview d-flex justify-content-center align-items-center"><p>Your compressed image will appear here.</p></div>
-                                )
-                            )}
-                            {compressedFile && <p>Size: {formatBytes(compressedFile.size)}</p>}
-                        </Col>
-                    </Row>
-                </div>
-            )}
-
-            {originalFile && (
-                <div className="controls-section">
-                    <Form.Group as={Row} className="mb-3 align-items-center">
-                        <Col xs="auto">
-                            <Form.Label>Compression Quality: {quality}</Form.Label>
-                        </Col>
-                        <Col>
-                            <Form.Range value={quality} onChange={e => setQuality(parseInt(e.target.value))} min={1} max={100} />
-                        </Col>
-                    </Form.Group>
-                    <div className="d-flex gap-2 justify-content-center">
-                        <RsuiteButton appearance="primary" onClick={handleCompress} loading={isLoading}>
-                            Compress Image
-                        </RsuiteButton>
-                        {compressedFile && <RsuiteButton appearance="ghost" icon={<FileDownloadIcon />} onClick={handleDownload}>Download Compressed Image</RsuiteButton>}
+                                    compressedPreview ? (
+                                        <img src={compressedPreview} alt="Compressed" className="preview-image" />
+                                    ) : (
+                                        <div className="empty-preview d-flex justify-content-center align-items-center"><p>Your compressed image will appear here.</p></div>
+                                    )
+                                )}
+                                {compressedFile && <p>Size: {formatBytes(compressedFile.size)}</p>}
+                            </Col>
+                        </Row>
                     </div>
-                </div>
-            )}
+                )}
+
+                {originalFile && (
+                    <div className="controls-section">
+                        <Form.Group as={Row} className="mb-3 align-items-center">
+                            <Col xs="auto">
+                                <Form.Label>Compression Quality: {quality}</Form.Label>
+                            </Col>
+                            <Col>
+                                <Form.Range value={quality} onChange={e => setQuality(parseInt(e.target.value))} min={1} max={100} />
+                            </Col>
+                        </Form.Group>
+                        <div className="d-flex gap-2 justify-content-center">
+                            <RsuiteButton appearance="primary" onClick={handleCompress} loading={isLoading}>
+                                Compress Image
+                            </RsuiteButton>
+                            {compressedFile && <RsuiteButton appearance="ghost" icon={<FileDownloadIcon />} onClick={handleDownload}>Download Compressed Image</RsuiteButton>}
+                        </div>
+                    </div>
+                )}
+            </div>
         </div>
     );
 };

@@ -233,8 +233,8 @@ const AddWatermarkPdf = () => {
                 <link rel="canonical" href={`${window.location.origin}/add-watermark-pdf`} />
             </Helmet>
             <div className="watermark-header">
-                <h1>Add Watermark to PDF</h1>
-                <p>Apply a text or image watermark to your PDF files with customizable options.</p>
+                <h1 className='watermark-title'>Add Watermark to PDF</h1>
+                <p className='watermark-description'>Apply a text or image watermark to your PDF files with customizable options.</p>
             </div>
 
             <div className="watermark-content">
@@ -262,7 +262,7 @@ const AddWatermarkPdf = () => {
                                         <Col sm={6}><Form.Control type="number" name="fontSize" value={textOptions.fontSize} onChange={handleTextOptionsChange} min="6" /></Col>
                                     </Form.Group>
                                     <Form.Group as={Row} className="mb-3">
-.                                        <Form.Label column sm={4}>Pattern</Form.Label>
+                                        <Form.Label column sm={4}>Pattern</Form.Label>
                                         <Col sm={8}>
                                             <Form.Select name="tiling" value={textOptions.tiling} onChange={handleTextOptionsChange}>
                                                 <option value="single">Single</option>
