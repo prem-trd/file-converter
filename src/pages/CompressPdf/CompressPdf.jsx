@@ -51,7 +51,7 @@ const CompressPdf = () => {
       const blob = new Blob([compressedPdfBytes], { type: 'application/pdf' });
       const link = document.createElement('a');
       link.href = URL.createObjectURL(blob);
-      link.download = `compressed-${file.name}`;
+      link.download = `compress-pdf-smartconverter-${file.name}`;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);

@@ -83,7 +83,7 @@ const PptToPdf = () => {
                         );
                     }
 
-                    pdf.save(`${file.name.replace(/\.pptx$/i, '')}.pdf`);
+                    pdf.save(`ppt-to-pdf-smartconverter-${file.name.replace(/\.pptx$/i, '')}.pdf`);
                 } catch (err) {
                     console.error('Error processing presentation:', err);
                     setError('Could not process the .pptx file. It might be corrupt or in an unsupported format.');

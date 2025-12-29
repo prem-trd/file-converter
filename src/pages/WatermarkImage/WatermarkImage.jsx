@@ -133,7 +133,7 @@ const WatermarkImage = () => {
     const handleDownload = () => {
         const canvas = canvasRef.current;
         const link = document.createElement('a');
-        link.download = 'watermarked-image.png';
+        link.download = 'watermark-image-smartconverter.png';
         link.href = canvas.toDataURL('image/png');
         link.click();
     };

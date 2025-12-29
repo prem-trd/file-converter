@@ -69,14 +69,29 @@ This project is a web-based utility application offering a comprehensive suite o
 
 ---
 
-## Latest Change: Code Refactoring and Cleanup
+## Latest Change: Branded Filename Convention
 
 ### Objective
 
-To improve code quality, remove redundancies, and ensure the project is clean and maintainable.
+To enhance brand identity and provide users with more descriptive filenames, all downloadable files will now follow a standardized naming convention.
 
-### Implementation Steps
+### PDF Tool Updates
 
-1.  **`tools.jsx` Cleanup:** Updated `src/data/tools.jsx` to remove commented-out and unavailable tool definitions. This ensures the dashboard accurately reflects the application's implemented features.
-2.  **Redundant Component Removal:** Deleted the `src/pages/AddWatermark` directory and its contents (`AddWatermark.jsx`, `AddWatermark.css`). This component was a duplicate of the more feature-rich `AddWatermarkPdf.jsx`.
-3.  **Router Verification:** Confirmed that `src/router/index.jsx` correctly routes to the `AddWatermarkPdf` component and does not contain any broken links from the deleted component.
+1.  **`JpgToPdf.jsx`:** Saves the converted file as `jpg-to-pdf-smartconverter.pdf`.
+2.  **`MergePdf.jsx`:** Saves the merged document as `merge-pdf-smartconverter.pdf`.
+3.  **`OrganizePdf.jsx`:** Saves the organized PDF as `organize-pdf-smartconverter.pdf`.
+4.  **`ProtectPdf.jsx`:** Saves the encrypted file as `protect-pdf-smartconverter-[original-file-name].pdf`.
+5.  **`SplitPdf.jsx`:** Generates a zip file named `split-pdf-smartconverter-[original-file-name].zip`.
+6.  **`WordToPdf.jsx`:** Saves the converted file as `word-to-pdf-smartconverter-[original-file-name].pdf`.
+
+### Image Tool Updates
+
+1.  **`CompressImage.jsx`:** Saves the compressed file as `compress-image-smartconverter-[original-file-name]`.
+2.  **`MemeGenerator.jsx`:** Saves the generated meme as `meme-generator-smartconverter.png`.
+3.  **`PhotoEditor.jsx`:** Saves the edited photo as `photo-editor-smartconverter.png`.
+4.  **`ResizeImage.jsx`:** Saves the resized image as `resize-image-smartconverter-[original-file-name]`.
+5.  **`CropImage.jsx`:** Saves the cropped image as `crop-image-smartconverter-[original-file-name].jpeg`.
+6.  **`RotateImage.jsx`:** Saves the rotated image as `rotate-image-smartconverter.jpeg`.
+7.  **`WatermarkImage.jsx`:** Saves the watermarked image as `watermark-image-smartconverter.png`.
+
+This systematic update ensures a consistent and branded user experience across all file download functionalities.

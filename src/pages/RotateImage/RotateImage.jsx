@@ -50,7 +50,7 @@ const RotateImage = () => {
 
             const link = document.createElement('a');
             link.href = canvas.toDataURL('image/jpeg');
-            link.download = 'rotated-image.jpeg';
+            link.download = 'rotate-image-smartconverter.jpeg';
             link.click();
         };
     }

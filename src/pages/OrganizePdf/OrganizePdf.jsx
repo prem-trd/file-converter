@@ -129,7 +129,7 @@ const OrganizePdf = () => {
             const blob = new Blob([organizedPdfBytes], { type: 'application/pdf' });
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
-            link.download = 'organized.pdf';
+            link.download = 'organize-pdf-smartconverter.pdf';
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);

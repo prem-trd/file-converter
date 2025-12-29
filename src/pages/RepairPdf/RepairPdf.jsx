@@ -60,7 +60,7 @@ const RepairPdf = () => {
         const blob = new Blob([repairedPdf], { type: 'application/pdf' });
         const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
-        link.download = `repaired-${file.name}`;
+        link.download = `repair-pdf-smartconverter-${file.name}`;
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);

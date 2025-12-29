@@ -200,7 +200,7 @@ const AddWatermarkPdf = () => {
             const blob = new Blob([pdfBytes], { type: 'application/pdf' });
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
-            link.download = `watermarked-${file.name}`;
+            link.download = `add-watermark-smartconverter-${file.name}`;
             document.body.appendChild(link);
             link.click();
             link.remove();

@@ -68,7 +68,7 @@ const MemeGenerator = () => {
     const downloadMeme = () => {
         const dataURL = stageRef.current.toDataURL({ pixelRatio: 3 });
         const link = document.createElement('a');
-        link.download = 'meme.png';
+        link.download = 'meme-generator-smartconverter.png';
         link.href = dataURL;
         document.body.appendChild(link);
         link.click();

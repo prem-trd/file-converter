@@ -53,7 +53,7 @@ const WordToPdf = () => {
 
             doc.html(contentDiv, {
                 callback: function (doc) {
-                    doc.save('converted.pdf');
+                    doc.save(`word-to-pdf-smartconverter-${file.name.replace('.docx', '')}.pdf`);
                     setIsLoading(false);
                     setFile(null);
                     document.body.removeChild(contentDiv);

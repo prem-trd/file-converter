@@ -94,7 +94,7 @@ const HtmlToPdf = () => {
                     });
 
                     pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-                    pdf.save(`${file.name.replace(/\.(html|htm)$/i, '')}.pdf`);
+                    pdf.save(`html-to-pdf-smartconverter-${file.name.replace(/\.(html|htm)$/i, '')}.pdf`);
 
                 } catch (err) {
                     console.error('Error during canvas conversion:', err);

@@ -65,7 +65,7 @@ const MergePdf = () => {
     const blob = new Blob([mergedPdfBytes], { type: 'application/pdf' });
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
-    link.download = 'merged.pdf';
+    link.download = 'merge-pdf-smartconverter.pdf';
     link.click();
     setIsMerging(false);
   };
