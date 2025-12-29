@@ -1,5 +1,5 @@
 
-import React, { useState, useCallback, useEffect, useRef } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useDropzone } from 'react-dropzone';
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
@@ -14,100 +14,53 @@ const AddPageNumbers = () => {
     const [error, setError] = useState(null);
     const [options, setOptions] = useState({
         position: 'bottom-center',
-        margin: 10,
-        startPage: 1,
-        endPage: 0,
+        margin: 5,
         format: 'Page {n} of {total}',
         fontSize: 12,
         font: 'Helvetica',
         color: '#000000',
     });
-    const isGeneratingRef = useRef(false);
 
-    const generatePagePreviews = useCallback(async (file, opts) => {
-        if (isGeneratingRef.current) return;
-        isGeneratingRef.current = true;
+    const generatePagePreviews = useCallback(async (file) => {
         setIsLoading(true);
-
         try {
             const arrayBuffer = await file.arrayBuffer();
             const pdfDoc = await PDFDocument.load(arrayBuffer);
             const numPages = pdfDoc.getPageCount();
 
-            const parsedOpts = {
-                ...opts,
-                margin: parseInt(opts.margin, 10) || 0,
-                fontSize: parseInt(opts.fontSize, 10) || 12,
-                startPage: parseInt(opts.startPage, 10) || 1,
-                endPage: parseInt(opts.endPage, 10) || 0,
-            };
-
-            const effectiveEndPage = parsedOpts.endPage === 0 ? numPages : parsedOpts.endPage;
-
-            const pagePromises = Array.from({ length: numPages }, (_, i) =>
-                (async () => {
-                    const newPdf = await PDFDocument.create();
-                    const [copiedPage] = await newPdf.copyPages(pdfDoc, [i]);
-                    newPdf.addPage(copiedPage);
-
-                    if (i + 1 >= parsedOpts.startPage && i + 1 <= effectiveEndPage) {
-                        const tempPage = newPdf.getPage(0);
-                        const { width, height } = tempPage.getSize();
-                        const font = await newPdf.embedFont(StandardFonts[parsedOpts.font] || StandardFonts.Helvetica);
-                        const text = parsedOpts.format.replace('{n}', i + 1).replace('{total}', numPages);
-                        const textWidth = font.widthOfTextAtSize(text, parsedOpts.fontSize);
-
-                        const positions = {
-                            'top-left': { x: parsedOpts.margin, y: height - parsedOpts.fontSize - parsedOpts.margin },
-                            'top-center': { x: (width - textWidth) / 2, y: height - parsedOpts.fontSize - parsedOpts.margin },
-                            'top-right': { x: width - textWidth - parsedOpts.margin, y: height - parsedOpts.fontSize - parsedOpts.margin },
-                            'bottom-left': { x: parsedOpts.margin, y: parsedOpts.margin },
-                            'bottom-center': { x: (width - textWidth) / 2, y: parsedOpts.margin },
-                            'bottom-right': { x: width - textWidth - parsedOpts.margin, y: parsedOpts.margin },
-                        };
-
-                        tempPage.drawText(text, {
-                            ...positions[parsedOpts.position],
-                            font,
-                            size: parsedOpts.fontSize,
-                            color: rgb(parseInt(parsedOpts.color.slice(1, 3), 16) / 255, parseInt(parsedOpts.color.slice(3, 5), 16) / 255, parseInt(parsedOpts.color.slice(5, 7), 16) / 255),
-                        });
-                    }
-
-                    const dataUri = await newPdf.saveAsBase64({ dataUri: true });
-                    return { id: `${file.name}-${i}`, preview: dataUri, originalIndex: i };
-                })()
-            );
+            const pagePromises = Array.from({ length: numPages }, async (_, i) => {
+                const newPdf = await PDFDocument.create();
+                const [copiedPage] = await newPdf.copyPages(pdfDoc, [i]);
+                newPdf.addPage(copiedPage);
+                const dataUri = await newPdf.saveAsBase64({ dataUri: true });
+                return { id: `${file.name}-${i}`, preview: dataUri, originalIndex: i };
+            });
 
             const pageData = await Promise.all(pagePromises);
             setPages(pageData);
         } catch (e) {
             console.error(e);
-            setError("Could not read or render the PDF. It may be corrupted or protected.");
+            setError("Could not read the PDF. It may be corrupted or protected.");
             setFile(null);
             setPages([]);
         } finally {
-            isGeneratingRef.current = false;
             setIsLoading(false);
         }
     }, []);
 
     useEffect(() => {
         if (file) {
-            generatePagePreviews(file, options);
+            generatePagePreviews(file);
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [file, options]);
+    }, [file, generatePagePreviews]);
 
     const onDrop = useCallback(acceptedFiles => {
         if (acceptedFiles.length === 0) return;
         const selectedFile = acceptedFiles[0];
-
         if (selectedFile.type !== 'application/pdf') {
             setError("Please upload a valid PDF file.");
             return;
         }
-
         setError(null);
         setPages([]);
         setFile(selectedFile);
@@ -116,15 +69,13 @@ const AddPageNumbers = () => {
     const { getRootProps, getInputProps } = useDropzone({ onDrop, accept: { 'application/pdf': ['.pdf'] }, maxFiles: 1 });
 
     const handleOptionsChange = (e) => {
-        const { name, value, type, checked } = e.target;
-        setOptions(prevOptions => ({ ...prevOptions, [name]: type === 'checkbox' ? checked : value }));
+        const { name, value } = e.target;
+        setOptions(prev => ({ ...prev, [name]: value }));
     };
 
     const handleApplyNumbers = async () => {
         if (!file) return;
-
         setIsLoading(true);
-        setError(null);
 
         try {
             const arrayBuffer = await file.arrayBuffer();
@@ -132,38 +83,27 @@ const AddPageNumbers = () => {
             const numPages = pdfDoc.getPageCount();
             const font = await pdfDoc.embedFont(StandardFonts[options.font] || StandardFonts.Helvetica);
 
-            const parsedOpts = {
-                ...options,
-                margin: parseInt(options.margin, 10) || 0,
-                fontSize: parseInt(options.fontSize, 10) || 12,
-                startPage: parseInt(options.startPage, 10) || 1,
-                endPage: parseInt(options.endPage, 10) || 0,
-            };
-
-            const effectiveEndPage = parsedOpts.endPage === 0 ? numPages : parsedOpts.endPage;
-
-            for (let i = parsedOpts.startPage - 1; i < effectiveEndPage; i++) {
-                if (i < 0 || i >= numPages) continue;
-
+            for (let i = 0; i < numPages; i++) {
                 const page = pdfDoc.getPage(i);
                 const { width, height } = page.getSize();
-                const text = parsedOpts.format.replace('{n}', i + 1).replace('{total}', numPages);
-                const textWidth = font.widthOfTextAtSize(text, parsedOpts.fontSize);
-
+                const text = options.format.replace('{n}', i + 1).replace('{total}', numPages);
+                const textWidth = font.widthOfTextAtSize(text, parseInt(options.fontSize, 10));
+                
+                const margin = parseInt(options.margin, 10);
                 const positions = {
-                    'top-left': { x: parsedOpts.margin, y: height - parsedOpts.fontSize - parsedOpts.margin },
-                    'top-center': { x: (width - textWidth) / 2, y: height - parsedOpts.fontSize - parsedOpts.margin },
-                    'top-right': { x: width - textWidth - parsedOpts.margin, y: height - parsedOpts.fontSize - parsedOpts.margin },
-                    'bottom-left': { x: parsedOpts.margin, y: parsedOpts.margin },
-                    'bottom-center': { x: (width - textWidth) / 2, y: parsedOpts.margin },
-                    'bottom-right': { x: width - textWidth - parsedOpts.margin, y: parsedOpts.margin },
+                    'top-left': { x: margin, y: height - parseInt(options.fontSize, 10) - margin },
+                    'top-center': { x: (width - textWidth) / 2, y: height - parseInt(options.fontSize, 10) - margin },
+                    'top-right': { x: width - textWidth - margin, y: height - parseInt(options.fontSize, 10) - margin },
+                    'bottom-left': { x: margin, y: margin },
+                    'bottom-center': { x: (width - textWidth) / 2, y: margin },
+                    'bottom-right': { x: width - textWidth - margin, y: margin },
                 };
 
                 page.drawText(text, {
-                    ...positions[parsedOpts.position],
+                    ...positions[options.position],
                     font,
-                    size: parsedOpts.fontSize,
-                    color: rgb(parseInt(parsedOpts.color.slice(1, 3), 16) / 255, parseInt(parsedOpts.color.slice(3, 5), 16) / 255, parseInt(parsedOpts.color.slice(5, 7), 16) / 255),
+                    size: parseInt(options.fontSize, 10),
+                    color: rgb(parseInt(options.color.slice(1, 3), 16) / 255, parseInt(options.color.slice(3, 5), 16) / 255, parseInt(options.color.slice(5, 7), 16) / 255),
                 });
             }
 
@@ -176,7 +116,6 @@ const AddPageNumbers = () => {
             link.click();
             document.body.removeChild(link);
             URL.revokeObjectURL(link.href);
-
             removeFile();
         } catch (e) {
             console.error(e);
@@ -192,13 +131,53 @@ const AddPageNumbers = () => {
         setError(null);
     };
 
+    const getPreviewNumberStyle = () => {
+        const style = {
+            fontFamily: options.font.replace(/[^a-zA-Z]/g, ' '),
+            fontSize: `${options.fontSize}px`,
+            color: options.color,
+            position: 'absolute',
+        };
+        const margin = `${options.margin}px`;
+
+        switch (options.position) {
+            case 'top-left':
+                style.top = margin;
+                style.left = margin;
+                break;
+            case 'top-center':
+                style.top = margin;
+                style.left = '50%';
+                style.transform = 'translateX(-50%)';
+                break;
+            case 'top-right':
+                style.top = margin;
+                style.right = margin;
+                break;
+            case 'bottom-left':
+                style.bottom = margin;
+                style.left = margin;
+                break;
+            case 'bottom-right':
+                style.bottom = margin;
+                style.right = margin;
+                break;
+            default: // bottom-center
+                style.bottom = margin;
+                style.left = '50%';
+                style.transform = 'translateX(-50%)';
+                break;
+        }
+        return style;
+    };
+
     const fontOptions = Object.keys(StandardFonts).map(fontKey => (
         <option key={fontKey} value={fontKey}>{fontKey}</option>
     ));
 
     return (
         <div className="page-numbers-container">
-            <Helmet>
+             <Helmet>
                 <title>Add Page Numbers to PDF - Easily Number Your PDF Pages</title>
                 <meta name="description" content="Easily add page numbers to your PDF documents online for free. Customize the position, format, font, and style of your page numbers with a live preview." />
                 <link rel="canonical" href={`${window.location.origin}/add-page-numbers`} />
@@ -223,8 +202,7 @@ const AddPageNumbers = () => {
                     <div className="page-numbers-main-area">
                         <div className="page-numbers-options-panel">
                             <h3 className="options-title">Page Number Options</h3>
-                            <Form>
-                                {/* Form Groups... */}
+                             <Form>
                                 <Form.Group as={Row} className="mb-3">
                                     <Form.Label column sm={4}>Position</Form.Label>
                                     <Col sm={8}>
@@ -243,17 +221,6 @@ const AddPageNumbers = () => {
                                     <Col sm={8}>
                                         <Form.Control type="text" name="format" value={options.format} onChange={handleOptionsChange} />
                                         <Form.Text>Use {"{n}"} for page number and {"{total}"} for total pages.</Form.Text>
-                                    </Col>
-                                </Form.Group>
-                                 <Form.Group as={Row} className="mb-3">
-                                    <Form.Label column sm={4}>Pages</Form.Label>
-                                    <Col sm={4}>
-                                        <Form.Control type="number" name="startPage" value={options.startPage} onChange={handleOptionsChange} min="1"/>
-                                        <Form.Text>Start</Form.Text>
-                                    </Col>
-                                    <Col sm={4}>
-                                        <Form.Control type="number" name="endPage" value={options.endPage} onChange={handleOptionsChange} min="0"/>
-                                        <Form.Text>End (0=last)</Form.Text>
                                     </Col>
                                 </Form.Group>
                                 <Form.Group as={Row} className="mb-3">
@@ -276,6 +243,12 @@ const AddPageNumbers = () => {
                                         <Form.Control type="color" name="color" value={options.color} onChange={handleOptionsChange} />
                                     </Col>
                                 </Form.Group>
+                                <Form.Group as={Row} className="mb-3">
+                                     <Form.Label column sm={4}>Margin</Form.Label>
+                                     <Col sm={8}>
+                                         <Form.Control type="number" name="margin" value={options.margin} onChange={handleOptionsChange} min="0" />
+                                     </Col>
+                                 </Form.Group>
                             </Form>
                         </div>
                         <div className="page-numbers-preview-area">
@@ -288,12 +261,18 @@ const AddPageNumbers = () => {
                                     <div className="spinner-container"><Spinner animation="border" /></div>
                                 ) : (
                                     <div className="page-numbers-grid">
-                                        {pages.map(page => (
-                                            <div key={page.id} className="page-item">
-                                                <img src={page.preview} alt={`Page ${page.originalIndex + 1}`} className="page-preview-img"/>
-                                                <div className="page-number-indicator">{page.originalIndex + 1}</div>
-                                            </div>
-                                        ))}
+                                        {pages.map(page => {
+                                            const pageNumber = page.originalIndex + 1;
+                                            return (
+                                                <div key={page.id} className="page-item">
+                                                    <img src={page.preview} alt={`Page ${pageNumber}`} className="page-preview-img"/>
+                                                    <div style={getPreviewNumberStyle()}>
+                                                        {options.format.replace('{n}', pageNumber).replace('{total}', pages.length)}
+                                                    </div>
+                                                    {/* <div className="page-number-indicator">{pageNumber}</div> */}
+                                                </div>
+                                            );
+                                        })}
                                     </div>
                                 )}
                             </div>

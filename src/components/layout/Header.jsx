@@ -10,7 +10,7 @@ import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { pdfToolCategories, imageToolCategories } from '../../data/tools.jsx';
 import useMediaQuery from '../../hooks/useMediaQuery.jsx';
 import './Header.css';
-import logo from '/logo.png';
+import logo from '../../assets/logo.png';
 
 const ToolsDropdown = ({ title, toolCategories, activeKey }) => {
   const isMobile = useMediaQuery('(max-width: 992px)');
