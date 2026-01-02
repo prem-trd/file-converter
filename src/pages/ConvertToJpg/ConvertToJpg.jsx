@@ -21,11 +21,11 @@ const ConvertToJpg = () => {
             if (isSvgFile) {
                 const reader = new FileReader();
                 reader.onload = (e) => {
-                    setFile({ preview, raw: e.target.result });
+                    setFile({ preview, raw: e.target.result, name: uploadedFile.name });
                 };
                 reader.readAsText(uploadedFile);
             } else {
-                setFile({ preview });
+                setFile({ preview, name: uploadedFile.name });
             }
         }
     }, []);
@@ -57,7 +57,8 @@ const ConvertToJpg = () => {
             ctx.drawImage(image, 0, 0);
             const link = document.createElement('a');
             link.href = canvas.toDataURL('image/jpeg', 1.0);
-            link.download = `converted-image.jpeg`;
+            const originalName = file.name.split('.').slice(0, -1).join('.');
+            link.download = `convert-to-jpg-smartconverter-${originalName}.jpeg`;
             link.click();
         };
     };

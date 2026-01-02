@@ -70,7 +70,7 @@ const CompressImage = () => {
             toaster.push(<Message type="error" closable>No compressed image to download.</Message>);
             return;
         }
-        saveAs(compressedFile, `compressed-${originalFile.name}`);
+        saveAs(compressedFile, `compress-image-smartconverter-${originalFile.name}`);
     };
 
     const formatBytes = (bytes, decimals = 2) => {

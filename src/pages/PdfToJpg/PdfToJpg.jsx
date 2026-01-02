@@ -89,7 +89,7 @@ const PdfToJpg = () => {
 
         try {
             const content = await zip.generateAsync({ type: 'blob' });
-            saveAs(content, `${pdfName}-images.zip`);
+            saveAs(content, `pdf-to-jpg-smartconverter-${pdfName}.zip`);
         } catch (err) {
             setError('Failed to create the zip file.');
             console.error('ZIP creation error:', err);

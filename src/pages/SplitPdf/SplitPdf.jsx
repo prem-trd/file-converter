@@ -99,7 +99,7 @@ const SplitPdf = () => {
         const copiedPages = await newPdfDoc.copyPages(pdfDoc, indices);
         copiedPages.forEach(page => newPdfDoc.addPage(page));
         const pdfBytes = await newPdfDoc.save();
-        zip.file(`${file.name.replace('.pdf', '')}-p${from}-${to}.pdf`, pdfBytes);
+        zip.file(`split-pdf-smartconverter-${file.name.replace('.pdf', '')}-p${from}-${to}.pdf`, pdfBytes);
       }
 
       if (validRanges === 0) {
@@ -111,7 +111,7 @@ const SplitPdf = () => {
       const zipBlob = await zip.generateAsync({ type: 'blob' });
       const link = document.createElement('a');
       link.href = URL.createObjectURL(zipBlob);
-      link.download = `${file.name.replace('.pdf', '')}_split.zip`;
+      link.download = `split-pdf-smartconverter-${file.name.replace('.pdf', '')}.zip`;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);

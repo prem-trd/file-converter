@@ -68,7 +68,7 @@ const ResizeImage = () => {
   const handleDownload = () => {
     const link = document.createElement('a');
     link.href = resizedPreview;
-    link.download = `resized-${files[0].name}`;
+    link.download = `resize-image-smartconverter-${files[0].name}`;
     link.click();
   };
 

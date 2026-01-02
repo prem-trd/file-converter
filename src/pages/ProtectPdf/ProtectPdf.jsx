@@ -2,8 +2,9 @@
 import React, { useState, useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useDropzone } from 'react-dropzone';
-import { Button, Input, InputGroup, List, IconButton, Message, toaster, Loader } from 'rsuite';
+import { Button, Input, InputGroup, List, IconButton, Message, toaster } from 'rsuite';
 import { VscFilePdf, VscLock, VscTrash } from "react-icons/vsc";
+import { PDFDocument, Permissions } from 'pdf-lib';
 import './ProtectPdf.css';
 
 const ProtectPdf = () => {
@@ -30,13 +31,43 @@ const ProtectPdf = () => {
             return;
         }
         setIsLoading(true);
-        // Mock protection logic
-        setTimeout(() => {
-            setIsLoading(false);
-            toaster.push(<Message type="success" closable>{`Successfully protected ${file.name}`}</Message>);
+
+        try {
+            const pdfBytes = await file.arrayBuffer();
+            const pdfDoc = await PDFDocument.load(pdfBytes);
+
+            await pdfDoc.encrypt({ // Correctly await the encryption
+                userPassword: password,
+                ownerPassword: password, // You can set a different owner password if needed
+                permissions: [
+                    Permissions.Printing,
+                    Permissions.Copying,
+                    Permissions.Modifying,
+                ],
+            });
+
+            const protectedPdfBytes = await pdfDoc.save();
+            const blob = new Blob([protectedPdfBytes], { type: 'application/pdf' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            
+            const originalFilename = file.name.endsWith('.pdf') ? file.name.slice(0, -4) : file.name;
+            link.download = `protect-pdf-smartconverter-${originalFilename}.pdf`;
+            
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(link.href);
+
+            toaster.push(<Message type="success" closable>{`Successfully protected and downloaded ${file.name}`}</Message>);
             setFile(null);
             setPassword('');
-        }, 1500);
+        } catch (error) {
+            console.error(error);
+            toaster.push(<Message type="error" closable>Failed to protect the PDF. Please try again.</Message>);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     const removeFile = () => {

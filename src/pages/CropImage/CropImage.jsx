@@ -9,6 +9,7 @@ import './CropImage.css';
 
 const CropImage = () => {
   const [imageSrc, setImageSrc] = useState(null);
+  const [filename, setFilename] = useState(null);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [rotation, setRotation] = useState(0);
@@ -16,6 +17,7 @@ const CropImage = () => {
 
   const onDrop = useCallback(acceptedFiles => {
     const file = acceptedFiles[0];
+    setFilename(file.name);
     const reader = new FileReader();
     reader.onload = () => {
       setImageSrc(reader.result);
@@ -41,7 +43,8 @@ const CropImage = () => {
         const croppedImage = await getCroppedImg(imageSrc, croppedAreaPixels, rotation);
         const link = document.createElement('a');
         link.href = croppedImage;
-        link.download = 'cropped-image.jpeg';
+        const baseName = filename.split('.').slice(0, -1).join('.');
+        link.download = `crop-image-smartconverter-${baseName}.jpeg`;
         link.click();
       } catch (e) {
         console.error(e);
@@ -51,6 +54,7 @@ const CropImage = () => {
 
   const removeImage = () => {
     setImageSrc(null);
+    setFilename(null);
     setZoom(1);
     setRotation(0);
   };

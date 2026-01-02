@@ -116,7 +116,7 @@ const SignPdf = () => {
             const pdfWithSignatureBytes = await pdfDoc.save();
 
             const blob = new Blob([pdfWithSignatureBytes], { type: 'application/pdf' });
-            saveAs(blob, `signed-${pdfFile.name}`);
+            saveAs(blob, `signed-pdf-smartconverter-${pdfFile.name}`);
 
             toaster.push(<Message type="success" closable>PDF signed successfully!</Message>);
         } catch (error) {

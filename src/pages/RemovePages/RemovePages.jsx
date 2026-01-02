@@ -95,7 +95,7 @@ const RemovePages = () => {
       const blob = new Blob([pdfBytes], { type: 'application/pdf' });
       const link = document.createElement('a');
       link.href = URL.createObjectURL(blob);
-      link.download = `removed-${file.name}`;
+      link.download = `remove-pages-smartconverter-${file.name}`;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);

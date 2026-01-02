@@ -52,7 +52,7 @@ const ConvertFromJpg = () => {
             const mimeType = `image/${outputFormat}`;
             link.href = canvas.toDataURL(mimeType);
             const originalName = file.name.split('.').slice(0, -1).join('.');
-            link.download = `${originalName}.${outputFormat}`;
+            link.download = `convert-from-jpg-smartconverter-${originalName}.${outputFormat}`;
             link.click();
         };
     };

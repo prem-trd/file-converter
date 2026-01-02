@@ -89,7 +89,7 @@ const ExcelToPdf = () => {
                         heightLeft -= pdfHeight;
                     }
 
-                    pdf.save(`${file.name.replace(/\.xlsx$/i, '')}.pdf`);
+                    pdf.save(`excel-to-pdf-smartconverter-${file.name.replace(/\.xlsx$/i, '')}.pdf`);
 
                 } catch (err) {
                     console.error('Error processing Excel file:', err);

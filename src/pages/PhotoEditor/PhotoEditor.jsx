@@ -69,7 +69,7 @@ const PhotoEditor = () => {
             context.drawImage(imageElement, 0, 0, naturalWidth, naturalHeight);
 
             const link = document.createElement('a');
-            link.download = 'edited-photo.png';
+            link.download = 'photo-editor-smartconverter.png';
             link.href = canvas.toDataURL('image/png');
             link.click();
         }

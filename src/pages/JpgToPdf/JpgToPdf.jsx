@@ -63,7 +63,7 @@ const JpgToPdf = () => {
 
         const processFile = (index) => {
             if (index >= files.length) {
-                doc.save('converted.pdf');
+                doc.save('jpg-to-pdf-smartconverter.pdf');
                 setIsLoading(false);
                 setFiles([]);
                 return;

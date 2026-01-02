@@ -111,7 +111,7 @@ const AddPageNumbers = () => {
             const blob = new Blob([pdfBytes], { type: 'application/pdf' });
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
-            link.download = `numbered-${file.name}`;
+            link.download = `add-page-numbers-smartconverter-${file.name}`;
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
