@@ -6,8 +6,8 @@ import Loader from "../components/Loader";
 
 const Dashboard = lazy(() => import("../pages/Dashboard"));
 const NotFound = lazy(() => import("../pages/NotFound"));
-const SignIn = lazy(() => import("../pages/SignIn"));
-const SignUp = lazy(() => import("../pages/SignUp"));
+const Signin = lazy(() => import("../pages/Signin/Signin.jsx"));
+const Signup = lazy(() => import("../pages/Signup/Signup.jsx"));
 const MergePdf = lazy(() => import("../pages/MergePdf/MergePdf.jsx"));
 const SplitPdf = lazy(() => import("../pages/SplitPdf/SplitPdf.jsx"));
 const RemovePages = lazy(() => import("../pages/RemovePages/RemovePages.jsx"));
@@ -177,11 +177,11 @@ const router = createBrowserRouter(
     },
     {
       path: "/signin",
-      element: <Suspense fallback={<Loader />}><SignIn /></Suspense>,
+      element: <Suspense fallback={<Loader />}><Signin /></Suspense>,
     },
     {
       path: "/signup",
-      element: <Suspense fallback={<Loader />}><SignUp /></Suspense>,
+      element: <Suspense fallback={<Loader />}><Signup /></Suspense>,
     },
   ],
   {

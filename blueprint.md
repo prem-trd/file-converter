@@ -69,29 +69,23 @@ This project is a web-based utility application offering a comprehensive suite o
 
 ---
 
-## Latest Change: Branded Filename Convention
+## Latest Change: My Account Page
 
 ### Objective
 
-To enhance brand identity and provide users with more descriptive filenames, all downloadable files will now follow a standardized naming convention.
+To provide users with a personalized experience, a "My Account" page has been created. This page allows logged-in users to view their account details and manage their sessions.
 
-### PDF Tool Updates
+### Key Features
 
-1.  **`JpgToPdf.jsx`:** Saves the converted file as `jpg-to-pdf-smartconverter.pdf`.
-2.  **`MergePdf.jsx`:** Saves the merged document as `merge-pdf-smartconverter.pdf`.
-3.  **`OrganizePdf.jsx`:** Saves the organized PDF as `organize-pdf-smartconverter.pdf`.
-4.  **`ProtectPdf.jsx`:** Saves the encrypted file as `protect-pdf-smartconverter-[original-file-name].pdf`.
-5.  **`SplitPdf.jsx`:** Generates a zip file named `split-pdf-smartconverter-[original-file-name].zip`.
-6.  **`WordToPdf.jsx`:** Saves the converted file as `word-to-pdf-smartconverter-[original-file-name].pdf`.
+-   **Account Details:** Displays the user's email address and unique user ID (UID).
+-   **Sign Out:** Allows users to securely log out of their account.
+-   **Protected Route:** The "My Account" page is a protected route, accessible only to authenticated users. Unauthenticated users will be redirected to the sign-in page.
 
-### Image Tool Updates
+### Technical Implementation
 
-1.  **`CompressImage.jsx`:** Saves the compressed file as `compress-image-smartconverter-[original-file-name]`.
-2.  **`MemeGenerator.jsx`:** Saves the generated meme as `meme-generator-smartconverter.png`.
-3.  **`PhotoEditor.jsx`:** Saves the edited photo as `photo-editor-smartconverter.png`.
-4.  **`ResizeImage.jsx`:** Saves the resized image as `resize-image-smartconverter-[original-file-name]`.
-5.  **`CropImage.jsx`:** Saves the cropped image as `crop-image-smartconverter-[original-file-name].jpeg`.
-6.  **`RotateImage.jsx`:** Saves the rotated image as `rotate-image-smartconverter.jpeg`.
-7.  **`WatermarkImage.jsx`:** Saves the watermarked image as `watermark-image-smartconverter.png`.
+-   **`MyAccount.jsx`:** A new component that fetches and displays the current user's data from Firebase Authentication.
+-   **`MyAccount.css`:** Provides styling for the "My Account" page, ensuring a clean and user-friendly layout.
+-   **`Header.jsx`:** The header has been updated to include a "My Account" link, which is dynamically displayed only when a user is logged in.
+-   **`router/index.jsx`:** A new route for `/my-account` has been added, linking to the `MyAccount.jsx` component.
 
-This systematic update ensures a consistent and branded user experience across all file download functionalities.
+This feature enhances the user experience by providing a dedicated space for account management, a crucial element for any application with user authentication.

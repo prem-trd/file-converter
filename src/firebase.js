@@ -2,13 +2,13 @@ import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 
 const firebaseConfig = {
-  projectId: "project1-3d56e",
-  appId: "1:835408379399:web:807b7974c877c79c8c74a2",
-  storageBucket: "project1-3d56e.firebasestorage.app",
-  apiKey: "AIzaSyD3bMl5fmOvP_UsHCoo3M6f6p4Mn9wIN0c",
-  authDomain: "project1-3d56e.firebaseapp.com",
-  messagingSenderId: "835408379399"
+  projectId: "fileconverter-9509d",
+  appId: "1:805297617844:web:fc91147f662e9ac6f0d0e1",
+  storageBucket: "fileconverter-9509d.firebasestorage.app",
+  apiKey: "AIzaSyD9wq-2k1qVUvkx5nqNDH0Qe_8m7ZGbDpo",
+  authDomain: "fileconverter-9509d.firebaseapp.com",
+  messagingSenderId: "805297617844",
+  measurementId: "G-HFVF5PC539"
 };
-
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
