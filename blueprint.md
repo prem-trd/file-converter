@@ -69,23 +69,33 @@ This project is a web-based utility application offering a comprehensive suite o
 
 ---
 
-## Latest Change: My Account Page
+## Latest Change: Conversion Limit for Unregistered Users
 
 ### Objective
 
-To provide users with a personalized experience, a "My Account" page has been created. This page allows logged-in users to view their account details and manage their sessions.
+To encourage user sign-ups, a conversion limit has been implemented for all unregistered users. This feature restricts the number of conversions a guest user can perform within a 24-hour period, prompting them to create an account for unlimited access.
 
 ### Key Features
 
--   **Account Details:** Displays the user's email address and unique user ID (UID).
--   **Sign Out:** Allows users to securely log out of their account.
--   **Protected Route:** The "My Account" page is a protected route, accessible only to authenticated users. Unauthenticated users will be redirected to the sign-in page.
+-   **Conversion Limit:** Unregistered users are limited to 5 conversions per day.
+-   **Session-Based Tracking:** The conversion count and the last conversion date are tracked using the browser's `sessionStorage`.
+-   **User-Friendly Notifications:** When the limit is reached, users are presented with a clear and concise message encouraging them to sign up.
+-   **Unlimited Access for Registered Users:** The conversion limit is not applied to users who are logged in.
 
 ### Technical Implementation
 
--   **`MyAccount.jsx`:** A new component that fetches and displays the current user's data from Firebase Authentication.
--   **`MyAccount.css`:** Provides styling for the "My Account" page, ensuring a clean and user-friendly layout.
--   **`Header.jsx`:** The header has been updated to include a "My Account" link, which is dynamically displayed only when a user is logged in.
--   **`router/index.jsx`:** A new route for `/my-account` has been added, linking to the `MyAccount.jsx` component.
+-   **`conversionLimiter.jsx`:** A new utility module that provides the following functions:
+    -   `checkConversionLimit()`: Checks if the user has reached their daily conversion limit.
+    -   `incrementConversionCount()`: Increments the user's conversion count for the day.
+-   **Tool Page Integration:** The `checkConversionLimit` and `incrementConversionCount` functions have been integrated into the following tool pages:
+    -   `WordToPdf.jsx`
+    -   `PptToPdf.jsx`
+    -   `ExcelToPdf.jsx`
+    -   `JpgToPdf.jsx`
+    -   `HtmlToPdf.jsx`
+    -   `PdfToJpg.jsx`
+    -   `ConvertToJpg.jsx`
+    -   `ConvertFromJpg.jsx`
+-   **Authentication Context:** The `useAuth` hook is used to determine if a user is logged in. The conversion limit is only applied if `currentUser` is `null`.
 
-This feature enhances the user experience by providing a dedicated space for account management, a crucial element for any application with user authentication.
+This new feature incentivizes user registration, which will help to build a more engaged user base and provide valuable insights into user behavior.

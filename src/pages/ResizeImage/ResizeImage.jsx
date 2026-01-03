@@ -3,6 +3,8 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useDropzone } from 'react-dropzone';
 import { FaFileImage, FaDownload, FaTrash } from 'react-icons/fa';
+import { useAuth } from '../../context/AuthContext';
+import { checkConversionLimit, incrementConversionCount } from '../../utils/conversionLimiter';
 import './ResizeImage.css';
 
 const ResizeImage = () => {
@@ -10,13 +12,19 @@ const ResizeImage = () => {
   const [width, setWidth] = useState('');
   const [height, setHeight] = useState('');
   const [resizedPreview, setResizedPreview] = useState(null);
+  const { currentUser } = useAuth();
+  const [error, setError] = useState(null);
 
   const onDrop = useCallback(acceptedFiles => {
+    if (!currentUser && checkConversionLimit()) {
+        setError("You have reached your daily conversion limit. Please sign up for unlimited conversions.");
+        return;
+    }
     setFiles(acceptedFiles.map(file => Object.assign(file, {
       preview: URL.createObjectURL(file)
     })));
     setResizedPreview(null); // Clear previous resized preview
-  }, []);
+  }, [currentUser]);
 
   useEffect(() => {
     if (files.length > 0 && (width || height)) {
@@ -66,6 +74,9 @@ const ResizeImage = () => {
   });
 
   const handleDownload = () => {
+    if (!currentUser) {
+        incrementConversionCount();
+    }
     const link = document.createElement('a');
     link.href = resizedPreview;
     link.download = `resize-image-smartconverter-${files[0].name}`;
@@ -93,6 +104,7 @@ const ResizeImage = () => {
       </div>
 
       <div className="resize-image-content">
+        {error && <div className="alert alert-danger">{error}</div>}
         {files.length === 0 && (
             <div {...getRootProps({ className: `dropzone ${isDragActive ? 'drag-over' : ''}` })}>
                 <input {...getInputProps()} />

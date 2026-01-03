@@ -3,6 +3,9 @@ import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useDropzone } from 'react-dropzone';
 import { FaFileImage, FaDownload, FaArrowLeft, FaFont, FaImage } from 'react-icons/fa';
+import { checkConversionLimit, incrementConversionCount } from '../../utils/conversionLimiter';
+import { useAuth } from '../../contexts/AuthContext';
+import { Message, toaster } from 'rsuite';
 import './WatermarkImage.css';
 
 // Helper function to calculate watermark positions
@@ -52,27 +55,39 @@ const WatermarkImage = () => {
     const [imageOptions, setImageOptions] = useState({ scale: 0.2, opacity: 0.5, rotation: 0, mode: 'single', position: 'center', tileGap: 50, rows: 3, cols: 3 });
     const [watermarkImage, setWatermarkImage] = useState(null);
     const canvasRef = useRef(null);
+    const { currentUser } = useAuth();
+    const [isLimitReached, setIsLimitReached] = useState(false);
 
     const onDropMain = useCallback(acceptedFiles => {
+        if (!currentUser && checkConversionLimit()) {
+            setIsLimitReached(true);
+            toaster.push(<Message type="error" closable>You have reached your daily conversion limit. Please log in for unlimited conversions.</Message>);
+            return;
+        }
         const file = acceptedFiles[0];
         if (file) {
             const reader = new FileReader();
             reader.onload = (e) => setMainImage(e.target.result);
             reader.readAsDataURL(file);
         }
-    }, []);
+    }, [currentUser]);
 
     const onDropWatermark = useCallback(acceptedFiles => {
+        if (!currentUser && checkConversionLimit()) {
+            setIsLimitReached(true);
+            toaster.push(<Message type="error" closable>You have reached your daily conversion limit. Please log in for unlimited conversions.</Message>);
+            return;
+        }
         const file = acceptedFiles[0];
         if (file) {
             const reader = new FileReader();
             reader.onload = (e) => setWatermarkImage(e.target.result);
             reader.readAsDataURL(file);
         }
-    }, []);
+    }, [currentUser]);
 
-    const { getRootProps: getMainRootProps, getInputProps: getMainInputProps, isDragActive: isMainDragActive } = useDropzone({ onDrop: onDropMain, accept: 'image/*', multiple: false });
-    const { getRootProps: getWatermarkRootProps, getInputProps: getWatermarkInputProps, isDragActive: isWatermarkDragActive } = useDropzone({ onDrop: onDropWatermark, accept: 'image/*', multiple: false });
+    const { getRootProps: getMainRootProps, getInputProps: getMainInputProps, isDragActive: isMainDragActive } = useDropzone({ onDrop: onDropMain, accept: 'image/*', multiple: false, disabled: isLimitReached });
+    const { getRootProps: getWatermarkRootProps, getInputProps: getWatermarkInputProps, isDragActive: isWatermarkDragActive } = useDropzone({ onDrop: onDropWatermark, accept: 'image/*', multiple: false, disabled: isLimitReached });
 
     useEffect(() => {
         if (mainImage && canvasRef.current) {
@@ -131,6 +146,14 @@ const WatermarkImage = () => {
     }, [mainImage, watermarkType, textOptions, watermarkImage, imageOptions]);
 
     const handleDownload = () => {
+        if (!currentUser) {
+            if (checkConversionLimit()) {
+                setIsLimitReached(true);
+                toaster.push(<Message type="error" closable>You have reached your daily conversion limit. Please log in for unlimited conversions.</Message>);
+                return;
+            }
+            incrementConversionCount();
+        }
         const canvas = canvasRef.current;
         const link = document.createElement('a');
         link.download = 'watermark-image-smartconverter.png';
@@ -156,7 +179,7 @@ const WatermarkImage = () => {
             </div>
             <div className='watermark-image-content'>
                 {!mainImage ? (
-                    <div {...getMainRootProps({ className: `dropzone` })}>
+                    <div {...getMainRootProps({ className: `dropzone ${isLimitReached ? 'disabled' : ''}` })}>
                         <input {...getMainInputProps()} />
                         <div className="dropzone-content">
                             <FaFileImage size={50} />
@@ -195,7 +218,7 @@ const WatermarkImage = () => {
                                 </div>
                             ) : (
                                 <div className='watermark-image-settings-group'>
-                                    <div {...getWatermarkRootProps({ className: `watermark-image-dropzone-small ${isWatermarkDragActive ? 'drag-over' : ''}` })}>
+                                    <div {...getWatermarkRootProps({ className: `watermark-image-dropzone-small ${isWatermarkDragActive ? 'drag-over' : ''} ${isLimitReached ? 'disabled' : ''}` })}>
                                         <input {...getWatermarkInputProps()} />
                                         {watermarkImage ? <img src={watermarkImage} alt="watermark preview" /> : <p>Drop watermark image</p>}
                                     </div>
@@ -207,7 +230,7 @@ const WatermarkImage = () => {
                             )}
 
                             <div className="watermark-image-sidebar-buttons">
-                                <button className='watermark-image-download-button' onClick={handleDownload}><FaDownload /> Download Image</button>
+                                <button className='watermark-image-download-button' onClick={handleDownload} disabled={isLimitReached}><FaDownload /> Download Image</button>
                                 <button className='watermark-image-back-button' onClick={handleBack}><FaArrowLeft /> Back</button>
                             </div>
                         </div>

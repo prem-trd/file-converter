@@ -5,6 +5,8 @@ import { useDropzone } from 'react-dropzone';
 import { Button, Alert, Spinner } from 'react-bootstrap';
 import { FaFilePdf, FaTrash } from 'react-icons/fa';
 import { PDFDocument } from 'pdf-lib';
+import { useAuth } from '../../context/AuthContext.jsx';
+import { checkConversionLimit, incrementConversionCount } from '../../utils/conversionLimiter.jsx';
 import './CompressPdf.css';
 
 const CompressPdf = () => {
@@ -12,8 +14,13 @@ const CompressPdf = () => {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const { currentUser } = useAuth();
 
   const onDrop = useCallback(acceptedFiles => {
+    if (!currentUser && checkConversionLimit()) {
+        setError("You have reached your daily conversion limit. Please sign up for unlimited conversions.");
+        return;
+    }
     if (acceptedFiles.length > 1) {
       setError("Please upload only one PDF file at a time.");
       setFiles([]);
@@ -28,7 +35,7 @@ const CompressPdf = () => {
     setError(null);
     setSuccess(null);
     setFiles(acceptedFiles);
-  }, []);
+  }, [currentUser]);
 
   const { getRootProps, getInputProps } = useDropzone({ onDrop, accept: { 'application/pdf': ['.pdf'] } });
 
@@ -36,6 +43,10 @@ const CompressPdf = () => {
     if (files.length === 0) {
       setError("Please select a file to compress.");
       return;
+    }
+
+    if (!currentUser) {
+        incrementConversionCount();
     }
 
     setIsLoading(true);

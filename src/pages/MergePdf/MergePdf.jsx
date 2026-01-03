@@ -5,14 +5,22 @@ import { useDropzone } from 'react-dropzone';
 import { PDFDocument } from 'pdf-lib';
 import { Button, IconButton, List } from 'rsuite';
 import { VscFilePdf, VscChevronUp, VscChevronDown, VscTrash } from "react-icons/vsc";
+import { useAuth } from '../../context/AuthContext';
+import { checkConversionLimit, incrementConversionCount } from '../../utils/conversionLimiter';
 import './MergePdf.css';
 import { FaFilePdf } from 'react-icons/fa';
 
 const MergePdf = () => {
   const [files, setFiles] = useState([]);
   const [isMerging, setIsMerging] = useState(false);
+  const { currentUser } = useAuth();
+  const [error, setError] = useState(null);
 
   const onDrop = useCallback(acceptedFiles => {
+    if (!currentUser && checkConversionLimit()) {
+        setError("You have reached your daily conversion limit. Please sign up for unlimited conversions.");
+        return;
+    }
     const newFiles = acceptedFiles
       .filter(file => file.type === 'application/pdf')
       .map(file => ({
@@ -20,7 +28,7 @@ const MergePdf = () => {
         id: `${file.name}-${file.lastModified}`,
       }));
     setFiles(prevFiles => [...prevFiles, ...newFiles]);
-  }, []);
+  }, [currentUser]);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
@@ -49,6 +57,10 @@ const MergePdf = () => {
     if (files.length < 2) {
       alert('Please select at least two PDF files to merge.');
       return;
+    }
+
+    if (!currentUser) {
+        incrementConversionCount();
     }
 
     setIsMerging(true);
@@ -92,6 +104,7 @@ const MergePdf = () => {
       </div>
 
       <div className='merge-pdf-content'>
+        {error && <div className="alert alert-danger">{error}</div>}
         <div {...getRootProps({ className: `dropzone` })}>
           <input {...getInputProps()} />
           <div className="dropzone-content">

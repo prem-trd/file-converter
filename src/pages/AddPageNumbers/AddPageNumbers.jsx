@@ -5,6 +5,8 @@ import { useDropzone } from 'react-dropzone';
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 import { Button, Spinner, Alert, Form, Row, Col } from 'react-bootstrap';
 import { FaFilePdf, FaTrash } from 'react-icons/fa';
+import { useAuth } from '../../context/AuthContext.jsx';
+import { checkConversionLimit, incrementConversionCount } from '../../utils/conversionLimiter.jsx';
 import './AddPageNumbers.css';
 
 const AddPageNumbers = () => {
@@ -12,6 +14,7 @@ const AddPageNumbers = () => {
     const [pages, setPages] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
+    const { currentUser } = useAuth();
     const [options, setOptions] = useState({
         position: 'bottom-center',
         margin: 5,
@@ -55,6 +58,10 @@ const AddPageNumbers = () => {
     }, [file, generatePagePreviews]);
 
     const onDrop = useCallback(acceptedFiles => {
+        if (!currentUser && checkConversionLimit()) {
+            setError("You have reached your daily conversion limit. Please sign up for unlimited conversions.");
+            return;
+        }
         if (acceptedFiles.length === 0) return;
         const selectedFile = acceptedFiles[0];
         if (selectedFile.type !== 'application/pdf') {
@@ -64,7 +71,7 @@ const AddPageNumbers = () => {
         setError(null);
         setPages([]);
         setFile(selectedFile);
-    }, []);
+    }, [currentUser]);
 
     const { getRootProps, getInputProps } = useDropzone({ onDrop, accept: { 'application/pdf': ['.pdf'] }, maxFiles: 1 });
 
@@ -75,6 +82,11 @@ const AddPageNumbers = () => {
 
     const handleApplyNumbers = async () => {
         if (!file) return;
+
+        if (!currentUser) {
+            incrementConversionCount();
+        }
+
         setIsLoading(true);
 
         try {

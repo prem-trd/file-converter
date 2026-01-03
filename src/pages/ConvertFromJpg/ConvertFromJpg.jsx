@@ -3,15 +3,23 @@ import React, { useState, useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useDropzone } from 'react-dropzone';
 import { FaFileImage, FaDownload, FaArrowLeft } from 'react-icons/fa';
+import { useAuth } from '../../context/AuthContext.jsx';
+import { checkConversionLimit, incrementConversionCount } from '../../utils/conversionLimiter.jsx';
 import './ConvertFromJpg.css';
 
 const ConvertFromJpg = () => {
     const [file, setFile] = useState(null);
     const [outputFormat, setOutputFormat] = useState('png');
     const [error, setError] = useState(null);
+    const { currentUser } = useAuth();
 
     const onDrop = useCallback(acceptedFiles => {
         setError(null);
+        if (!currentUser && checkConversionLimit()) {
+            setError("You have reached your daily conversion limit. Please sign up for unlimited conversions.");
+            return;
+        }
+
         if (acceptedFiles.length === 0) {
             setError('Invalid file type. Please upload a JPG or JPEG file.');
             return;
@@ -24,7 +32,7 @@ const ConvertFromJpg = () => {
                 name: uploadedFile.name
             });
         }
-    }, []);
+    }, [currentUser]);
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         onDrop,
@@ -38,6 +46,10 @@ const ConvertFromJpg = () => {
     });
 
     const handleDownload = () => {
+        if (!currentUser) {
+            incrementConversionCount();
+        }
+
         const image = new Image();
         image.crossOrigin = 'anonymous';
         image.src = file.preview;

@@ -6,6 +6,8 @@ import { Stage, Layer, Image, Text } from 'react-konva';
 import useImage from 'use-image';
 import { FiDownload, FiX } from 'react-icons/fi';
 import { FaFileImage } from 'react-icons/fa';
+import { useAuth } from '../../context/AuthContext';
+import { checkConversionLimit, incrementConversionCount } from '../../utils/conversionLimiter';
 import './MemeGenerator.css';
 
 const MemeImage = ({ src, width, height }) => {
@@ -26,6 +28,8 @@ const MemeGenerator = () => {
     const [aspectRatio, setAspectRatio] = useState(0);
     const stageRef = useRef(null);
     const containerRef = useRef(null);
+    const { currentUser } = useAuth();
+    const [error, setError] = useState(null);
 
     const calculateSize = () => {
         if (containerRef.current && aspectRatio) {
@@ -45,6 +49,10 @@ const MemeGenerator = () => {
     }, [image, aspectRatio]);
 
     const onDrop = (acceptedFiles) => {
+        if (!currentUser && checkConversionLimit()) {
+            setError("You have reached your daily conversion limit. Please sign up for unlimited conversions.");
+            return;
+        }
         const reader = new FileReader();
         reader.onload = (e) => {
             const img = new window.Image();
@@ -66,6 +74,9 @@ const MemeGenerator = () => {
     });
 
     const downloadMeme = () => {
+        if (!currentUser) {
+            incrementConversionCount();
+        }
         const dataURL = stageRef.current.toDataURL({ pixelRatio: 3 });
         const link = document.createElement('a');
         link.download = 'meme-generator-smartconverter.png';
@@ -95,6 +106,7 @@ const MemeGenerator = () => {
               <p className="meme-generator-description">Create your own memes by adding text to images.</p>
             </div>
             <div className="meme-generator-content">
+                {error && <div className="alert alert-danger">{error}</div>}
                 {!image ? (
                     <div {...getRootProps({ className: 'dropzone' })}>
                         <input {...getInputProps()} />

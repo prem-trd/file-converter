@@ -6,6 +6,8 @@ import { pdfjs } from 'react-pdf';
 import { Button, Spinner, Alert } from 'react-bootstrap';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
+import { useAuth } from '../../context/AuthContext.jsx';
+import { checkConversionLimit, incrementConversionCount } from '../../utils/conversionLimiter.jsx';
 import './PdfToJpg.css';
 
 // Force the PDF.js worker to be loaded from a reliable CDN.
@@ -18,15 +20,25 @@ const PdfToJpg = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
     const [pdfName, setPdfName] = useState('');
+    const { currentUser } = useAuth();
 
     const onDrop = useCallback(async (acceptedFiles) => {
         const file = acceptedFiles[0];
         if (!file) return;
 
+        if (!currentUser && checkConversionLimit()) {
+            setError("You have reached your daily conversion limit. Please sign up for unlimited conversions.");
+            return;
+        }
+
         setIsLoading(true);
         setError(null);
         setImages([]);
         setPdfName(file.name.replace(/\.pdf$/i, ''));
+
+        if (!currentUser) {
+            incrementConversionCount();
+        }
 
         const reader = new FileReader();
 
@@ -70,7 +82,7 @@ const PdfToJpg = () => {
         };
 
         reader.readAsArrayBuffer(file);
-    }, []);
+    }, [currentUser]);
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         onDrop,

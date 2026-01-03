@@ -6,12 +6,15 @@ import { Button, Spinner, Alert } from 'react-bootstrap';
 import { FaFileWord, FaTrashAlt } from 'react-icons/fa';
 import { renderAsync } from 'docx-preview';
 import { jsPDF } from 'jspdf';
+import { useAuth } from '../../context/AuthContext';
+import { checkConversionLimit, incrementConversionCount } from '../../utils/conversionLimiter.jsx';
 import './WordToPdf.css';
 
 const WordToPdf = () => {
     const [file, setFile] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
+    const { currentUser } = useAuth();
 
     const onDrop = useCallback(acceptedFiles => {
         if (acceptedFiles.length > 0) {
@@ -31,8 +34,17 @@ const WordToPdf = () => {
             return;
         }
 
+        if (!currentUser && checkConversionLimit()) {
+            setError("You have reached your daily conversion limit. Please sign up for unlimited conversions.");
+            return;
+        }
+
         setIsLoading(true);
         setError(null);
+
+        if (!currentUser) {
+            incrementConversionCount();
+        }
 
         const arrayBuffer = await file.arrayBuffer();
 

@@ -53,6 +53,7 @@ const ToolsDropdown = ({ title, toolCategories, activeKey, onSelect }) => {
 const MobileHeader = ({ activeKey, user, onLogout }) => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
+  const isMobile = useMediaQuery('(max-width: 450px)');
 
   const handleSelect = () => {
     setOpen(false);
@@ -70,7 +71,7 @@ const MobileHeader = ({ activeKey, user, onLogout }) => {
           </Navbar.Brand>
         </Nav>
       </Navbar>
-      <Drawer open={open} onClose={() => setOpen(false)} placement="left" size={'full'}>
+      <Drawer open={open} onClose={() => setOpen(false)} placement="left" size={isMobile ? 'full' : 'xs'}>
         <Drawer.Header>
           {user ? (
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>

@@ -3,6 +3,8 @@ import React, { useState, useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useDropzone } from 'react-dropzone';
 import { FaFileImage, FaDownload, FaArrowLeft } from 'react-icons/fa';
+import { useAuth } from '../../context/AuthContext.jsx';
+import { checkConversionLimit, incrementConversionCount } from '../../utils/conversionLimiter.jsx';
 import './ConvertToJpg.css';
 
 const ConvertToJpg = () => {
@@ -10,8 +12,15 @@ const ConvertToJpg = () => {
     const [backgroundColor, setBackgroundColor] = useState('#FFFFFF');
     const [svgStrokeColor, setSvgStrokeColor] = useState('#000000');
     const [isSvg, setIsSvg] = useState(false);
+    const { currentUser } = useAuth();
+    const [error, setError] = useState(null);
 
     const onDrop = useCallback(acceptedFiles => {
+        if (!currentUser && checkConversionLimit()) {
+            setError("You have reached your daily conversion limit. Please sign up for unlimited conversions.");
+            return;
+        }
+
         const uploadedFile = acceptedFiles[0];
         if (uploadedFile) {
             const preview = URL.createObjectURL(uploadedFile);
@@ -28,7 +37,7 @@ const ConvertToJpg = () => {
                 setFile({ preview, name: uploadedFile.name });
             }
         }
-    }, []);
+    }, [currentUser]);
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         onDrop,
@@ -37,6 +46,10 @@ const ConvertToJpg = () => {
     });
 
     const handleDownload = () => {
+        if (!currentUser) {
+            incrementConversionCount();
+        }
+
         const image = new Image();
         image.crossOrigin = 'anonymous';
 
@@ -84,6 +97,7 @@ const ConvertToJpg = () => {
                 <p className='convert-to-jpg-description'>Easily convert your images to JPG format, with options for background color and SVG stroke color.</p>
             </div>
             <div className='convert-to-jpg-content'>
+                {error && <Alert variant="danger" onClose={() => setError(null)} dismissible>{error}</Alert>}
                 {!file ? (
                     <div {...getRootProps({ className: `dropzone ${isDragActive ? 'drag-over' : ''}` })}>
                         <input {...getInputProps()} />

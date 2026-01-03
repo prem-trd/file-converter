@@ -2,10 +2,12 @@
 import React, { useState, useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useDropzone } from 'react-dropzone';
-import { Button, Message, toaster, Loader, Row, Col, IconButton, RadioGroup, Radio, InputNumber } from 'rsuite';
+import { Button, Message, toaster, Row, Col, IconButton, RadioGroup, Radio, InputNumber } from 'rsuite';
 import { VscFilePdf, VscTrash } from "react-icons/vsc";
 import { PDFDocument } from 'pdf-lib';
 import { saveAs } from 'file-saver';
+import { checkConversionLimit, incrementConversionCount } from '../../utils/conversionLimiter';
+import { useAuth } from '../../contexts/AuthContext';
 import './SignPdf.css';
 
 const SignPdf = () => {
@@ -16,8 +18,15 @@ const SignPdf = () => {
     const [placement, setPlacement] = useState('bottom-right');
     const [numPages, setNumPages] = useState(null);
     const [pageNumber, setPageNumber] = useState(1);
+    const { currentUser } = useAuth();
+    const [isLimitReached, setIsLimitReached] = useState(false);
 
     const onPdfDrop = useCallback(async (acceptedFiles) => {
+        if (!currentUser && checkConversionLimit()) {
+            setIsLimitReached(true);
+            toaster.push(<Message type="error" closable>You have reached your daily conversion limit. Please log in for unlimited conversions.</Message>);
+            return;
+        }
         if (acceptedFiles.length > 0) {
             const selectedFile = acceptedFiles[0];
             if (selectedFile.type !== 'application/pdf') {
@@ -40,9 +49,14 @@ const SignPdf = () => {
                 setIsLoading(false);
             }
         }
-    }, []);
+    }, [currentUser]);
 
     const onSignatureDrop = useCallback((acceptedFiles) => {
+        if (!currentUser && checkConversionLimit()) {
+            setIsLimitReached(true);
+            toaster.push(<Message type="error" closable>You have reached your daily conversion limit. Please log in for unlimited conversions.</Message>);
+            return;
+        }
         if (acceptedFiles.length > 0) {
             const selectedFile = acceptedFiles[0];
             if (!selectedFile.type.startsWith('image/')) {
@@ -52,7 +66,7 @@ const SignPdf = () => {
             setSignatureFile(selectedFile);
             setSignaturePreview(URL.createObjectURL(selectedFile));
         }
-    }, []);
+    }, [currentUser]);
 
     const { getRootProps: getPdfRootProps, getInputProps: getPdfInputProps, isDragActive: isPdfDragActive } = useDropzone({ onDrop: onPdfDrop, accept: { 'application/pdf': ['.pdf'] }, maxFiles: 1 });
     const { getRootProps: getSignatureRootProps, getInputProps: getSignatureInputProps, isDragActive: isSignatureDragActive } = useDropzone({ onDrop: onSignatureDrop, accept: { 'image/*': [] }, maxFiles: 1 });
@@ -62,6 +76,16 @@ const SignPdf = () => {
             toaster.push(<Message type="error" closable>Please select both a PDF and a signature file.</Message>);
             return;
         }
+        
+        if (!currentUser) {
+            if (checkConversionLimit()) {
+                setIsLimitReached(true);
+                toaster.push(<Message type="error" closable>You have reached your daily conversion limit. Please log in for unlimited conversions.</Message>);
+                return;
+            }
+            incrementConversionCount();
+        }
+
         setIsLoading(true);
 
         try {
@@ -167,8 +191,8 @@ const SignPdf = () => {
 
             <Row gutter={30} className="upload-section">
                 <Col md={12}>
-                    <div {...getPdfRootProps({ className: `dropzone` })}>
-                        <input {...getPdfInputProps()} />
+                    <div {...getPdfRootProps({ className: `dropzone ${isPdfDragActive || isLimitReached ? 'disabled' : ''}` })}>
+                        <input {...getPdfInputProps()} disabled={isLimitReached} />
                         <p className="dropzone-content">Drop PDF here, or click to select</p>
                     </div>
                     {pdfFile && (
@@ -191,8 +215,8 @@ const SignPdf = () => {
                     )}
                 </Col>
                 <Col md={12}>
-                    <div {...getSignatureRootProps({ className: `dropzone` })}>
-                        <input {...getSignatureInputProps()} />
+                    <div {...getSignatureRootProps({ className: `dropzone ${isSignatureDragActive || isLimitReached ? 'disabled' : ''}` })}>
+                        <input {...getSignatureInputProps()} disabled={isLimitReached}/>
                         <p className="dropzone-content">Drop signature here, or click to select</p>
                     </div>
                     {signaturePreview && (
@@ -216,7 +240,7 @@ const SignPdf = () => {
             </div>
 
             <div className="sign-button-container">
-                <Button onClick={handleSignPdf} appearance="primary" color="blue" size="lg" loading={isLoading} disabled={!pdfFile || !signatureFile}>
+                <Button onClick={handleSignPdf} appearance="primary" color="blue" size="lg" loading={isLoading} disabled={!pdfFile || !signatureFile || isLoading || isLimitReached}>
                     {isLoading ? 'Signing...' : 'Sign PDF'}
                 </Button>
             </div>

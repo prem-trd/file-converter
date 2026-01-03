@@ -6,12 +6,15 @@ import { Button, Spinner, Alert } from 'react-bootstrap';
 import { FaFileCode, FaTrashAlt, FaExclamationTriangle } from 'react-icons/fa';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import { useAuth } from '../../context/AuthContext.jsx';
+import { checkConversionLimit, incrementConversionCount } from '../../utils/conversionLimiter.jsx';
 import './HtmlToPdf.css';
 
 const HtmlToPdf = () => {
     const [file, setFile] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
+    const { currentUser } = useAuth();
 
     const onDrop = useCallback(acceptedFiles => {
         if (acceptedFiles.length > 0) {
@@ -34,8 +37,17 @@ const HtmlToPdf = () => {
     const handleConvertToPdf = async () => {
         if (!file) return;
 
+        if (!currentUser && checkConversionLimit()) {
+            setError("You have reached your daily conversion limit. Please sign up for unlimited conversions.");
+            return;
+        }
+
         setIsLoading(true);
         setError(null);
+
+        if (!currentUser) {
+            incrementConversionCount();
+        }
 
         const reader = new FileReader();
         reader.onload = (event) => {

@@ -6,12 +6,15 @@ import { Button, Spinner, Alert } from 'react-bootstrap';
 import { FaFilePowerpoint, FaTrashAlt } from 'react-icons/fa';
 import JSZip from 'jszip';
 import jsPDF from 'jspdf';
+import { useAuth } from '../../context/AuthContext';
+import { checkConversionLimit, incrementConversionCount } from '../../utils/conversionLimiter.jsx';
 import './PptToPdf.css';
 
 const PptToPdf = () => {
     const [file, setFile] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
+    const { currentUser } = useAuth();
 
     const onDrop = useCallback(acceptedFiles => {
         if (acceptedFiles.length > 0) {
@@ -29,8 +32,17 @@ const PptToPdf = () => {
     const handleConvertToPdf = async () => {
         if (!file) return;
 
+        if (!currentUser && checkConversionLimit()) {
+            setError("You have reached your daily conversion limit. Please sign up for unlimited conversions.");
+            return;
+        }
+
         setIsLoading(true);
         setError(null);
+
+        if (!currentUser) {
+            incrementConversionCount();
+        }
 
         try {
             const reader = new FileReader();

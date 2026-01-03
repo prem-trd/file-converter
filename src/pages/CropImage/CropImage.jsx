@@ -5,6 +5,8 @@ import { useDropzone } from 'react-dropzone';
 import Cropper from 'react-easy-crop';
 import { FaFileImage, FaDownload, FaTrash, FaUndo, FaRedo } from 'react-icons/fa';
 import getCroppedImg from './cropImage';
+import { useAuth } from '../../context/AuthContext';
+import { checkConversionLimit, incrementConversionCount } from '../../utils/conversionLimiter';
 import './CropImage.css';
 
 const CropImage = () => {
@@ -14,8 +16,14 @@ const CropImage = () => {
   const [zoom, setZoom] = useState(1);
   const [rotation, setRotation] = useState(0);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
+  const { currentUser } = useAuth();
+  const [error, setError] = useState(null);
 
   const onDrop = useCallback(acceptedFiles => {
+    if (!currentUser && checkConversionLimit()) {
+        setError("You have reached your daily conversion limit. Please sign up for unlimited conversions.");
+        return;
+    }
     const file = acceptedFiles[0];
     setFilename(file.name);
     const reader = new FileReader();
@@ -25,7 +33,7 @@ const CropImage = () => {
       setRotation(0);
     };
     reader.readAsDataURL(file);
-  }, []);
+  }, [currentUser]);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
@@ -39,6 +47,9 @@ const CropImage = () => {
 
   const handleDownload = async () => {
     if (imageSrc && croppedAreaPixels) {
+      if (!currentUser) {
+        incrementConversionCount();
+      }
       try {
         const croppedImage = await getCroppedImg(imageSrc, croppedAreaPixels, rotation);
         const link = document.createElement('a');
@@ -89,6 +100,7 @@ const CropImage = () => {
       </div>
 
       <div className="crop-image-content">
+        {error && <div className="alert alert-danger">{error}</div>}
         {!imageSrc ? (
           <div {...getRootProps({ className: `dropzone ${isDragActive ? 'drag-over' : ''}` })}>
             <input {...getInputProps()} />

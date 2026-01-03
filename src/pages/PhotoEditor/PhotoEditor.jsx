@@ -5,6 +5,8 @@ import { FaFileImage, FaCrop } from 'react-icons/fa';
 import { FiDownload, FiTrash2, FiRotateCcw, FiXCircle, FiArrowLeft } from 'react-icons/fi';
 import ReactCrop from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
+import { useAuth } from '../../context/AuthContext';
+import { checkConversionLimit, incrementConversionCount } from '../../utils/conversionLimiter';
 import './PhotoEditor.css';
 
 const PhotoEditor = () => {
@@ -21,8 +23,14 @@ const PhotoEditor = () => {
         blur: 0,
     });
     const imageRef = useRef(null);
+    const { currentUser } = useAuth();
+    const [error, setError] = useState(null);
 
     const onDrop = (acceptedFiles) => {
+        if (!currentUser && checkConversionLimit()) {
+            setError("You have reached your daily conversion limit. Please sign up for unlimited conversions.");
+            return;
+        }
         const reader = new FileReader();
         reader.onload = () => {
             setImage(reader.result);
@@ -56,6 +64,9 @@ const PhotoEditor = () => {
 
     const downloadImage = () => {
         if (imageRef.current) {
+            if (!currentUser) {
+                incrementConversionCount();
+            }
             const imageElement = imageRef.current;
             const canvas = document.createElement('canvas');
             const context = canvas.getContext('2d');
@@ -137,6 +148,7 @@ const PhotoEditor = () => {
                 </p>
             </div>
             <div className="photo-editor-content">
+                {error && <div className="alert alert-danger">{error}</div>}
                 {!image ? (
                     <div {...getRootProps({ className: 'dropzone' })}>
                         <input {...getInputProps()} />

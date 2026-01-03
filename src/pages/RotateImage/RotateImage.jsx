@@ -3,13 +3,23 @@ import React, { useState, useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useDropzone } from 'react-dropzone';
 import { FaFileImage, FaDownload, FaTrash, FaUndo, FaRedo } from 'react-icons/fa';
+import { checkConversionLimit, incrementConversionCount } from '../../utils/conversionLimiter';
+import { useAuth } from '../../contexts/AuthContext';
+import { Alert } from 'rsuite';
 import './RotateImage.css';
 
 const RotateImage = () => {
   const [imageSrc, setImageSrc] = useState(null);
   const [rotation, setRotation] = useState(0);
+  const { currentUser } = useAuth();
+  const [isLimitReached, setIsLimitReached] = useState(false);
 
   const onDrop = useCallback(acceptedFiles => {
+    if (!currentUser && checkConversionLimit()) {
+      setIsLimitReached(true);
+      Alert.error('You have reached your daily conversion limit. Please log in for unlimited conversions.');
+      return;
+    }
     const file = acceptedFiles[0];
     const reader = new FileReader();
     reader.onload = () => {
@@ -17,7 +27,7 @@ const RotateImage = () => {
       setRotation(0);
     };
     reader.readAsDataURL(file);
-  }, []);
+  }, [currentUser]);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
@@ -27,6 +37,9 @@ const RotateImage = () => {
 
   const handleDownload = () => {
     if (imageSrc) {
+        if (!currentUser) {
+            incrementConversionCount();
+        }
         const image = new Image();
         image.src = imageSrc;
         image.onload = () => {
@@ -109,7 +122,7 @@ const RotateImage = () => {
                 <button onClick={() => setRotation((rotation - 90) % 360)} className='rotate-button'><FaUndo /> Left</button>
                 <button onClick={() => setRotation((rotation + 90) % 360)} className='rotate-button'><FaRedo /> Right</button>
               </div>
-              <button onClick={handleDownload} className="download-button">
+              <button onClick={handleDownload} className="download-button" disabled={isLimitReached}>
                 <FaDownload />
                 Download Rotated Image
               </button>

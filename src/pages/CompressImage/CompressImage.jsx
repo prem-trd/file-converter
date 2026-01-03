@@ -10,6 +10,8 @@ import FileDownloadIcon from '@rsuite/icons/FileDownload';
 import TrashIcon from '@rsuite/icons/Trash';
 import './CompressImage.css';
 import { FaFileImage } from 'react-icons/fa';
+import { useAuth } from '../../context/AuthContext.jsx';
+import { checkConversionLimit, incrementConversionCount } from '../../utils/conversionLimiter.jsx';
 
 const CompressImage = () => {
     const [originalFile, setOriginalFile] = useState(null);
@@ -18,8 +20,13 @@ const CompressImage = () => {
     const [compressedPreview, setCompressedPreview] = useState(null);
     const [quality, setQuality] = useState(80);
     const [isLoading, setIsLoading] = useState(false);
+    const { currentUser } = useAuth();
 
     const onDrop = useCallback((acceptedFiles) => {
+        if (!currentUser && checkConversionLimit()) {
+            toaster.push(<Message type="error" closable>You have reached your daily conversion limit. Please sign up for unlimited conversions.</Message>);
+            return;
+        }
         toaster.clear();
         if (acceptedFiles.length > 0) {
             const file = acceptedFiles[0];
@@ -32,7 +39,7 @@ const CompressImage = () => {
             setCompressedFile(null);
             setCompressedPreview(null);
         }
-    }, []);
+    }, [currentUser]);
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop, accept: { 'image/*': [] }, maxFiles: 1 });
 
@@ -40,6 +47,10 @@ const CompressImage = () => {
         if (!originalFile) {
             toaster.push(<Message type="error" closable>Please upload an image first.</Message>);
             return;
+        }
+
+        if (!currentUser) {
+            incrementConversionCount();
         }
 
         setIsLoading(true);

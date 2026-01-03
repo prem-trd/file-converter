@@ -7,12 +7,15 @@ import { FaFileExcel, FaTrashAlt } from 'react-icons/fa';
 import * as XLSX from 'xlsx';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import { useAuth } from '../../context/AuthContext';
+import { checkConversionLimit, incrementConversionCount } from '../../utils/conversionLimiter.jsx';
 import './ExcelToPdf.css';
 
 const ExcelToPdf = () => {
     const [file, setFile] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
+    const { currentUser } = useAuth();
 
     const onDrop = useCallback(acceptedFiles => {
         if (acceptedFiles.length > 0) {
@@ -35,8 +38,17 @@ const ExcelToPdf = () => {
     const handleConvertToPdf = async () => {
         if (!file) return;
 
+        if (!currentUser && checkConversionLimit()) {
+            setError("You have reached your daily conversion limit. Please sign up for unlimited conversions.");
+            return;
+        }
+
         setIsLoading(true);
         setError(null);
+
+        if (!currentUser) {
+            incrementConversionCount();
+        }
 
         try {
             const reader = new FileReader();

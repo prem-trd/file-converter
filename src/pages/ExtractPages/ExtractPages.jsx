@@ -5,6 +5,8 @@ import { useDropzone } from 'react-dropzone';
 import { Button, Alert, Spinner, Form } from 'react-bootstrap';
 import { FaFilePdf, FaTrash } from 'react-icons/fa';
 import { PDFDocument } from 'pdf-lib';
+import { useAuth } from '../../context/AuthContext';
+import { checkConversionLimit, incrementConversionCount } from '../../utils/conversionLimiter';
 import './ExtractPages.css';
 
 const ExtractPages = () => {
@@ -14,8 +16,13 @@ const ExtractPages = () => {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const { currentUser } = useAuth();
 
   const onDrop = useCallback(async (acceptedFiles) => {
+    if (!currentUser && checkConversionLimit()) {
+        setError("You have reached your daily conversion limit. Please sign up for unlimited conversions.");
+        return;
+    }
     if (acceptedFiles.length === 0) return;
     const selectedFile = acceptedFiles[0];
 
@@ -42,7 +49,7 @@ const ExtractPages = () => {
       setFile(null);
       setNumPages(null);
     }
-  }, []);
+  }, [currentUser]);
 
   const { getRootProps, getInputProps } = useDropzone({ onDrop, accept: { 'application/pdf': ['.pdf'] }, maxFiles: 1 });
 
@@ -60,6 +67,10 @@ const ExtractPages = () => {
     if (!file || pagesToExtract.size === 0) {
       setError("Please select at least one page to extract.");
       return;
+    }
+
+    if (!currentUser) {
+        incrementConversionCount();
     }
 
     setIsLoading(true);

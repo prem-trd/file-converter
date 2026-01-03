@@ -8,6 +8,8 @@ import { PDFDocument, degrees, PageSizes } from 'pdf-lib';
 import { Button, Spinner, Alert } from 'react-bootstrap';
 import { FaFilePdf, FaTrash, FaRedo, FaPlus } from 'react-icons/fa';
 import DraggablePage from './DraggablePage';
+import { useAuth } from '../../context/AuthContext';
+import { checkConversionLimit, incrementConversionCount } from '../../utils/conversionLimiter';
 import './OrganizePdf.css';
 
 const OrganizePdf = () => {
@@ -15,6 +17,7 @@ const OrganizePdf = () => {
     const [pages, setPages] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
+    const { currentUser } = useAuth();
 
     const loadFilePages = async (fileObject) => {
         const newPages = [];
@@ -39,6 +42,10 @@ const OrganizePdf = () => {
     };
 
     const onDrop = useCallback(async (acceptedFiles) => {
+        if (!currentUser && checkConversionLimit()) {
+            setError("You have reached your daily conversion limit. Please sign up for unlimited conversions.");
+            return;
+        }
         const newFileObjects = acceptedFiles.map((file, index) => ({
             file,
             id: `file-${files.length + Date.now() + index}`,
@@ -53,7 +60,7 @@ const OrganizePdf = () => {
 
         setPages(p => [...p, ...allNewPages]);
         setIsLoading(false);
-    }, [files]);
+    }, [files, currentUser]);
 
     const { getRootProps, getInputProps } = useDropzone({
         onDrop,
@@ -94,6 +101,10 @@ const OrganizePdf = () => {
         if (pages.length === 0) {
             setError('There are no pages to organize.');
             return;
+        }
+
+        if (!currentUser) {
+            incrementConversionCount();
         }
 
         setIsLoading(true);

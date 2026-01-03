@@ -6,6 +6,8 @@ import { PDFDocument } from 'pdf-lib';
 import { Button, Form, Alert, Spinner } from 'react-bootstrap';
 import { FaFilePdf, FaTrash, FaPlus } from 'react-icons/fa';
 import JSZip from 'jszip';
+import { checkConversionLimit, incrementConversionCount } from '../../utils/conversionLimiter';
+import { useAuth } from '../../contexts/AuthContext';
 import './SplitPdf.css';
 
 const SplitPdf = () => {
@@ -15,8 +17,15 @@ const SplitPdf = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
+  const { currentUser } = useAuth();
+  const [isLimitReached, setIsLimitReached] = useState(false);
 
   const onDrop = useCallback(async (acceptedFiles) => {
+    if (!currentUser && checkConversionLimit()) {
+      setIsLimitReached(true);
+      setError("You have reached your daily conversion limit. Please log in for unlimited conversions.");
+      return;
+    }
     if (acceptedFiles.length === 0) return;
     const selectedFile = acceptedFiles[0];
 
@@ -46,9 +55,9 @@ const SplitPdf = () => {
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [currentUser]);
 
-  const { getRootProps, getInputProps } = useDropzone({ onDrop, accept: { 'application/pdf': ['.pdf'] }, maxFiles: 1 });
+  const { getRootProps, getInputProps } = useDropzone({ onDrop, accept: { 'application/pdf': ['.pdf'] }, maxFiles: 1, disabled: isLimitReached });
 
   const handleRangeChange = (index, field, value) => {
     const newRanges = [...ranges];
@@ -73,6 +82,15 @@ const SplitPdf = () => {
     if (!file) {
       setError("Please select a file first.");
       return;
+    }
+
+    if (!currentUser) {
+        if (checkConversionLimit()) {
+            setIsLimitReached(true);
+            setError("You have reached your daily conversion limit. Please log in for unlimited conversions.");
+            return;
+        }
+        incrementConversionCount();
     }
 
     setIsLoading(true);
@@ -167,7 +185,7 @@ const SplitPdf = () => {
         {success && <Alert variant="success" onClose={() => setSuccess(null)} dismissible>{success}</Alert>}
 
         {!file ? (
-          <div {...getRootProps({ className: 'dropzone' })}>
+          <div {...getRootProps({ className: `dropzone ${isLimitReached ? 'disabled' : ''}` })}>
             <input {...getInputProps()} />
             <div className="dropzone-content">
               <FaFilePdf size={48} />
@@ -214,7 +232,7 @@ const SplitPdf = () => {
             </div>
 
             <div className="split-pdf-split-button-container">
-              <Button onClick={handleSplit} disabled={isLoading} size="lg">
+              <Button onClick={handleSplit} disabled={isLoading || isLimitReached} size="lg">
                 {isLoading ? <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" /> : 'Split PDF'}
               </Button>
             </div>

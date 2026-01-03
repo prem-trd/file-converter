@@ -8,12 +8,15 @@ import { jsPDF } from 'jspdf';
 import { Button, Spinner, Alert } from 'react-bootstrap';
 import { FaFileImage, FaTrash, FaRedo, FaPlus } from 'react-icons/fa';
 import DraggableImage from './DraggableImage';
+import { useAuth } from '../../context/AuthContext.jsx';
+import { checkConversionLimit, incrementConversionCount } from '../../utils/conversionLimiter.jsx';
 import './JpgToPdf.css';
 
 const JpgToPdf = () => {
     const [files, setFiles] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
+    const { currentUser } = useAuth();
 
     const onDrop = useCallback(acceptedFiles => {
         const imageFiles = acceptedFiles.filter(file => file.type.startsWith('image/'));
@@ -56,8 +59,17 @@ const JpgToPdf = () => {
             return;
         }
 
+        if (!currentUser && checkConversionLimit()) {
+            setError("You have reached your daily conversion limit. Please sign up for unlimited conversions.");
+            return;
+        }
+
         setIsLoading(true);
         setError(null);
+
+        if (!currentUser) {
+            incrementConversionCount();
+        }
 
         const doc = new jsPDF();
 

@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import { useDropzone } from 'react-dropzone';
 import { Button, Input, InputGroup, List, IconButton, Message, toaster } from 'rsuite';
 import { VscFilePdf, VscLock, VscTrash } from "react-icons/vsc";
-import { PDFDocument, Permissions } from 'pdf-lib';
+import { PDFDocument } from 'pdf-lib';
 import './ProtectPdf.css';
 
 const ProtectPdf = () => {
@@ -39,11 +39,11 @@ const ProtectPdf = () => {
             await pdfDoc.encrypt({ // Correctly await the encryption
                 userPassword: password,
                 ownerPassword: password, // You can set a different owner password if needed
-                permissions: [
-                    Permissions.Printing,
-                    Permissions.Copying,
-                    Permissions.Modifying,
-                ],
+                permissions: {
+                    printing: true,
+                    copying: true,
+                    modifying: true,
+                },
             });
 
             const protectedPdfBytes = await pdfDoc.save();
