@@ -38,6 +38,8 @@ const PrivacyNotice = lazy(() => import("../pages/PrivacyNotice/PrivacyNotice.js
 const TermsAndConditions = lazy(() => import("../pages/TermsAndConditions/TermsAndConditions.jsx"));
 const ContactUs = lazy(() => import("../pages/ContactUs/ContactUs.jsx"));
 const ThankYou = lazy(() => import("../pages/ThankYou/ThankYou.jsx"));
+const AboutUs = lazy(() => import("../pages/AboutUs/AboutUs.jsx"));
+
 
 const router = createBrowserRouter(
   [
@@ -164,6 +166,10 @@ const router = createBrowserRouter(
         {
           path: "contact-us",
           element: <Suspense fallback={<Loader />}><ContactUs /></Suspense>,
+        },
+        {
+          path: "about-us",
+          element: <Suspense fallback={<Loader />}><AboutUs /></Suspense>,
         },
         {
           path: "thank-you",

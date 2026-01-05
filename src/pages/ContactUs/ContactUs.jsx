@@ -6,15 +6,23 @@ const ContactUs = () => {
   return (
     <div className="contact-container">
       <Helmet>
-        <title>Contact Us - Image & PDF Tools</title>
-        <meta name="description" content="Contact us for support, feedback, or any questions about our free online image and PDF tools. We're here to help!" />
-        <link rel="canonical" href={`${window.location.origin}/contact-us`} />
+        <title>Contact Us | SmartConverter</title>
+        <meta
+          name="description"
+          content="Contact SmartConverter for support, feedback, or questions related to our free online PDF and image conversion tools."
+        />
+        <link
+          rel="canonical"
+          href={`${window.location.origin}/contact-us`}
+        />
       </Helmet>
+
       <h1>Contact Us</h1>
 
       <p>
-        If you have any questions, feedback, or issues related to Image & PDF Tools,
-        feel free to reach out. We’ll do our best to respond as soon as possible.
+        If you have any questions, feedback, or issues related to SmartConverter,
+        feel free to reach out using the form below. We’ll do our best to respond
+        as soon as possible.
       </p>
 
       <form

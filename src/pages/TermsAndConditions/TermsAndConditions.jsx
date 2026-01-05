@@ -3,29 +3,38 @@ import { Helmet } from 'react-helmet-async';
 import './TermsAndConditions.css';
 
 const TermsAndConditions = () => {
+  const lastUpdated = "25 December 2025";
+
   return (
     <div className="terms-container">
       <Helmet>
-        <title>Terms & Conditions - Image & PDF Tools</title>
-        <meta name="description" content="Read the terms and conditions for using our free online image and PDF tools. Understand your rights and responsibilities when using our services." />
-        <link rel="canonical" href={`${window.location.origin}/terms-and-conditions`} />
+        <title>Terms & Conditions | SmartConverter</title>
+        <meta
+          name="description"
+          content="Read the terms and conditions for using SmartConverter’s free online PDF and image tools. Understand your rights and responsibilities."
+        />
+        <link
+          rel="canonical"
+          href={`${window.location.origin}/terms-and-conditions`}
+        />
       </Helmet>
+
       <h1>Terms & Conditions</h1>
 
       <p>
-        <strong>Last Updated:</strong> {new Date().toLocaleDateString()}
+        <strong>Last Updated:</strong> {lastUpdated}
       </p>
 
       <p>
         These Terms and Conditions (“Terms”) govern your access to and use of
-        the <strong>Image & PDF Tools</strong> website (“Website”, “Service”).
+        the <strong>SmartConverter</strong> website (“Website”, “Service”).
         By accessing or using this Website, you agree to be bound by these Terms.
         If you do not agree with any part of these Terms, please do not use the Website.
       </p>
 
       <h2>1. About the Service</h2>
       <p>
-        Image & PDF Tools is an independently developed web-based utility that
+        SmartConverter is an independently developed web-based utility that
         allows users to convert and manage image and PDF files online. The
         Service is provided on an “as-is” and “as-available” basis.
       </p>
@@ -42,9 +51,6 @@ const TermsAndConditions = () => {
         does not infringe the rights of others or restrict or inhibit anyone
         else’s use of the Website.
       </p>
-      <p>
-        You must not:
-      </p>
       <ul>
         <li>Upload or process illegal, harmful, or copyrighted content without permission</li>
         <li>Attempt to disrupt or damage the Website or its infrastructure</li>
@@ -54,56 +60,56 @@ const TermsAndConditions = () => {
       <h2>4. File Responsibility</h2>
       <p>
         You are solely responsible for the files you upload and process using
-        the Website. We do not verify, monitor, or take responsibility for the
-        content of uploaded files.
+        the Website. SmartConverter does not verify or monitor uploaded content.
       </p>
 
       <h2>5. Intellectual Property</h2>
       <p>
         All content, design, logos, and software on this Website are the
-        intellectual property of Image & PDF Tools unless otherwise stated.
-        You may not reproduce, distribute, or modify any part of the Website
-        without prior written permission.
+        intellectual property of SmartConverter unless otherwise stated.
+        You may not reproduce or redistribute any part without permission.
       </p>
 
       <h2>6. Disclaimer</h2>
       <p>
         The Website and its tools are provided for general use only. We do not
-        guarantee that the Service will be uninterrupted, error-free, or meet
-        your specific requirements.
+        guarantee uninterrupted or error-free service.
       </p>
 
       <h2>7. Limitation of Liability</h2>
       <p>
-        To the maximum extent permitted by law, we shall not be liable for any
-        direct, indirect, incidental, or consequential damages arising out of
-        your use or inability to use the Website or Service.
+        To the maximum extent permitted by law, SmartConverter shall not be
+        liable for any damages arising from your use of the Website.
       </p>
 
       <h2>8. Third-Party Services</h2>
       <p>
-        The Website may include links to or integrations with third-party
-        services such as analytics or advertising providers. We are not
-        responsible for the content or practices of these third-party services.
+        The Website may use third-party services such as analytics or advertising
+        providers. SmartConverter is not responsible for their practices.
       </p>
 
-      <h2>9. Changes to These Terms</h2>
+      <h2>9. Governing Law</h2>
       <p>
-        We may update these Terms from time to time. Continued use of the
-        Website after changes are posted constitutes your acceptance of the
-        updated Terms.
+        These Terms shall be governed and interpreted in accordance with the
+        laws of India.
       </p>
 
-      <h2>10. Termination</h2>
+      <h2>10. Changes to These Terms</h2>
       <p>
-        We reserve the right to suspend or terminate access to the Website at
-        any time, without prior notice, if these Terms are violated.
+        We may update these Terms from time to time. Continued use of the Website
+        constitutes acceptance of the updated Terms.
       </p>
 
-      <h2>11. Contact</h2>
+      <h2>11. Termination</h2>
+      <p>
+        We reserve the right to suspend or terminate access to the Website if
+        these Terms are violated.
+      </p>
+
+      <h2>12. Contact</h2>
       <p>
         If you have any questions regarding these Terms & Conditions, please
-        contact us through the Website.
+        contact us through the <a href="/contact-us">Contact Us</a> page.
       </p>
     </div>
   );
